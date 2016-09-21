@@ -1,0 +1,16 @@
+# line styles for ColorBrewer PuOr
+# for use with divering data
+# provides 8 colors with orange low, white middle, and purple high
+# compatible with gnuplot >=4.2
+# author: Anna Schneider, haxxed by Ciaran McCreesh
+
+# palette
+set palette defined ( 0 '#FD8D3C',\
+		      1 '#FEB24C',\
+		      2 '#FED976',\
+		      3 '#FFEDA0',\
+		      4 '#FFFFFF',\
+		      5 '#D8DAEB',\
+		      6 '#B2ABD2',\
+		      7 '#8073AC',\
+		      8 '#542788' )
