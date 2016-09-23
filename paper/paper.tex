@@ -62,12 +62,12 @@ Graph Databases \thanks{Part of this paper appeared at IJCAI 2016
     When labels are introduced, as commonly seen in graph databases, additional rich behaviour
     arises.  We show that when only slightly better algorithms are used, all commonly used benchmark
     suites for evaluating graph database systems become trivial, and that existing notions of
-    difficulty are based almost entirely upon unnecessarily poor performance from a widely used
-    subgraph isomorphism algorithm. With this in mind, we argue that widely researched ``filter /
-    verify'' indexing technique used in graph databases is a flawed design based upon a widely
-    repeated misunderstanding of what makes subgraph isomorphism hard. We explain why this technique
-    would not be beneficial, even with harder instances than those currently used, when paired with
-    any reasonable modern subgraph isomorphism algorithm.
+    difficulty are based almost entirely upon unnecessarily poor performance from overly simplistic
+    subgraph isomorphism algorithms. With this in mind, we argue that the widely researched ``filter
+    / verify'' indexing technique used in graph databases is a flawed design based upon a repeated
+    misunderstanding of what makes subgraph isomorphism hard. We explain why this technique would
+    not be beneficial, even with harder instances than those currently used, when paired with any
+    reasonable modern subgraph isomorphism algorithm.
 \end{abstract}
 
 \section{Introduction}\label{section:introduction}
@@ -357,14 +357,11 @@ the cardinality of its vertex set. We write $\operatorname{V}(G)$ for the vertex
 The \emph{complement} of a graph $G$, denoted $\shortoverline{G}$, is the graph with the same vertex
 set as $G$, and with an edge between distinct vertices $v$ and $w$ if and only if $v$ and $w$ are
 not adjacent in $G$. We write $G(n, p)$ for an Erd\H{o}s-R\'enyi random graph with $n$ vertices, and
-an edge between each distinct pair of vertices with independent probability $p$.
-
-A graph may have labels on its vertices, in which case we write $\ell(v)$ for the label of a given
-vertex $v$. We write $G(n, p, l)$ for the graph $G(n, p)$ with vertex labels selected uniformly at
-random from a set of $l$ different labels.
+an edge between each distinct pair of vertices with independent probability $p$.  A graph may have
+labels on its vertices, in which case we write $\ell(v)$ for the label of a given vertex $v$.
 
 A \emph{non-induced subgraph isomorphism} from a graph $P$ (called the \emph{pattern}) to a graph
-$T$ (called the \emph{target}) is an injective mapping from $\operatorname{V}(P)$ to
+$T$ (called the \emph{target}) is an injective mapping $i$ from $\operatorname{V}(P)$ to
 $\operatorname{V}(T)$ which preserves adjacency---that is, for every adjacent $v$ and $w$ in
 $\operatorname{V}(P)$, the vertices $i(v)$ and $i(w)$ are adjacent in $T$. If vertices are labelled,
 the mapping must preserve labels, so $\ell(v) = \ell(i(v))$. An \emph{induced subgraph isomorphism}
@@ -457,8 +454,11 @@ general, satisfiable instances are easy, until very close to the phase transitio
 phase transition and move into the unsatisfiable region, we see complexity increase. Finally, as
 we pass through the phase transition and move deeper into the unsatisfiable region, instances become
 easier again. This behaviour is largely solver-independent, although VF2 has a larger hard region
-than Glasgow or LAD. Thus, although we have moved away from a single control parameter, we still
-observe the easy-hard-easy pattern seen in many other \NP-complete problems.
+than Glasgow or LAD (and the observant reader may notice that VF2 finds some instances extremely
+hard when the target is empty but the pattern is not---this turns out to be extremely important, and
+we return to it in \cref{section:labelled,section:filterverify}). Thus, although we have moved away
+from a single control parameter, we still observe the easy-hard-easy pattern seen in many other
+\NP-complete problems.
 
 \subsection{Locating the Phase Transition}
 
@@ -688,7 +688,7 @@ sporadic unsatisfiable instances deep inside the satisfiable reason. With suffic
 we get a kind of phase transition from ``all unsatisfiable'' to ``mixed satisfiable and
 unsatisfiable''.
 
-\subsection{Flawed Instances}
+\subsection{Flawed and Obviously Unsatisfiable Instances}
 
 What goes on here?
 
@@ -696,9 +696,8 @@ Min unsat core.
 
 Insufficient vertices.
 
-Two adjacent differently-coloured vertices.
-
-VF2 does not detect the case that there are insufficient, or even no, labels.
+VF2 does not detect the case that there are insufficient labels. Also empty pattern but
+not empty target.
 
 \section{Querying Graph Databases}\label{section:filterverify}
 
@@ -777,7 +776,9 @@ set''.\end{displayquote} This claim becomes understandable when one examines the
 algorithm chosen for the verification step \citep{DBLP:journals/jacm/Ullmann76}: as the algorithm
 predates techniques like arc-consistent all-different propagation \citep{DBLP:conf/aaai/Regin94}, it
 cannot immediately detect unsatisfiability in simple cases like there being two red vertices in the
-pattern but only one in the target.
+pattern but only one in the target\footnote{?? expand on: Although interestingly, this algorithm
+effectively does forward-checking and decent value ordering heuristics before these concepts
+appeared in the constraints literature.}.
 
 Without using the equation, \citet{DBLP:conf/sigmod/ChengKNL07} state that since subgraph
 isomorphism is NP-complete, processing by a sequential scan is infeasible. They introduce new
@@ -832,17 +833,13 @@ obviously-unsatisfiable instances with a similar time requirement to an indexing
 These beliefs are not entirely unfounded: none of the matching algorithms considered in these papers
 will immediately detect if a pattern contains two red vertices, whilst the target graph contains
 only one. This kind of flaw \emph{should} be picked up at the top of search by an all-different
-propagator, but such techniques are not used in graph databases systems, let alone the more powerful
-degree- and difference-based propagation rules introduced LAD \cite{Solnon:2010} or the
-distance-based reasoning in more recent work \cite{Audemard:2014,McCreesh:2015}.
-
-Indeed, as \citet{DBLP:journals/pvldb/KatsarouNT15} note, some variation on VF2
-\citep{Cordella:2004} is the usual matching algorithm of choice, although
-\citeS{DBLP:journals/jacm/Ullmann76}'s algorithm is sometimes chosen. Other approaches have been
-considered: for example, \citet{DBLP:journals/pvldb/ShangZLY08} propose an algorithm which makes use
-of the frequency of various features to guide search.  \citet{DBLP:journals/pvldb/LeeHKL12}
-determine experimentally that this technique tends to be very effective, even on families of graphs
-for which it was not designed.
+propagator \citep{DBLP:conf/aaai/Regin94}.  However, as \citet{DBLP:journals/pvldb/KatsarouNT15}
+note, some variation on VF2 \citep{Cordella:2004} is the usual matching algorithm of choice for
+graph database systems, although \citeS{DBLP:journals/jacm/Ullmann76}'s algorithm is sometimes
+chosen. Other approaches have been considered: for example, \citet{DBLP:journals/pvldb/ShangZLY08}
+propose an algorithm which makes use of the frequency of various features to guide search.
+\citet{DBLP:journals/pvldb/LeeHKL12} determine experimentally that this technique tends to be very
+effective, even on families of graphs for which it was not designed.
 
 Thus we believe it would be unlikely to cause too much astonishment if we suggested that a better
 matching algorithm could be dropped in as a black box replacement in graph databases systems to
@@ -859,20 +856,17 @@ plausible with a decent algorithm.
 
 \subsection{What Should the Future of Graph Matching in Databases Be?}
 
-We do not present the ultimate big data subgraph matching algorithm.
+?? The point of this paper is not to present the ultimate big data subgraph matching algorithm.
 
-Read outside the field. AI has a lot to offer.
+Read outside the field. AI has a lot to offer. Much more focus on the matching algorithm.
 
-Much more focus on the matching algorithm.
-
-Optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
+?? Optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
 all-different. Presolving.
 
-Invariants on labels used to inform algorithm design and to provide filtering during search.
+?? Invariant which are effective on labels used to inform algorithm design and to provide filtering
+during search. Minimum unsat core. Indexing can be used to enhance propagation.
 
-Indexing can be used to enhance propagation.
-
-On the other hand, our key message is not just saying use a better algorithm. Need a full
+?? On the other hand, our key message is not just saying use a better algorithm. Need a full
 understanding of every aspect of the system, and cannot treat subgraph matching as a black box.
 
 \section{Conclusion}
@@ -884,11 +878,11 @@ uncovered several interesting phenomena: there are hard instances far from a pha
 constrainedness predicts this, and existing general techniques for designing heuristics do not work
 in certain portions of the parameter space.
 
-?? Stuff about graph databases.
-
 It is worth noting that this technique does \emph{not} give a way of generating hard instances for
 graph isomorphism problems: the pattern graph must be substantially smaller than the target graph
 for independent pairs of randomly generated instances to give interesting behaviour.
+
+?? This is not purely of theoretical interest. Stuff about graph databases.
 
 \section*{Acknowledgements}
 
