@@ -719,9 +719,9 @@ unsatisfiable instances from consideration, without performing a subgraph isomor
 An early graph database system by \citet{DBLP:conf/pods/ShashaWG02} uses a filtering heuristic to
 eliminate unsatisfiable instances based upon simple structural elements. It is not clear whether the
 aim is to reduce I/O costs, or to reduce the number of queries which must be tested, and the
-experiments do not answer whether the indexing is effective. (?? This isn't the first paper on this,
-but before this seem to be commercial applications, in particular a system called Daylight. Maybe
-more digging is required.)
+experiments do not answer whether the indexing is effective. However, the work was influenced by a commercial
+graph database system, whose documentation \cite[section 7.1]{Daylight} states that indexing is
+used to minimise disk accesses.
 
 Subsequently, in a widely cited paper, \citet{DBLP:conf/sigmod/YanYH04} introduce an indexing system
 called gIndex. Again, this system handles queries by first producing a set of candidates by
@@ -858,13 +858,19 @@ plausible with a decent algorithm.
 
 ?? The point of this paper is not to present the ultimate big data subgraph matching algorithm.
 
-Read outside the field. AI has a lot to offer. Much more focus on the matching algorithm.
+?? They need to read outside the field. AI has a lot to offer. There needs to be much more focus on
+the matching algorithm, and how it interacts with the system as a whole.
 
-?? Optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
-all-different. Presolving.
+?? We need optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
+all-different. Presolving. Huge domains.
+
+?? Degrade to clique.
 
 ?? Invariant which are effective on labels used to inform algorithm design and to provide filtering
-during search. Minimum unsat core. Indexing can be used to enhance propagation.
+during search. Look at minimum unsat core. If we are prepared to spend hours, indexing-like system
+can be used to enhance propagation, for example by pre-computing degree sequences and paths on
+target graphs. This is stronger, because, say, counting red vertices and counting degrees are
+automatically combined.
 
 ?? On the other hand, our key message is not just saying use a better algorithm. Need a full
 understanding of every aspect of the system, and cannot treat subgraph matching as a black box.
