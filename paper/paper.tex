@@ -440,14 +440,14 @@ What if we alter the edge probabilities for both the pattern graph and the targe
 row of \cref{figure:non-induced} we show the satisfiability phase transition for the non-induced
 variant, for patterns of order 10, 20 and 30, targets of order 150, and varying pattern (x-axis) and
 target (y-axis) edge probabilities. Each axis runs over 101 edge probabilities, from 0 to 1 in steps
-of 0.01, except for the VF2 row which uses steps of 0.02. For each of these points, we generate ten
-random instances. The colour denotes the proportion of these instances which were found to be
-satisfiable.  Inside the orange region, at the bottom right of each plot, every instance is
-unsatisfiable---here we are trying to find a dense pattern in a sparse target. In the purple region,
-at the top left, every instance is satisfiable---we are looking for a sparse pattern in a dense
-target (which is easy, since we only have to preserve adjacency, not non-adjacency). The white band
-between the regions shows the location of the phase transition: here, roughly half the instances are
-satisfiable. (We discuss the black line below.)
+of 0.01. For each of these points, we generate ten random instances. The colour denotes the
+proportion of these instances which were found to be satisfiable.  Inside the orange region, at the
+bottom right of each plot, every instance is unsatisfiable---here we are trying to find a dense
+pattern in a sparse target. In the purple region, at the top left, every instance is
+satisfiable---we are looking for a sparse pattern in a dense target (which is easy, since we only
+have to preserve adjacency, not non-adjacency). The white band between the regions shows the
+location of the phase transition: here, roughly half the instances are satisfiable. (We discuss the
+black line below.)
 
 On subsequent rows, we show the average number of search nodes used by the different algorithms. In
 general, satisfiable instances are easy, until very close to the phase transition. As we hit the
@@ -645,9 +645,10 @@ the same predictions as maximising the expected number of solutions.
 \begin{figure}[t]
     \centering\includegraphics{gen-graph-labels.pdf}
     \caption{On the top row, predicted and actual location of the phase transition for labelled
-    non-induced random subgraph isomorphism, with a pattern order of 20, a target order of 100,
-    varying pattern (x-axis) and target (y-axis) density, and varying numbers of labels. On the second
-    row, the average number of search nodes needed to solve an instance.}\label{figure:labels}
+    non-induced random subgraph isomorphism, with a pattern order of 20, a target order of 150,
+    varying pattern (x-axis) and target (y-axis) density, and varying numbers of labels. On
+    subsequent rows, the average number of search nodes needed to solve an instance, for three
+    different solvers.}\label{figure:labels}
 \end{figure}
 
 So far, we have looked at unlabelled graphs. What happens when labels on vertices are introduced?
@@ -688,7 +689,7 @@ sporadic unsatisfiable instances deep inside the satisfiable reason. With suffic
 we get a kind of phase transition from ``all unsatisfiable'' to ``mixed satisfiable and
 unsatisfiable''.
 
-\subsection{Flawed and Obviously Unsatisfiable Instances}
+\subsection{What's Wrong with VF2?}
 
 What goes on here?
 
@@ -828,25 +829,24 @@ time for a subgraph isomorphism query does not particularly depend upon the inst
 it considered that a good subgraph isomorphism algorithm should be able to eliminate
 obviously-unsatisfiable instances with a similar time requirement to an indexing system.
 
-\subsection{An Algorithm which Requires No Filtering}
-
 These beliefs are not entirely unfounded: none of the matching algorithms considered in these papers
 will immediately detect if a pattern contains two red vertices, whilst the target graph contains
 only one. This kind of flaw \emph{should} be picked up at the top of search by an all-different
 propagator \citep{DBLP:conf/aaai/Regin94}.  However, as \citet{DBLP:journals/pvldb/KatsarouNT15}
 note, some variation on VF2 \citep{Cordella:2004} is the usual matching algorithm of choice for
 graph database systems, although \citeS{DBLP:journals/jacm/Ullmann76}'s algorithm is sometimes
-chosen. Other approaches have been considered: for example, \citet{DBLP:journals/pvldb/ShangZLY08}
+chosen. (Other approaches have been considered: for example, \citet{DBLP:journals/pvldb/ShangZLY08}
 propose an algorithm which makes use of the frequency of various features to guide search.
 \citet{DBLP:journals/pvldb/LeeHKL12} determine experimentally that this technique tends to be very
-effective, even on families of graphs for which it was not designed.
+effective, even on families of graphs for which it was not designed.) We believe it would be
+unlikely to cause too much astonishment if we suggested that a better matching algorithm could be
+dropped in as a black box replacement in graph databases systems to improve their performance.
+However, it appears not to have occurred to the graph databases community that a better subgraph
+isomorphism algorithm could invalidate the premise underlying the entire filter / verify approach.
+Eliminating this filtering step would not merely be a matter of simplicity: indices take ??  hours
+to build.
 
-Thus we believe it would be unlikely to cause too much astonishment if we suggested that a better
-matching algorithm could be dropped in as a black box replacement in graph databases systems to
-improve their performance. However, it appears not to have occurred to the graph databases community
-that a better subgraph isomorphism algorithm could invalidate the premise underlying the entire
-filter / verify approach. Eliminating this filtering step would not merely be a matter of
-simplicity: indices take ??  hours to build.
+\subsection{An Algorithm which Requires No Filtering}
 
 We build up a simple algorithm. Start with VF2, adapt to track domains, smallest domain first, all
 different. Show its effectiveness at eliminating unsatisfiable instances, and give its total
@@ -856,13 +856,13 @@ plausible with a decent algorithm.
 
 \subsection{What Should the Future of Graph Matching in Databases Be?}
 
-?? The point of this paper is not to present the ultimate big data subgraph matching algorithm.
+?? Presenting the ultimate big data subgraph matching algorithm is outwith the scope of this paper.
 
 ?? They need to read outside the field. AI has a lot to offer. There needs to be much more focus on
 the matching algorithm, and how it interacts with the system as a whole.
 
 ?? We need optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
-all-different. Presolving. Huge domains.
+all-different. Presolving. Huge domains. Ongoing use of VF2 and micro vs millisecond benchmarks.
 
 ?? Degrade to clique.
 
@@ -874,6 +874,8 @@ automatically combined.
 
 ?? On the other hand, our key message is not just saying use a better algorithm. Need a full
 understanding of every aspect of the system, and cannot treat subgraph matching as a black box.
+
+?? Use of VF2 in other areas.
 
 \section{Conclusion}
 
@@ -896,5 +898,10 @@ The authors wish to thank Kitty Meeks and Craig Reilly for their comments.
 
 \bibliography{paper}
 \bibliographystyle{theapa}
+
+\clearpage
+\appendix
+
+\section{Reproducing These Experiments}
 
 \end{document}

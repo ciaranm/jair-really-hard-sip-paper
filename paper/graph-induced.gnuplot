@@ -123,24 +123,24 @@ set cbrange [2:8]
 set label 1 at screen 0, graph 0.5 center 'VF2' rotate by 90
 
 set notitle
-plot "data/ps10-ts150.vf2-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3+1)) matrix w image notitle
+plot "data/ps10-ts150.vf2-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3+1)) matrix w image notitle
 
 unset label 1
 
 set notitle
-plot "data/ps14-ts150.vf2-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3+1)) matrix w image notitle
+plot "data/ps14-ts150.vf2-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3+1)) matrix w image notitle
 
 set notitle
-plot "data/ps15-ts150.vf2-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3+1)) matrix w image notitle
+plot "data/ps15-ts150.vf2-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3+1)) matrix w image notitle
 
 set notitle
-plot "data/ps16-ts150.vf2-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3+1)) matrix w image notitle
+plot "data/ps16-ts150.vf2-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3+1)) matrix w image notitle
 
 set notitle
-plot "data/ps20-ts150.vf2-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3+1)) matrix w image notitle
+plot "data/ps20-ts150.vf2-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3+1)) matrix w image notitle
 
 set cbtics 2 add ('${\le}10^{2}$' 2) add ('${\ge}10^{8}$' 8)
-plot "data/ps30-ts150.vf2-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3+1)) matrix w image notitle
+plot "data/ps30-ts150.vf2-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3+1)) matrix w image notitle
 
 load "puyl.pal"
 unset colorbox
