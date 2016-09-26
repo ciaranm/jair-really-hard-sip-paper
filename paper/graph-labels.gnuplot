@@ -91,7 +91,7 @@ plot "data/ps20-ts150.lad-non-induced.average-nodes.plot" u ($2/100):($1/100):(l
 unset label 1
 
 unset title
-plot "data/ps20-ts150-l2.lad-non-induced.average-nodes.plot" u ($2/25):($1/25):(log10($3)) matrix w image notitle
+plot "data/ps20-ts150-l2.lad-non-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3)) matrix w image notitle
 
 unset title
 plot "data/ps20-ts150-l3.lad-non-induced.average-nodes.plot" u ($2/25):($1/25):(log10($3)) matrix w image notitle
