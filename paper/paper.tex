@@ -838,16 +838,16 @@ graph database systems, although \citeS{DBLP:journals/jacm/Ullmann76}'s algorith
 chosen. Other approaches have been considered: for example, \citet{DBLP:journals/pvldb/ShangZLY08}
 propose an algorithm which makes use of the frequency of various features to guide search.
 \citet{DBLP:journals/pvldb/LeeHKL12} determine experimentally that this technique tends to be very
-effective, even on families of graphs for which it was not designed. However, these comparisons have
-either ignored strong propagation algorithms, or in one case misunderstood them to be part of a
-filtering step rather than matching algorithms \citep{DBLP:conf/icdm/AlmasriGF14}.
+effective, even on families of graphs for which it was not designed.) We believe it would be
+unlikely to cause too much astonishment if we suggested that a better matching algorithm could be
+dropped in as a black box replacement in graph databases systems to improve their performance.
+However, it appears not to have occurred to the graph databases community that a better subgraph
+isomorphism algorithm could invalidate the premise underlying the entire filter / verify approach.
 
-We believe it would be unlikely to cause too much astonishment if we suggested that a better
-matching algorithm could be dropped in as a black box replacement in graph databases systems to
-improve their performance.  However, it appears not to have occurred to the graph databases
-community that a better subgraph isomorphism algorithm could invalidate the premise underlying the
-entire filter / verify approach.  Eliminating this filtering step would not merely be a matter of
-simplicity: indices take ??  hours to build.
+?? Eliminating this filtering step would not merely be a matter of simplicity: indices take ??  hours
+to build.
+
+?? Additionally, this stuff works on satisfiable instances too.
 
 \subsection{An Algorithm which Requires No Filtering}
 
