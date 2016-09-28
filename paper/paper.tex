@@ -704,6 +704,9 @@ do. Explain thrashing.
 neighbours, rather than a root node property? Would be nice if we could find a representative
 example.
 
+?? We call these \emph{spuriously hard} instances, to distinguish them from \emph{really hard}
+problems. Not the same as \emph{exceptionally hard}.
+
 ?? Look more at size of min unsat core in these areas?
 
 \section{Querying Graph Databases}\label{section:filterverify}
@@ -879,11 +882,11 @@ graph, but also helps on the satisfiable instances that an indexing system canno
 ?? Clearly lots of scope for cooperation between AI and graph databases. AI is not just good for
 better algorithms, but the design of entire systems.
 
-?? Presenting the ultimate big data subgraph matching algorithm is outwith the scope of this paper.
+?? We are not presenting the ultimate big data subgraph matching algorithm.
 
-?? We need optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
-all-different. Presolving. Huge domains. Ongoing use of VF2 and micro vs millisecond benchmarks.
-Precalculating NDS, distance 2 etc, not for indexing. Edge labels.
+?? We need optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics
+and all-different. Presolving. Huge domains.  Precalculating NDS, distance 2 etc, not for indexing.
+Edge labels.
 
 ?? Degrade to clique. Symmetries.
 
@@ -896,7 +899,11 @@ automatically combined.
 ?? On the other hand, our key message is not just saying use a better algorithm. Need a full
 understanding of every aspect of the system, and cannot treat subgraph matching as a black box.
 
+\section{Spuriously Hard Instances Outwith Graph Databases}
+
 ?? Use of VF2 in other areas.
+
+?? Need for better benchmark instances, not running millisecond versus microsecond benchmarks.
 
 \section{Conclusion}
 
