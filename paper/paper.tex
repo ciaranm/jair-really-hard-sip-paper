@@ -82,11 +82,11 @@ with many hundreds of vertices in the pattern graph, and up to ten thousand vert
 graph \cite{Cordella:2004,Solnon:2010,Audemard:2014,McCreesh:2015}, leading to successful
 application in areas such as computer vision \cite{Damiand:2011,Solnon:2015}, biochemistry
 \cite{Giugno:2013,Carletti:2015}, and pattern recognition \citep{Conte:2004}.  In particular,
-subgraph isomorphism is one of the key components in supporting complex queries in graph
-databases---typically, these systems store a fixed set of target graphs, and for a sequence of
-pattern queries, they must return every target graph which contains that pattern.  One common
-approach to this problem is to combine a subgraph isomorphism algorithm with an indexing system in a
-so-called ``filter / verify'' model, where invariants are used to attempt to pre-exclude
+a labelled version of subgraph isomorphism is one of the key components in supporting complex
+queries in graph databases---typically, these systems store a fixed set of target graphs, and for a
+sequence of pattern queries, they must return every target graph which contains that pattern.  One
+common approach to this problem is to combine a subgraph isomorphism algorithm with an indexing
+system in a so-called ``filter / verify'' model, where invariants are used to attempt to pre-exclude
 unsatisfiable instances to avoid the cost of a subgraph isomorphism call. In this context, the terms
 \emph{matching} and \emph{verification} are often used for the subgraph isomorphism step (or a
 slightly broader problem, for example permitting wildcards).
@@ -691,14 +691,20 @@ unsatisfiable''.
 
 \subsection{What's Wrong with VF2?}
 
-What goes on here?
+?? What goes on here? With labels, there are two regions where VF2 often finds instances really
+hard, but Glasgow and LAD do not. Looking at the data more closely, although the average runtime is
+high, there is a wide distribution of runtimes in these areas, and VF2 does sometimes find these
+instances trivial too.
 
-Min unsat core.
+?? Give examples here: VF2 does not detect simple things like there being two red vertices in the
+pattern but one in the target, or even no red vertices in the target. In contrast, Glasgow and LAD
+do. Explain thrashing.
 
-Insufficient vertices.
+?? Explain what's going on in the satisfiable region. This is a bit more subtle: is it to do with
+neighbours, rather than a root node property? Would be nice if we could find a representative
+example.
 
-VF2 does not detect the case that there are insufficient labels. Also empty pattern but
-not empty target.
+?? Look more at size of min unsat core in these areas?
 
 \section{Querying Graph Databases}\label{section:filterverify}
 
@@ -716,6 +722,9 @@ incomplete overview. Our description is biased by a general modern understanding
 which was not widely known at least at the time of the earlier papers we discuss. The common theme
 of all of the following papers is that pre-computed information is used to eliminate certain
 unsatisfiable instances from consideration, without performing a subgraph isomorphism test.
+
+?? Give a quick example here of how an index would eliminate the two red vertices in the pattern but
+one red vertex in the target example.
 
 An early graph database system by \citet{DBLP:conf/pods/ShashaWG02} uses a filtering heuristic to
 eliminate unsatisfiable instances based upon simple structural elements. It is not clear whether the
@@ -847,27 +856,36 @@ isomorphism algorithm could invalidate the premise underlying the entire filter 
 ?? Eliminating this filtering step would not merely be a matter of simplicity: indices take ??  hours
 to build.
 
-?? Additionally, this stuff works on satisfiable instances too.
+?? Additionally, this stuff works on satisfiable instances too. Indexing addresses some of the
+obviously-unsatisfiable cases that VF2 struggles with, but does nothing on the satisfiable
+instances.
 
 \subsection{An Algorithm which Requires No Filtering}
 
-We build up a simple algorithm. Start with VF2, adapt to track domains, smallest domain first, all
-different. Show its effectiveness at eliminating unsatisfiable instances, and give its total
-performance.  None of the steps in this algorithm are new. Our aim in this section is to show which
-aspects of modern algorithm design are critical, and that an indexless sequential scan is entirely
-plausible with a decent algorithm.
+?? We build up a simple algorithm. Use smallest domain first, all different, NDS, possibly distance
+2 filtering. Show its effectiveness at eliminating unsatisfiable instances from graph database test
+sets, and give its total performance.  None of the steps in this algorithm are new. Our aim in this
+section is to show which aspects of modern algorithm design are critical, and that an indexless
+sequential scan is entirely plausible with a decent algorithm.
+
+?? To tie this into earlier parts of the paper, we also show what happens if we use the VF2
+heuristic in this setting, rather than smallest domains first.
+
+?? This stuff eliminates all the spuriously hard unsatisfiable instances along the bottom of the
+graph, but also helps on the satisfiable instances that an indexing system cannot touch.
 
 \subsection{What Should the Future of Graph Matching in Databases Be?}
 
-?? Presenting the ultimate big data subgraph matching algorithm is outwith the scope of this paper.
+?? Clearly lots of scope for cooperation between AI and graph databases. AI is not just good for
+better algorithms, but the design of entire systems.
 
-?? They need to read outside the field. AI has a lot to offer. There needs to be much more focus on
-the matching algorithm, and how it interacts with the system as a whole.
+?? Presenting the ultimate big data subgraph matching algorithm is outwith the scope of this paper.
 
 ?? We need optimisations for trivial cases. Lazy forward checking, cheap alternatives to heuristics and
 all-different. Presolving. Huge domains. Ongoing use of VF2 and micro vs millisecond benchmarks.
+Precalculating NDS, distance 2 etc, not for indexing. Edge labels.
 
-?? Degrade to clique.
+?? Degrade to clique. Symmetries.
 
 ?? Invariant which are effective on labels used to inform algorithm design and to provide filtering
 during search. Look at minimum unsat core. If we are prepared to spend hours, indexing-like system

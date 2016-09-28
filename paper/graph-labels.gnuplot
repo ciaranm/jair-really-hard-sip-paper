@@ -132,5 +132,5 @@ set cbtics 1 add ('${\le}10^{2}$' 2) add ('${\ge}10^{5}$' 5)
 set format cb '$10^{%.0f}$'
 
 unset title
-plot "data/ps20-ts150-l20.vf2-non-induced.average-nodes.plot" u ($2/50):($1/50):(log10($3)) matrix w image notitle
+plot "data/ps20-ts150-l20.vf2-non-induced.average-nodes.plot" u ($2/100):($1/100):(log10($3)) matrix w image notitle
 
