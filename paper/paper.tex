@@ -426,7 +426,36 @@ enabled this option to avoid dealing with the complexity of search tree measurem
 parallelism.)
 
 \begin{figure}[tb]
-    \centering\includegraphics{gen-graph-non-induced.pdf}
+    \centering
+    \begin{tikzpicture}
+        \matrix {
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize $G(10, x){\rightarrowtail}G(150, y)$}; &
+            \node [anchor=center] {\scriptsize $G(20, x){\rightarrowtail}G(150, y)$}; &
+            \node [anchor=center] {\scriptsize $G(30, x){\rightarrowtail}G(150, y)$}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-30.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-30.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-30.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-30.pdf}}; \\
+        };
+    \end{tikzpicture}
+
     \caption{Behaviour of algorithms on the non-induced variant. For each plot, the x-axis is the
         pattern edge probability and the y-axis is the target edge probability, both from 0 to 1.
         Along the top row, we show the proportion of instances which are satisfiable; the white

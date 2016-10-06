@@ -24,7 +24,6 @@ plot \
     "data/ps20-ts150.non-induced.slice-averages.plot" u 1:3 w l ti 'Mean search' lc '#1d91c0' lw 3, \
     "" u (NaN):(NaN) w p pt 1 lc '#542788' ti "Satisfiable", \
     "" u (NaN):(NaN) w p pt 2 lc '#feb24c' ti "Unsatisfiable", \
-    "data/ps20-ts150.non-induced.slice-averages.plot" u 1:4 w l axes x1y2 ti 'Proportion SAT' lc '#0c2c84' lw 3, \
     "" u (NaN):(NaN) w l lw 0 lc '#ffffff' ti "~", \
-    "" u (NaN):(NaN) w l lw 0 lc '#ffffff' ti "~"
+    "data/ps20-ts150.non-induced.slice-averages.plot" u 1:4 w l axes x1y2 ti 'Proportion SAT' lc '#0c2c84' lw 3
 
