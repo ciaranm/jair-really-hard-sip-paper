@@ -13,7 +13,7 @@
 \usepackage{nicefrac}
 \usepackage{csquotes}
 
-% \usepackage{showframe}
+\usepackage{showframe}
 
 \usetikzlibrary{decorations, decorations.pathreplacing, calc, backgrounds}
 
@@ -533,8 +533,68 @@ which gives very little discrimination except on the sparsest of inputs.
 
 \section{Induced Subgraph Isomorphisms}
 
+
 \begin{figure}[p]
-    \centering\includegraphics{gen-graph-induced.pdf}
+    \centering
+    \begin{tikzpicture}
+        \matrix {
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize $G(10, x)$}; &
+            \node [anchor=center] {\scriptsize $G(14, x)$}; &
+            \node [anchor=center] {\scriptsize $G(15, x)$}; &
+            \node [anchor=center] {\scriptsize $G(16, x)$}; &
+            \node [anchor=center] {\scriptsize $G(20, x)$}; &
+            \node [anchor=center] {\scriptsize $G(30, x)$}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-14.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-15.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-16.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-30.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-14.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-15.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-16.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-30.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-14.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-15.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-16.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-30.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-14.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-15.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-16.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-30.pdf}}; \\
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Constrainedness}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-14.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-15.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-16.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-30.pdf}}; \\
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Complement?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-10.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-14.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-15.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-16.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-20.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-30.pdf}}; \\
+        };
+    \end{tikzpicture}
     \caption{Behaviour of algorithms on the induced variant, shown in the style
     of \cref{figure:non-induced}. The fifth row plots constrainedness: the darkest region is where
     $\kappa = 1$, and the lighter regions show where the problem is either over-
