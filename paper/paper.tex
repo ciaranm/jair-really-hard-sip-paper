@@ -533,8 +533,7 @@ which gives very little discrimination except on the sparsest of inputs.
 
 \section{Induced Subgraph Isomorphisms}
 
-
-\begin{figure}[p]
+\begin{figure}[tb]
     \centering
     \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
@@ -603,6 +602,58 @@ which gives very little discrimination except on the sparsest of inputs.
 of the phase transition, and the dotted lines are $t_d=0.5$ and the $p_d=t_d$ diagonal.}\label{figure:induced}
 \end{figure}
 
+In the first four rows of \cref{figure:induced} we repeat our experiments, finding induced
+isomorphisms. With a pattern of order 10, we get two independent phase transitions: the bottom right
+half of the plots resemble the non-induced results, and the top left half is close to a mirror
+image. The central satisfiable region, which is away from either phase transition, is
+computationally easy, but instances near the phase transition are hard.
+
+For larger patterns of order 20 and 30, we have a large unsatisfiable region in the middle. Despite
+not being near either phase transition, instances in the centre remain computationally challenging.
+We also plot patterns of orders 14, 15 and 16, to show the transition between the two behaviours.
+
+\subsection{Predictions and Heuristics}
+
+To predict the location of the induced phase transition, we repeat the argument for locating the
+non-induced phase transition and additionally considering non-edges, to get an expected number of
+solutions of \[ \langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot
+{(1 - d_{t})}^{(1 - d_{p}) \cdot \binom{p}{2}} \textnormal{.} \] We plot this using black lines on
+the top row of \cref{figure:induced}---again, our prediction is accurate except for very sparse or
+very dense patterns.
+
+We might guess that degree-based heuristics would just not work for the induced problem: for any
+claim about the degree, the opposite will hold for the complement constraints. However, empirically,
+this is not the case: on the final row of \cref{figure:induced}, we show whether it is better to use
+the original pattern and target as the input to the Glasgow algorithm, or to take the complements.
+(The only steps performed by the Glagsow algorithm which differ under taking the complements are
+the degree-based heuristics.  LAD and VF2 are not symmetric in this way: LAD performs a filtering
+step using degree information, but does not consider the complement degree, and VF2 uses
+connectivity in the pattern graph.)
+
+For patterns of order 10, it is always better to try to move towards the satisfiable region: if we
+are in the bottom right diagonal half, we are best retaining the original heuristics (which move us
+towards the top left), and if we are in the top left we should use the complement instead. This
+goes against a suggestion by \citet{Walsh:1998} that switching heuristics based upon an estimate of
+the solubility of the problem may offer good performance.
+
+For larger patterns, more complex behaviour emerges. If we are in the intersection of the bottom half
+and the bottom right diagonal of the search space, we should always retain the original heuristic,
+and if we are in the intersection of the top half and the top left diagonal, we should always use
+the complements. This behaviour can be predicted by taking the partial derivatives of $\langle Sol
+\rangle$ in the $-p_d$ and $t_d$ directions.  However, when inside the remaining two eighths of the
+parameter space, the partial derivatives of $\langle Sol \rangle$ disagree on which heuristic to
+use, and using directional derivatives is not enough to resolve the problem. A close observation of
+the data suggests that the actual location of the phase transition may be involved (and perhaps
+\citeS{Walsh:1998} suggestion applies only in these conditions). In any case, $\langle Sol
+\rangle$ is insufficient to explain the observed behaviour in these two eighths of the parameter space.
+
+In practice, this is unlikely to be a problem: most real-world instances are extremely sparse and
+are usually easy, which perhaps explains the continuing popularity of VF2's connectivity-based
+heuristics \citep{Carletti:2015}. In this situation, these experiments justify reusing the
+non-induced heuristics on induced problems.
+
+\subsection{Is the Central Region Genuinely Hard?}
+
 \begin{figure}[tb]
     \centering
     \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
@@ -668,61 +719,9 @@ of the phase transition, and the dotted lines are $t_d=0.5$ and the $p_d=t_d$ di
     \caption{Behaviour of other solvers on the induced variant on smaller graphs, shown in the style of
         \cref{figure:non-induced}. The second row shows the number of search nodes used by the
     Glasgow algorithm, the third and fourth rows show the number of decisions made by the pseudo-boolean
-and SAT solvers, and the final shows the number of search nodes used on the clique
-encoding.}\label{figure:alt}
+and SAT solvers, the fifth shows the number of search nodes used on the clique encoding, and the
+final row the MIP encoding.}\label{figure:alt}
 \end{figure}
-
-In the first four rows of \cref{figure:induced} we repeat our experiments, finding induced
-isomorphisms. With a pattern of order 10, we get two independent phase transitions: the bottom right
-half of the plots resemble the non-induced results, and the top left half is close to a mirror
-image. The central satisfiable region, which is away from either phase transition, is
-computationally easy, but instances near the phase transition are hard.
-
-For larger patterns of order 20 and 30, we have a large unsatisfiable region in the middle. Despite
-not being near either phase transition, instances in the centre remain computationally challenging.
-We also plot patterns of orders 14, 15 and 16, to show the transition between the two behaviours.
-
-\subsection{Predictions and Heuristics}
-
-To predict the location of the induced phase transition, we repeat the argument for locating the
-non-induced phase transition and additionally considering non-edges, to get an expected number of
-solutions of \[ \langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot
-{(1 - d_{t})}^{(1 - d_{p}) \cdot \binom{p}{2}} \textnormal{.} \] We plot this using black lines on
-the top row of \cref{figure:induced}---again, our prediction is accurate except for very sparse or
-very dense patterns.
-
-We might guess that degree-based heuristics would just not work for the induced problem: for any
-claim about the degree, the opposite will hold for the complement constraints. However, empirically,
-this is not the case: on the final row of \cref{figure:induced}, we show whether it is better to use
-the original pattern and target as the input to the Glasgow algorithm, or to take the complements.
-(The only steps performed by the Glagsow algorithm which differ under taking the complements are
-the degree-based heuristics.  LAD and VF2 are not symmetric in this way: LAD performs a filtering
-step using degree information, but does not consider the complement degree, and VF2 uses
-connectivity in the pattern graph.)
-
-For patterns of order 10, it is always better to try to move towards the satisfiable region: if we
-are in the bottom right diagonal half, we are best retaining the original heuristics (which move us
-towards the top left), and if we are in the top left we should use the complement instead. This
-goes against a suggestion by \citet{Walsh:1998} that switching heuristics based upon an estimate of
-the solubility of the problem may offer good performance.
-
-For larger patterns, more complex behaviour emerges. If we are in the intersection of the bottom half
-and the bottom right diagonal of the search space, we should always retain the original heuristic,
-and if we are in the intersection of the top half and the top left diagonal, we should always use
-the complements. This behaviour can be predicted by taking the partial derivatives of $\langle Sol
-\rangle$ in the $-p_d$ and $t_d$ directions.  However, when inside the remaining two eighths of the
-parameter space, the partial derivatives of $\langle Sol \rangle$ disagree on which heuristic to
-use, and using directional derivatives is not enough to resolve the problem. A close observation of
-the data suggests that the actual location of the phase transition may be involved (and perhaps
-\citeS{Walsh:1998} suggestion applies only in these conditions). In any case, $\langle Sol
-\rangle$ is insufficient to explain the observed behaviour in these two eighths of the parameter space.
-
-In practice, this is unlikely to be a problem: most real-world instances are extremely sparse and
-are usually easy, which perhaps explains the continuing popularity of VF2's connectivity-based
-heuristics \citep{Carletti:2015}. In this situation, these experiments justify reusing the
-non-induced heuristics on induced problems.
-
-\subsection{Is the Central Region Genuinely Hard?}
 
 The region in the parameter space where both pattern and target have medium density is far from a
 phase transition, but nevertheless contains instances that are hard for all three solvers. We would
@@ -740,11 +739,11 @@ each target vertex is mapped to by at most one pattern vertex, that adjacent ver
 adjacent vertices, and that non-adjacent vertices are mapped to non-adjacent vertices. We used the
 Clasp solver~\citep{gekakaosscsc11a} version 3.1.3 to solve the pseudo-boolean instances.  The
 instances that are hard for the Glasgow solver remain hard for the PB solver, including instances
-inside the central region, and the easy satisfiable instances remain easy. Similar results were
-seen with the Glucose SAT solver \cite{glucose} using a direct encoding of the cardinality constraints. (We also
-implemented an integer program encoding; the Gurobi solver was only able to solve some of the
-trivial satisfiable instances, and was almost never able to prove unsatisfiability within the time
-limit.)
+inside the central region, and the easy satisfiable instances remain easy. Similar results were seen
+with the Glucose SAT solver \cite{glucose} using a direct encoding of the cardinality constraints.
+We also implemented an integer program encoding: the Gurobi solver was only able to solve some of
+the trivial satisfiable instances, and was almost never able to prove unsatisfiability within the
+time limit.
 
 The \emph{association graph encoding} of a subgraph isomorphism problem (illustrated in
 \cref{figure:sip}) is constructed by creating a new graph with a vertex for each pair $(p, t)$ of
