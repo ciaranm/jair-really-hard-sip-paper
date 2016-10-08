@@ -13,8 +13,6 @@
 \usepackage{nicefrac}
 \usepackage{csquotes}
 
-\usepackage{showframe}
-
 \usetikzlibrary{decorations, decorations.pathreplacing, calc, backgrounds}
 
 \jairheading{1}{2016}{0-0}{0/0}{0/0}
@@ -791,7 +789,50 @@ the same predictions as maximising the expected number of solutions.
 \section{Labelled Graphs}\label{section:labelled}
 
 \begin{figure}[t]
-    \centering\includegraphics{gen-graph-labels.pdf}
+    \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
+        \matrix {
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize No labels}; &
+            \node [anchor=center] {\scriptsize 1 label}; &
+            \node [anchor=center] {\scriptsize 2 labels}; &
+            \node [anchor=center] {\scriptsize 5 labels}; &
+            \node [anchor=center] {\scriptsize 10 labels}; &
+            \node [anchor=center] {\scriptsize 20 labels}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-l2-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-l3-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-l5-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-l10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-l20-150.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-l2-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-l3-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-l5-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-l10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-l20-150.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-l2-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-l3-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-l5-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-l10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-l20-150.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-l2-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-l3-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-l5-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-l10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-l20-150.pdf}}; &
+            \\
+        };
+    \end{tikzpicture}
     \caption{On the top row, predicted and actual location of the phase transition for labelled
     non-induced random subgraph isomorphism, with a pattern order of 20, a target order of 150,
     varying pattern (x-axis) and target (y-axis) density, and varying numbers of labels. On

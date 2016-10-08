@@ -3,19 +3,12 @@
 outputfile="gen-graph-" . format . "-kappa-" . ps . "-" . ts . ".tex"
 nodesfile="data/ps" . ps . "-ts" . ts . "." . format . ".kappa.plot"
 
-if (plotsize eq 'large') { \
-    if (ps == 30) { \
-        set terminal tikz standalone color size 1.2in,1.0in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
-    } else { \
-        set terminal tikz standalone color size 1.1in,1.0in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
-    }
+if (ps == 30) { \
+    set terminal tikz standalone color size 1.1in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } else { \
-    if (ps == 30) { \
-        set terminal tikz standalone color size 1.1in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
-    } else { \
-        set terminal tikz standalone color size 0.9in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
-    } \
+    set terminal tikz standalone color size 0.9in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 }
+
 set output outputfile
 
 set lmargin screen 0

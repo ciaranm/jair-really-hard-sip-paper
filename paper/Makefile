@@ -4,7 +4,6 @@ all : tables graphs
 TABLES =
 
 GRAPHS = gen-graph-phase-transition.pdf \
-	 gen-graph-labels.pdf \
 	 $(foreach ps, 10 20 30, \
 		 gen-graph-non-induced-satisfiable-$(ps)-150.pdf \
 		 gen-graph-non-induced-nodes-$(ps)-150.pdf \
@@ -24,7 +23,12 @@ GRAPHS = gen-graph-phase-transition.pdf \
 		 gen-graph-clasp-induced-nodes-$(ps)-75.pdf \
 		 gen-graph-glucose-induced-nodes-$(ps)-75.pdf \
 		 gen-graph-clique-induced-nodes-$(ps)-75.pdf \
-		 gen-graph-gurobi-induced-nodes-$(ps)-75.pdf )
+		 gen-graph-gurobi-induced-nodes-$(ps)-75.pdf ) \
+	$(foreach l, 2 3 5 10 20, \
+		 gen-graph-non-induced-satisfiable-20-l$(l)-150.pdf \
+		 gen-graph-non-induced-nodes-20-l$(l)-150.pdf \
+		 gen-graph-lad-non-induced-nodes-20-l$(l)-150.pdf \
+		 gen-graph-vf2-non-induced-nodes-20-l$(l)-150.pdf )
 
 tables : $(TABLES)
 
@@ -32,33 +36,47 @@ graphs : $(GRAPHS)
 
 define GRAPH_template =
 gen-graph-$(1)-satisfiable-$(2)-$(3).pdf : graph-satisfiable-template.gnuplot
-	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "plotsize='$(4)'" -e "satlines=$(5)" -e "divide=$(6)" $$<
+	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "satlines=$(4)" -e "divide=$(5)" $$<
 	latexmk -pdf gen-graph-$(1)-satisfiable-$(2)-$(3)
 
 gen-graph-$(1)-nodes-$(2)-$(3).pdf : graph-nodes-template.gnuplot
-	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "plotsize='$(4)'" -e "divide=$(6)" $$<
+	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(5)" $$<
 	latexmk -pdf gen-graph-$(1)-nodes-$(2)-$(3)
 
 gen-graph-$(1)-kappa-$(2)-$(3).pdf : graph-kappa-template.gnuplot
-	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "plotsize='$(4)'" -e "divide=$(6)" $$<
+	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(5)" $$<
 	latexmk -pdf gen-graph-$(1)-kappa-$(2)-$(3)
 
 gen-graph-$(1)-which-$(2)-$(3).pdf : graph-which-template.gnuplot
-	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "plotsize='$(4)'" -e "divide=$(6)" $$<
+	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(5)" $$<
 	latexmk -pdf gen-graph-$(1)-which-$(2)-$(3)
+endef
+
+define LGRAPH_template =
+gen-graph-$(1)-satisfiable-$(2)-l$(3)-$(4).pdf : graph-lsatisfiable-template.gnuplot
+	gnuplot -e "ps=$(2)" -e "ts=$(4)" -e "l=$(3)" -e "format='$(1)'" -e "satlines=$(5)" -e "divide=$(6)" $$<
+	latexmk -pdf gen-graph-$(1)-satisfiable-$(2)-l$(3)-$(4)
+
+gen-graph-$(1)-nodes-$(2)-l$(3)-$(4).pdf : graph-lnodes-template.gnuplot
+	gnuplot -e "ps=$(2)" -e "ts=$(4)" -e "l=$(3)" -e "format='$(1)'" -e "plotsize='$(5)'" -e "divide=$(6)" $$<
+	latexmk -pdf gen-graph-$(1)-nodes-$(2)-l$(3)-$(4)
 endef
 
 $(foreach ps, 10 20 30, \
     $(foreach f, non-induced lad-non-induced vf2-non-induced, \
-    $(eval $(call GRAPH_template,$(f),$(ps),150,large,1,100))))
+    $(eval $(call GRAPH_template,$(f),$(ps),150,1,100))))
 
 $(foreach ps, 10 14 15 16 20 30, \
     $(foreach f, induced lad-induced vf2-induced, \
-    $(eval $(call GRAPH_template,$(f),$(ps),150,small,2,100))))
+    $(eval $(call GRAPH_template,$(f),$(ps),150,2,100))))
 
 $(foreach ps, 10 12 14 16 18 25, \
     $(foreach f, induced clasp-induced glucose-induced clique-induced gurobi-induced, \
-    $(eval $(call GRAPH_template,$(f),$(ps),75,small,0,50))))
+    $(eval $(call GRAPH_template,$(f),$(ps),75,0,50))))
+
+$(foreach l, 2 3 5 10 20, \
+    $(foreach f, non-induced lad-non-induced vf2-non-induced, \
+    $(eval $(call LGRAPH_template,$(f),20,$(l),150,2,100))))
 
 gen-graph-%.pdf : graph-%.gnuplot
 	gnuplot $<
