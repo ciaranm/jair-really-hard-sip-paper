@@ -427,7 +427,7 @@ parallelism.)
 
 \begin{figure}[tb]
     \centering
-    \begin{tikzpicture}
+    \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
             \node [anchor=center] {}; &
             \node [anchor=center] {\scriptsize $G(10, x){\rightarrowtail}G(150, y)$}; &
@@ -435,24 +435,24 @@ parallelism.)
             \node [anchor=center] {\scriptsize $G(30, x){\rightarrowtail}G(150, y)$}; &
             \\
             \node [anchor=center] [rotate=90] {\scriptsize Satisfiable?}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-30.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-satisfiable-30-150.pdf}}; &
             \\
             \node [anchor=center] [rotate=90] {\scriptsize Glasgow}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-30.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-nodes-30-150.pdf}}; &
             \\
             \node [anchor=center] [rotate=90] {\scriptsize LAD}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-30.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-non-induced-nodes-30-150.pdf}}; &
             \\
             \node [anchor=center] [rotate=90] {\scriptsize VF2}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-30.pdf}}; \\
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-non-induced-nodes-30-150.pdf}}; \\
         };
     \end{tikzpicture}
 
@@ -536,7 +536,7 @@ which gives very little discrimination except on the sparsest of inputs.
 
 \begin{figure}[p]
     \centering
-    \begin{tikzpicture}
+    \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
             \node [anchor=center] {}; &
             \node [anchor=center] {\scriptsize $G(10, x)$}; &
@@ -546,53 +546,53 @@ which gives very little discrimination except on the sparsest of inputs.
             \node [anchor=center] {\scriptsize $G(20, x)$}; &
             \node [anchor=center] {\scriptsize $G(30, x)$}; &
             \\
-            \node [anchor=center] [rotate=90] {\scriptsize Satisfiable?}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-14.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-15.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-16.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-30.pdf}}; &
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-30-150.pdf}}; &
             \\
-            \node [anchor=center] [rotate=90] {\scriptsize Glasgow}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-14.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-15.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-16.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-30.pdf}}; &
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-30-150.pdf}}; &
             \\
-            \node [anchor=center] [rotate=90] {\scriptsize LAD}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-14.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-15.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-16.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-30.pdf}}; &
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-lad-induced-nodes-30-150.pdf}}; &
             \\
-            \node [anchor=center] [rotate=90] {\scriptsize VF2}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-14.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-15.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-16.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-30.pdf}}; \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-vf2-induced-nodes-30-150.pdf}}; \\
             \\
-            \node [anchor=center] [rotate=90] {\scriptsize Constrainedness}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-14.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-15.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-16.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-30.pdf}}; \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Constrainedness}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-kappa-30-150.pdf}}; \\
             \\
-            \node [anchor=center] [rotate=90] {\scriptsize Complement?}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-10.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-14.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-15.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-16.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-20.pdf}}; &
-            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-30.pdf}}; \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Complement?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-which-30-150.pdf}}; \\
         };
     \end{tikzpicture}
     \caption{Behaviour of algorithms on the induced variant, shown in the style
@@ -604,7 +604,67 @@ of the phase transition, and the dotted lines are $t_d=0.5$ and the $p_d=t_d$ di
 \end{figure}
 
 \begin{figure}[tb]
-    \centering\includegraphics{gen-graph-sat.pdf}
+    \centering
+    \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
+        \matrix {
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize $G(10, x)$}; &
+            \node [anchor=center] {\scriptsize $G(12, x)$}; &
+            \node [anchor=center] {\scriptsize $G(14, x)$}; &
+            \node [anchor=center] {\scriptsize $G(16, x)$}; &
+            \node [anchor=center] {\scriptsize $G(18, x)$}; &
+            \node [anchor=center] {\scriptsize $G(25, x)$}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-10-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-12-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-14-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-16-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-18-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-satisfiable-25-75.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-10-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-12-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-14-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-16-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-18-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-induced-nodes-25-75.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Clasp (PB)}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clasp-induced-nodes-10-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clasp-induced-nodes-12-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clasp-induced-nodes-14-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clasp-induced-nodes-16-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clasp-induced-nodes-18-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clasp-induced-nodes-25-75.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glucose (SAT)}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-glucose-induced-nodes-10-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-glucose-induced-nodes-12-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-glucose-induced-nodes-14-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-glucose-induced-nodes-16-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-glucose-induced-nodes-18-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-glucose-induced-nodes-25-75.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize BBMC (Clique)}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clique-induced-nodes-10-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clique-induced-nodes-12-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clique-induced-nodes-14-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clique-induced-nodes-16-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clique-induced-nodes-18-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-clique-induced-nodes-25-75.pdf}}; &
+            \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Gurobi (MIP)}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-gurobi-induced-nodes-10-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-gurobi-induced-nodes-12-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-gurobi-induced-nodes-14-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-gurobi-induced-nodes-16-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-gurobi-induced-nodes-18-75.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-gurobi-induced-nodes-25-75.pdf}}; &
+            \\
+        };
+    \end{tikzpicture}
     \caption{Behaviour of other solvers on the induced variant on smaller graphs, shown in the style of
         \cref{figure:non-induced}. The second row shows the number of search nodes used by the
     Glasgow algorithm, the third and fourth rows show the number of decisions made by the pseudo-boolean

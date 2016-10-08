@@ -1,7 +1,7 @@
 # vim: set et ft=gnuplot sw=4 :
 
-outputfile="gen-graph-" . format . "-kappa-" . ps . ".tex"
-nodesfile="data/ps" . ps . "-ts150." . format . ".kappa.plot"
+outputfile="gen-graph-" . format . "-kappa-" . ps . "-" . ts . ".tex"
+nodesfile="data/ps" . ps . "-ts" . ts . "." . format . ".kappa.plot"
 
 if (plotsize eq 'large') { \
     if (ps == 30) { \
@@ -11,9 +11,9 @@ if (plotsize eq 'large') { \
     }
 } else { \
     if (ps == 30) { \
-        set terminal tikz standalone color size 0.9in,0.7in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
+        set terminal tikz standalone color size 1.1in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
     } else { \
-        set terminal tikz standalone color size 0.75in,0.7in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
+        set terminal tikz standalone color size 0.9in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
     } \
 }
 set output outputfile
