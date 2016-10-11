@@ -495,8 +495,10 @@ parameters. Since we are trying to find an \emph{injective} mapping from a patte
 to a target $T = G(t, d_t)$, there are \[ t^{\underline{p}} = t \cdot (t - 1) \cdot \ldots \cdot (t -
 p + 1) \] possible assignments of target vertices to pattern vertices.  We expect the pattern to have
 $d_p \cdot \binom{p}{2}$ edges, so we obtain the probability of all of these edges being mapped to
-edges in the target by raising $d_t$ to this power, giving an expected number of solutions of \[
-\langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \textnormal{.} \] This
+edges in the target by raising $d_t$ to this power, giving an expected number of solutions of
+\begin{equation}
+    \langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \textnormal{.}
+\end{equation} This
 formula predicts a very sharp phase transition from $\langle Sol \rangle \ll 1$ to $\langle Sol
 \rangle \gg 1$, which may easily be located numerically. We plot where this occurs using black lines
 in the first row of \cref{figure:non-induced}.
@@ -614,8 +616,8 @@ We also plot patterns of orders 14, 15 and 16, to show the transition between th
 
 To predict the location of the induced phase transition, we repeat the argument for locating the
 non-induced phase transition and additionally considering non-edges, to get an expected number of
-solutions of \[ \langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot
-{(1 - d_{t})}^{(1 - d_{p}) \cdot \binom{p}{2}} \textnormal{.} \] We plot this using black lines on
+solutions of \begin{equation} \langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot
+{(1 - d_{t})}^{(1 - d_{p}) \cdot \binom{p}{2}} \textnormal{.} \end{equation} We plot this using black lines on
 the top row of \cref{figure:induced}---again, our prediction is accurate except for very sparse or
 very dense patterns.
 
@@ -770,9 +772,9 @@ problems \citep{Gent:1996:Kappa}. A problem with $\kappa < 1$ is said to be unde
 likely to be satisfiable; a problem with $\kappa > 1$ is overconstrained, and is likely to be
 unsatisfiable. Empirically, problems with $\kappa$ close to 1 are hard, and problems where $\kappa$
 is very small or very large are usually easy. By handling injectivity as a restriction on the size
-of the state space rather than as a constraint, we derive \[ \kappa = 1 - \frac{\log \left(
+of the state space rather than as a constraint, we derive \begin{equation} \kappa = 1 - \frac{\log \left(
 t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot {(1 - d_{t})}^{(1 - d_{p}) \cdot
-\binom{p}{2}} \right)}{\log t^{\underline{p}}}\] for induced isomorphisms, which we plot on the
+\binom{p}{2}} \right)}{\log t^{\underline{p}}} \end{equation} for induced isomorphisms, which we plot on the
 fifth row of \cref{figure:induced}. We see that constrainedness predicts that the central region
 will still be relatively difficult for larger pattern graphs: although the problem is
 overconstrained, it is less overconstrained than in the regions the Glasgow and LAD solvers found
@@ -865,10 +867,10 @@ A reasonable continuous extension may be obtained by taking \[ |S| = \left(\frac
 
 As before, we expect the pattern to have $d_p \cdot \binom{p}{2}$ edges, so we obtain the
 probability of all of these edges being mapped to edges in the target by raising $d_t$ to this
-power, giving an expected number of solutions of \[ \langle Sol \rangle = \left(
+power, giving an expected number of solutions of \begin{equation} \langle Sol \rangle = \left(
     \frac{\Gamma\left(\nicefrac{t}{k} + 1\right)}{\Gamma\left(\nicefrac{t}{k} - \nicefrac{p}{k} +
 1\right)} \right)^{k}  \cdot
-{d_t}^{d_p \cdot \binom{p}{2}} \textnormal{\,.} \]
+{d_t}^{d_p \cdot \binom{p}{2}} \textnormal{\,.} \end{equation}
 
 So how good are these predictions? We draw some heatmaps in \cref{figure:labels}. For small numbers
 of labels, our predictions are slightly better than in the unlabelled case: there seems to be less
