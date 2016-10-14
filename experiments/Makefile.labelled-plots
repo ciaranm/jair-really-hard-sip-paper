@@ -1,0 +1,28 @@
+SHELL := /bin/bash
+VARIANTS := non-induced lad-non-induced vf2-non-induced
+RESULTS := results
+PATTERN_SIZES := 20
+TARGET_SIZES := 150
+SKIP := 1
+LABELS := 2 3 5 10 20
+PATTERN_DENSITIES := $(shell for a in `seq 0 $(SKIP) 100 ` ; do printf '%0.02f\n' `bc <<<"$$a*0.01" ` ; done)
+TARGET_DENSITIES := $(PATTERN_DENSITIES)
+
+all : $(foreach l,$(LABELS),$(foreach ps,$(PATTERN_SIZES),$(foreach ts,$(TARGET_SIZES),$(foreach v,$(VARIANTS),\
+    $(RESULTS)/ps$(ps)-ts$(ts)-l$(l).$(v).proportion-sat.plot \
+    $(RESULTS)/ps$(ps)-ts$(ts)-l$(l).$(v).proportion-aborted.plot \
+    $(RESULTS)/ps$(ps)-ts$(ts)-l$(l).$(v).average-nodes.plot ))))
+
+define INSTANCE_template
+$(RESULTS)/ps$(1)-ts$(2)-l$(3).%.proportion-sat.plot : $(foreach pd,$(PATTERN_DENSITIES),$(foreach td,$(TARGET_DENSITIES), $(RESULTS)/ps$(1)-ts$(2)/pd$(pd)-td$(td)/l$(3)/%.proportion-sat ))
+	for pd in $(PATTERN_DENSITIES) ; do { for td in $(TARGET_DENSITIES) ; do cat $(RESULTS)/ps$(1)-ts$(2)/pd$$$${pd}-td$$$${td}/l$(3)/$$*.proportion-sat ; done ; } | xargs ; done | tee $$@
+
+$(RESULTS)/ps$(1)-ts$(2)-l$(3).%.proportion-aborted.plot : $(foreach pd,$(PATTERN_DENSITIES),$(foreach td,$(TARGET_DENSITIES), $(RESULTS)/ps$(1)-ts$(2)/pd$(pd)-td$(td)/l$(3)/%.proportion-aborted ))
+	for pd in $(PATTERN_DENSITIES) ; do { for td in $(TARGET_DENSITIES) ; do cat $(RESULTS)/ps$(1)-ts$(2)/pd$$$${pd}-td$$$${td}/l$(3)/$$*.proportion-aborted ; done ; } | xargs ; done | tee $$@
+
+$(RESULTS)/ps$(1)-ts$(2)-l$(3).%.average-nodes.plot : $(foreach pd,$(PATTERN_DENSITIES),$(foreach td,$(TARGET_DENSITIES), $(RESULTS)/ps$(1)-ts$(2)/pd$(pd)-td$(td)/l$(3)/%.average-nodes ))
+	for pd in $(PATTERN_DENSITIES) ; do { for td in $(TARGET_DENSITIES) ; do cat $(RESULTS)/ps$(1)-ts$(2)/pd$$$${pd}-td$$$${td}/l$(3)/$$*.average-nodes ; done ; } | xargs ; done | tee $$@
+endef
+
+$(foreach l,$(LABELS),$(foreach ps,$(PATTERN_SIZES),$(foreach ts,$(TARGET_SIZES),$(eval $(call INSTANCE_template,$(ps),$(ts),$(l))))))
+
