@@ -26,10 +26,10 @@ set size square
 set cbtics out scale 0.5 nomirror offset -1
 set cbtics 2 add ('fail' 8)
 
-load "ylgnbu.pal"
+load "wylgnbu.pal"
 set palette positive
 set format cb '$10^{%.0f}$'
 if (l == 20) set colorbox; else unset colorbox;
-set cbrange [2:8]
+set cbrange [0:8]
 
 plot nodesfile u ($2/divide):($1/divide):(log10($3+1)) matrix w image notitle
