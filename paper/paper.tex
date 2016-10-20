@@ -49,7 +49,7 @@ Graph Databases \thanks{Part of this paper appeared at IJCAI 2016
 
 \begin{abstract}
     Despite subgraph isomorphism being \NP-complete, modern algorithms can operate comfortably on
-    real-world graphs with thousands of vertices. However, they cannot handle arbitrary instances of
+    most real-world graphs with thousands of vertices. However, they cannot handle arbitrary instances of
     this size. We show how to generate ``really hard'' random instances for subgraph isomorphism
     problems, which are computationally challenging with only a couple of hundred vertices. For the
     non-induced version of the problem, these instances lie on a satisfiable / unsatisfiable phase
@@ -58,34 +58,35 @@ Graph Databases \thanks{Part of this paper appeared at IJCAI 2016
     phase transition. In both cases, we can use this to understand and improve variable and value
     ordering heuristics.
 
-    When labels are introduced, as commonly seen in graph databases, additional rich behaviour
-    arises.  We show that when only slightly better algorithms are used, all commonly used benchmark
-    suites for evaluating graph database systems become trivial, and that existing notions of
-    difficulty are based almost entirely upon unnecessarily poor performance from overly simplistic
-    subgraph isomorphism algorithms. With this in mind, we argue that the widely researched ``filter
-    / verify'' indexing technique used in graph databases is a flawed design based upon a repeated
-    misunderstanding of what makes subgraph isomorphism hard. We explain why this technique would
-    not be beneficial, even with harder instances than those currently used, when paired with any
-    reasonable modern subgraph isomorphism algorithm.
+    When labels are introduced, as commonly seen in real-world applications and in graph databases,
+    additional rich behaviour arises.  We show that when only slightly better algorithms are used,
+    all commonly used benchmark suites for evaluating graph database systems become trivial, and
+    that existing notions of difficulty are based almost entirely upon unnecessarily poor
+    performance from overly simplistic subgraph isomorphism algorithms. With this in mind, we argue
+    that the widely researched ``filter / verify'' indexing technique used in graph databases is a
+    flawed design based upon a repeated misunderstanding of what makes subgraph isomorphism hard. We
+    explain why this technique would not be beneficial, even with harder instances than those
+    currently used, when paired with any reasonable modern subgraph isomorphism algorithm.
 \end{abstract}
 
 \section{Introduction}\label{section:introduction}
 
-The \emph{non-induced subgraph isomorphism problem} is to find an injective mapping from a given
-pattern graph to a given target graph which preserves adjacency---in essence, we are ``finding a
-copy of'' the pattern inside the target. The \emph{induced} variant of the problem additionally
-requires that the mapping preserve non-adjacency, so there are no ``extra edges'' in the copy of the
-pattern that we find. We illustrate both variants in \cref{figure:sip}.  Although these problems
-are \NP-complete, modern practical subgraph isomorphism algorithms can handle problem instances
-with many hundreds of vertices in the pattern graph, and up to ten thousand vertices in the target
-graph \cite{Cordella:2004,Solnon:2010,Audemard:2014,McCreesh:2015}, leading to successful
-application in areas such as computer vision \cite{Damiand:2011,Solnon:2015}, biochemistry
-\cite{Giugno:2013,Carletti:2015}, and pattern recognition \citep{Conte:2004}.  In particular,
-a labelled version of subgraph isomorphism is one of the key components in supporting complex
-queries in graph databases---typically, these systems store a fixed set of target graphs, and for a
-sequence of pattern queries, they must return every target graph which contains that pattern.  One
-common approach to this problem is to combine a subgraph isomorphism algorithm with an indexing
-system in a so-called ``filter / verify'' model, where invariants are used to attempt to pre-exclude
+The \emph{non-induced subgraph isomorphism problem} is to find an injective mapping from the
+vertices of a given pattern graph to the vertices of a given target graph which preserves
+adjacency---in essence, we are ``finding a copy of'' the pattern inside the target. The
+\emph{induced} variant of the problem additionally requires that the mapping preserve non-adjacency,
+so there are no ``extra edges'' in the copy of the pattern that we find. We illustrate both variants
+in \cref{figure:sip}.  Although these problems are \NP-complete, modern practical subgraph
+isomorphism algorithms can handle problem instances with many hundreds of vertices in the pattern
+graph, and up to ten thousand vertices in the target graph
+\cite{Cordella:2004,Solnon:2010,Audemard:2014,McCreesh:2015}, leading to successful applications in
+areas such as computer vision \cite{Damiand:2011,Solnon:2015}, biochemistry
+\cite{Giugno:2013,Carletti:2015}, and pattern recognition \citep{Conte:2004}.  In particular, a
+labelled version of subgraph isomorphism is one of the key components in supporting complex queries
+in graph databases---typically, these systems store a fixed set of target graphs, and for a sequence
+of pattern queries, they must return every target graph which contains that pattern.  One common
+approach to this problem is to combine a subgraph isomorphism algorithm with an indexing system in a
+so-called ``filter / verify'' model, where invariants are used to attempt to pre-exclude
 unsatisfiable instances to avoid the cost of a subgraph isomorphism call. In this context, the terms
 \emph{matching} and \emph{verification} are often used for the subgraph isomorphism step (or a
 slightly broader problem, for example permitting wildcards).
@@ -299,10 +300,11 @@ graph and permuting the vertices. Such instances are guaranteed to be
 satisfiable---\citet{Anton:2009} exploited this property to create large sets of random satisfiable
 boolean satisfiability instances.  This has been by far the most common approach used so far to
 generate random subgraph isomorphism instances so far, meaning existing benchmark suites contain
-relatively few non-trivial unsatisfiable instances.  Also, the satisfiable instances tend to be
-computationally fairly easy, with most of the difficulty being in dealing with the size of the
-model. This has lead to bias in algorithm design, to the extent that some proposed techniques will
-\emph{only} work on satisfiable instances \citep{Battiti:2007}.
+relatively few non-trivial unsatisfiable instances (although some of the patterns in the instances
+by \citeauthor{Zampelli:2010} have had extra edges added, making them unsatisfiable). Also, the
+satisfiable instances tend to be computationally fairly easy, with most of the difficulty being in
+dealing with the size of the model. This has lead to bias in algorithm design, to the extent that
+some proposed techniques will \emph{only} work on satisfiable instances \citep{Battiti:2007}.
 
 Our first contribution is to present and evaluate a new method for creating random pattern/target
 pairs. This method generates both satisfiable and unsatisfiable instances, and can produce
@@ -312,6 +314,8 @@ for testing purposes cannot be addressed simply by using taking a pattern graph 
 existing random suites with the ``wrong'' target graph, as this tends to give either a trivially
 unsatisfiable instance, or a satisfiable instance. (In particular, it is \emph{not} the case that a
 relatively small random graph is unlikely to appear in a larger random graph.)
+
+?? This needs to be reworded if we include non-ER random graphs.
 
 This work builds upon the phase transition phenomena observed in satisfiability and graph colouring
 problems first described by \citet{DBLP:conf/ijcai/CheesemanKT91} and \citet{Mitchell:1992}.  For
@@ -336,20 +340,21 @@ region---these instances provide evidence in favour of constrainedness, rather t
 phase transition, being an accurate predictor of difficulty, and show that constrainedness is not
 simply a refinement of a phase transition prediction.
 
-When labels on vertices are introduced, as is commonly seen in graph database systems, richer
-behaviour emerges. We look at some of the datasets commonly used to test graph database systems,
-which the literature suggests are extremely hard to solve. Our theory predicts that these instances
-should be trivial, and indeed we see that the entire perceived difficulty of every dataset we
-investigate comes down to the widespread use of a particular subgraph isomorphsim algorithm which
-does not use a theoretically-strong variable ordering heuristic. Our second contribution is to show
-that the use of the right variable ordering heuristic, even without the more sophisticated recent
-advances in subgraph algorithms (which have been largely neglected outside of the artificial
-intelligence community), makes the entire graph database filter / verify paradigm unnecessary.
-Finally, we explain why filter / verify cannot be beneficial even on more challenging instances
-except if an extremely poor choice of subgraph isomorphism algorithm is made.
-
+When labels on vertices are introduced, as is commonly seen in real-world applications and in graph
+database systems, richer behaviour emerges. We look at some of the datasets commonly used to test
+graph database systems, which the literature suggests are extremely hard to solve. Our theory
+predicts that these instances should be trivial, and indeed we see that the entire perceived
+difficulty of every dataset we investigate comes down to the widespread use of a particular subgraph
+isomorphsim algorithm which does not use a theoretically-strong variable ordering heuristic. Our
+second contribution is to show that the use of the right variable ordering heuristic, even without
+the more sophisticated recent advances in subgraph algorithms, makes the entire graph database
+filter / verify paradigm unnecessary.  Finally, we explain why filter / verify cannot be beneficial
+even on more challenging instances except if an extremely poor choice of subgraph isomorphism
+algorithm is made.
 
 \subsection{Definitions}
+
+?? Check whether any of the real-world graphs we look at have loops.
 
 Throughout, our graphs are undirected, and do not have any loops.  The \emph{order} of a graph is
 the cardinality of its vertex set. We write $\operatorname{V}(G)$ for the vertex set of a graph $G$.
@@ -361,15 +366,16 @@ labels on its vertices, in which case we write $\ell(v)$ for the label of a give
 
 A \emph{non-induced subgraph isomorphism} from a graph $P$ (called the \emph{pattern}) to a graph
 $T$ (called the \emph{target}) is an injective mapping $i$ from $\operatorname{V}(P)$ to
-$\operatorname{V}(T)$ which preserves adjacency---that is, for every adjacent $v$ and $w$ in
-$\operatorname{V}(P)$, the vertices $i(v)$ and $i(w)$ are adjacent in $T$. If vertices are labelled,
-the mapping must preserve labels, so $\ell(v) = \ell(i(v))$. An \emph{induced subgraph isomorphism}
-additionally preserves non-adjacency---that is, if $v$ and $w$ are not adjacent in $P$, then $i(v)$
-and $i(w)$ must not be adjacent in $T$. We use the notation $i : P \rightarrowtail T$ for a
-non-induced isomorphism, and $i : P \hookrightarrow T$ for an induced isomorphism. Observe that an
-induced isomorphism $i : P \hookrightarrow T$ is a non-induced isomorphism $i : P \rightarrowtail T$
-which is also a non-induced isomorphism $\shortoverline{i} : \shortoverline{P} \rightarrowtail
-\shortoverline{T}$.
+$\operatorname{V}(T)$ which preserves adjacency---that is, for every adjacent vertices $v$ and $w$
+in $\operatorname{V}(P)$, the vertices $i(v)$ and $i(w)$ are adjacent in $T$. If vertices are
+labelled, the mapping must preserve labels, so $\ell(v) = \ell(i(v)) \forall v \in
+\operatorname{V}(P)$. An \emph{induced subgraph isomorphism} additionally preserves
+non-adjacency---that is, if $v$ and $w$ are not adjacent in $P$, then $i(v)$ and $i(w)$ must not be
+adjacent in $T$. We use the notation $i : P \rightarrowtail T$ for a non-induced subgraph
+isomorphism, and $i : P \hookrightarrow T$ for an induced subgraph isomorphism. Observe that an
+induced subgraph isomorphism $i : P \hookrightarrow T$ is a non-induced subgraph isomorphism $i : P
+\rightarrowtail T$ which is also a non-induced subgraph isomorphism $\shortoverline{i} :
+\shortoverline{P} \rightarrowtail \shortoverline{T}$.
 
 \subsection{Experimental Setup}
 
@@ -458,7 +464,7 @@ parallelism.)
     \caption{Behaviour of algorithms on the non-induced variant. For each plot, the x-axis is the
         pattern edge probability and the y-axis is the target edge probability, both from 0 to 1.
         Along the top row, we show the proportion of instances which are satisfiable; the white
-        bands shows the phase transitions, and the black lines are our predictions of where the
+        bands show the phase transitions, and the black lines are our predictions of where the
         phase transition will occur. On the final three rows, we show the number of search nodes used by the
         Glasgow, LAD and VF2 solvers; the dark regions indicate ``really hard'' instances.}
     \label{figure:non-induced}
@@ -850,11 +856,12 @@ hydrogen atoms with hydrogen atoms, and so on.  We will look at the non-induced 
 seems to be more common in the literature, and return to the Erd\H{o}s-R\'enyi model.
 
 Suppose our labels are drawn randomly from a set $L = \{ 1, \ldots, k \}$, where $k$ is reasonably
-small compared to $p$. We can partition the pattern vertices by label into disjoint sets \[\{
-    \operatorname{V}(P)\vert_1 = \{ v \in \operatorname{V}(P) : \ell(v) = 1 \}, \ldots,
-    \operatorname{V}(P)\vert_k \}\textnormal{\,,}\] each of which is expected to contain
-$\nicefrac{p}{k}$ vertices. Similarly, we may partition the target vertices into disjoint sets $\{
-    \operatorname{V}(T)\vert_1, \ldots, \operatorname{V}(T)\vert_k \}$.
+small compared to $p$. By defining \[ \operatorname{V}(P)\vert_n = \{ v \in \operatorname{V}(P) :
+\ell(v) = n \} \] to be the set of vertices with label $k$, we can partition the pattern
+vertices by label into disjoint sets \[\{ \operatorname{V}(P)\vert_1, \ldots,
+\operatorname{V}(P)\vert_k \}\textnormal{\,,}\] each of which is expected to contain
+$\nicefrac{p}{k}$ vertices. Similarly, we may partition the target vertices into disjoint
+sets $\{ \operatorname{V}(T)\vert_1, \ldots, \operatorname{V}(T)\vert_k \}$.
 
 Without labels, there are $t^{\underline{p}} = t \cdot (t - 1) \cdot \ldots \cdot (t - p + 1)$
 possible injective assignments of target vertices to pattern vertices.  With labels, observe that
@@ -862,9 +869,12 @@ for any label $x$, vertices in $\operatorname{V}(P)|_x$ may only be mapped to ve
 $\operatorname{V}(T)|_x$.  Thus for each label $x$, we have an expected $\nicefrac{p}{k}$ variables,
 each of whose domains contain $\nicefrac{t}{k}$ values. We would like to say that the size of the
 state space is now \[ |S| = \left((\nicefrac{t}{k})^{\underline{\nicefrac{p}{k}}}\right)^{k}
-\textnormal{,} \] but to do this we must state what $a^{\underline{b}}$ means when $b$ is fractional.
-A reasonable continuous extension may be obtained by taking \[ |S| = \left(\frac{\Gamma\left(\nicefrac{t}{k}
-+ 1\right)}{\Gamma\left(\nicefrac{t}{k} - \nicefrac{p}{k} + 1\right)}\right)^{k} \textnormal{\,.} \]
+\textnormal{,} \] but to do this we must state what $a^{\underline{b}}$ means when $b$ is
+fractional. The gamma function $\Gamma(n)$ is equal to $(n - 1)!$ for integers $n \ge 1$, but is also
+defined for positive real numbers, obeying the identify $\Gamma(x + 1) = x\Gamma(x)$. By noting that
+$t^{\underline{p}} = \nicefrac{t!}{(t - p)!}$, we may obtain a reasonable
+continuous extension by taking \[ |S| = \left(\frac{\Gamma\left(\nicefrac{t}{k} +
+1\right)}{\Gamma\left(\nicefrac{t}{k} - \nicefrac{p}{k} + 1\right)}\right)^{k} \textnormal{\,,} \]
 
 As before, we expect the pattern to have $d_p \cdot \binom{p}{2}$ edges, so we obtain the
 probability of all of these edges being mapped to edges in the target by raising $d_t$ to this
@@ -877,7 +887,7 @@ So how good are these predictions? We draw some heatmaps in \cref{figure:labels}
 of labels, our predictions are slightly better than in the unlabelled case: there seems to be less
 of a variance problem for very dense patterns. Even as the numbers of labels becomes relatively
 large, the prediction of the phase transition still occurs in the right place, but we start to see
-sporadic unsatisfiable instances deep inside the satisfiable reason. With sufficiently many labels,
+sporadic unsatisfiable instances deep inside the satisfiable region. With sufficiently many labels,
 we get a kind of phase transition from ``all unsatisfiable'' to ``mixed satisfiable and
 unsatisfiable''.
 
@@ -998,7 +1008,7 @@ appeared in the constraints literature.}.
 Without using the equation, \citet{DBLP:conf/sigmod/ChengKNL07} state that since subgraph
 isomorphism is NP-complete, processing by a sequential scan is infeasible. They introduce new
 filtering techniques to try to avoid the subgraph isomorphism step. A similar claim is made by
-\citet{DBLP:conf/icde/ZhangHY07} in a introduction of another indexing technique: ``obviously it is
+\citet{DBLP:conf/icde/ZhangHY07} in an introduction of another indexing technique: ``obviously it is
 inefficient to perform a sequential scan on every graph in the database, because the subgraph
 isomorphism test is expensive''.
 
