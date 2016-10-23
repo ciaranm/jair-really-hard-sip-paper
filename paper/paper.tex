@@ -1028,8 +1028,7 @@ subgraph isomorphism is an \NP-complete problem, a filter-and-verification metho
 employed to speed up the search efficiency of graph similarity matching over a graph set''.
 Similarly, after reviewing the literature, \citet{DBLP:journals/vldb/YuanM13} argue that subgraph
 querying is costly because it is \NP-complete, and that indices can improve the performance of graph
-database queries. Again, new indexing techniques are introduced.  Subsequently,
-\citet{DBLP:journals/pvldb/KatsarouNT15} perform a comprehensive comparison of graph database
+database queries. Again, new indexing techniques are introduced. Subsequently, \citet{DBLP:journals/pvldb/KatsarouNT15} perform a comprehensive comparison of graph database
 filtering techniques. They state that performing a query against each graph in the dataset
 ``obviously does not scale, as subgraph isomorphism is \NP-complete''. In describing a system which
 returns a special subset of graphs which match a query, \citet{DBLP:journals/tkde/ZhengLZHZ16}
@@ -1037,6 +1036,9 @@ suggest that it is ``NP-hard to check the graph isomorphism'' (meaning subgraph 
 ``in order to improve the time efficiency'' they use an indexing system to ``avoid as many costly
 subgraph isomorphism checkings as possible''. Their index takes tens of thousands of seconds to
 build, and they suggest that Ullmann's algorithm and VF2 are state of the art for verification.
+And \citet{DBLP:journals/www/PengZ0LZ16} state that ``obviously, it is impossible to employ some
+subgraph isomorphism algorithm, such as Ullmann or VF2'', and argue that ``in order to speed up
+query processing'', they need to create indices.
 
 The filter / verify paradigm also influences other research. For example, recently
 \citet{DBLP:journals/pvldb/YuanMG13} continue a line of supergraph search work, again using a
