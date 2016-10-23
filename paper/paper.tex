@@ -1040,18 +1040,22 @@ And \citet{DBLP:journals/www/PengZ0LZ16} state that ``obviously, it is impossibl
 subgraph isomorphism algorithm, such as Ullmann or VF2'', and argue that ``in order to speed up
 query processing'', they need to create indices.
 
-The filter / verify paradigm also influences other research. For example, recently
-\citet{DBLP:journals/pvldb/YuanMG13} continue a line of supergraph search work, again using a
-filtering step to avoid subgraph isomorphism calls.  \citet{DBLP:journals/tkde/HongZLY15} look at
-graph database subgraph matching with an additional set similarity constraint, and state that
-Ullmann's algorithm and VF2 are ``usually costly for large graphs'' because they ``do not utilize
-any index structure''. They propose an indexing structure, which takes over 2,000 seconds to
-construct, and uses nearly 2GBytes of space.  There is also research into maintaining indices when
-the set of target graph changes: for example \citet{DBLP:conf/sigmod/YuanMYG15} look at algorithms
-for updating graph indices. And in describing a system for reusing results of queries which are sub-
-or super-graphs of previous queries, \citet{DBLP:conf/edbt/WangNT16} state that querying is a ``very
-costly operation as it entails the \NP-complete problem of subgraph isomorphism'', and place ``an
-emphasis on the number of unnecessary subgraph isomorphism tests''.
+The filter / verify paradigm also influences other research. For example, it is used by
+\citet{DBLP:conf/icde/TianP08} in an approximate subgraph searching system: they state that
+Ullmann's algorithm ``is prohibitively expensive for querying against [a] database with a large
+number of graphs'', and that indices are used ``to filter out graphs that do not match the query''.
+More recently, \citet{DBLP:journals/pvldb/YuanMG13} continue a line of supergraph search work, again
+using a filtering step to avoid subgraph isomorphism calls (in the opposite direction, so queries
+are now target graphs). \citet{DBLP:journals/tkde/HongZLY15} look at graph database subgraph
+matching with an additional set similarity constraint, and state that Ullmann's algorithm and VF2
+are ``usually costly for large graphs'' because they ``do not utilize any index structure''. They
+propose an indexing structure, which takes over 2,000 seconds to construct, and uses nearly 2GBytes
+of space.  There is also research into maintaining indices when the set of target graph changes: for
+example \citet{DBLP:conf/sigmod/YuanMYG15} look at algorithms for updating graph indices. And in
+describing a system for reusing results of queries which are sub- or super-graphs of previous
+queries, \citet{DBLP:conf/edbt/WangNT16} state that querying is a ``very costly operation as it
+entails the \NP-complete problem of subgraph isomorphism'', and place ``an emphasis on the number of
+unnecessary subgraph isomorphism tests''.
 
 After some early ambiguity, it becomes clear that the intent behind filter / verify systems is to
 reduce the number of subgraph isomorphism calls, and that the cost of loading graphs from disk is
