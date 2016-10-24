@@ -2,6 +2,7 @@
 
 outputfile="gen-graph-" . format . "-kr-satisfiable-" . ps . "-" . ts . ".tex"
 proportionsat="data/ps" . ps . "-ts" . ts . "-kr." . format . ".proportion-sat.plot"
+predictedline="data/ps" . ps . "-ts" . ts . "-kr." . format . ".predicted-line.plot"
 
 if (ps == 30) { \
     set terminal tikz standalone color size 1.1in,0.9in font '\scriptsize' preamble '\usepackage{microtype,amssymb,amsmath}' \
@@ -30,5 +31,6 @@ if (ps==30) set colorbox; else unset colorbox;
 
 load "puyl.pal"
 
-plot proportionsat u ($2/(ps-1)):($1/divide):($3) matrix w image notitle
+plot proportionsat u ($2/(ps-1)):($1/divide):($3) matrix w image notitle, \
+    predictedline u 1:2 w steps notitle lc "black"
 
