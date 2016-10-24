@@ -795,6 +795,39 @@ the same predictions as maximising the expected number of solutions.
 
 \section{Other Models of Randomness}\label{section:models}
 
+\begin{figure}[tb]
+    \centering
+    \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
+        \matrix {
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize $\mathcal{G}(10, x){\rightarrowtail}\mathcal{G}(150, y)$}; &
+            \node [anchor=center] {\scriptsize $\mathcal{G}(20, x){\rightarrowtail}\mathcal{G}(150, y)$}; &
+            \node [anchor=center] {\scriptsize $\mathcal{G}(30, x){\rightarrowtail}\mathcal{G}(150, y)$}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-kr-satisfiable-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-kr-satisfiable-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-kr-satisfiable-30-150.pdf}}; &
+            \\
+            \node [anchor=center] [rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-kr-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-kr-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{gen-graph-non-induced-kr-nodes-30-150.pdf}}; &
+            \\
+        };
+    \end{tikzpicture}
+
+    \caption{Behaviour of algorithms on random $k$-regular graphs, as the pattern degree (x-axis)
+    and target degree (y-axis) are varied from 0 to $\left|\operatorname{V}\right| - 1$.}
+    \label{figure:kr}
+\end{figure}
+
+By $\mathcal{G}(n, k)$ we mean a random graph with $k$ vertices, each of which has degree $k$. In
+\cref{figure:kr} we recreate \cref{figure:non-induced}, using the NetworkX implementation
+\citep{NetworkX} of the \citet{DBLP:journals/cpc/StegerW99} algorithm to generate regular graphs.
+The $x$-axes range from degree 0 to degree $n - 1$, and the y-axes range from degree 0 to degree
+149.
+
 \section{Labelled Graphs}\label{section:labelled}
 
 \begin{figure}[t]

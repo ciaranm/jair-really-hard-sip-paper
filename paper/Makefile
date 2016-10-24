@@ -28,7 +28,10 @@ GRAPHS = gen-graph-phase-transition.pdf \
 		 gen-graph-non-induced-satisfiable-20-l$(l)-150.pdf \
 		 gen-graph-non-induced-nodes-20-l$(l)-150.pdf \
 		 gen-graph-lad-non-induced-nodes-20-l$(l)-150.pdf \
-		 gen-graph-vf2-non-induced-nodes-20-l$(l)-150.pdf )
+		 gen-graph-vf2-non-induced-nodes-20-l$(l)-150.pdf ) \
+	 $(foreach ps, 10 20 30, \
+		 gen-graph-non-induced-kr-satisfiable-$(ps)-150.pdf \
+		 gen-graph-non-induced-kr-nodes-$(ps)-150.pdf )
 
 tables : $(TABLES)
 
@@ -62,6 +65,16 @@ gen-graph-$(1)-nodes-$(2)-l$(3)-$(4).pdf : graph-lnodes-template.gnuplot
 	latexmk -pdf gen-graph-$(1)-nodes-$(2)-l$(3)-$(4)
 endef
 
+define KRGRAPH_template =
+gen-graph-$(1)-kr-satisfiable-$(2)-$(3).pdf : graph-krsatisfiable-template.gnuplot
+	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(4)" $$<
+	latexmk -pdf gen-graph-$(1)-kr-satisfiable-$(2)-$(3)
+
+gen-graph-$(1)-kr-nodes-$(2)-$(3).pdf : graph-krnodes-template.gnuplot
+	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(4)" $$<
+	latexmk -pdf gen-graph-$(1)-kr-nodes-$(2)-$(3)
+endef
+
 $(foreach ps, 10 20 30, \
     $(foreach f, non-induced lad-non-induced vf2-non-induced, \
     $(eval $(call GRAPH_template,$(f),$(ps),150,1,100))))
@@ -77,6 +90,10 @@ $(foreach ps, 10 12 14 16 18 25, \
 $(foreach l, 2 3 5 10 20, \
     $(foreach f, non-induced lad-non-induced vf2-non-induced, \
     $(eval $(call LGRAPH_template,$(f),20,$(l),150,2,100))))
+
+$(foreach ps, 10 20 30, \
+    $(foreach f, non-induced, \
+    $(eval $(call KRGRAPH_template,$(f),$(ps),150,149))))
 
 gen-graph-%.pdf : graph-%.gnuplot
 	gnuplot $<
