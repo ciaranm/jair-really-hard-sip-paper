@@ -31,7 +31,8 @@ GRAPHS = gen-graph-phase-transition.pdf \
 		 gen-graph-vf2-non-induced-nodes-20-l$(l)-150.pdf ) \
 	 $(foreach ps, 10 20 30, \
 		 gen-graph-non-induced-kr-satisfiable-$(ps)-150.pdf \
-		 gen-graph-non-induced-kr-nodes-$(ps)-150.pdf )
+		 gen-graph-non-induced-kr-nodes-$(ps)-150.pdf \
+		 gen-graph-lad-non-induced-kr-nodes-$(ps)-150.pdf )
 
 tables : $(TABLES)
 
@@ -92,7 +93,7 @@ $(foreach l, 2 3 5 10 20, \
     $(eval $(call LGRAPH_template,$(f),20,$(l),150,2,100))))
 
 $(foreach ps, 10 20 30, \
-    $(foreach f, non-induced, \
+    $(foreach f, non-induced lad-non-induced, \
     $(eval $(call KRGRAPH_template,$(f),$(ps),150,149))))
 
 gen-graph-%.pdf : graph-%.gnuplot
