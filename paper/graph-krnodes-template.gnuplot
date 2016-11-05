@@ -18,7 +18,7 @@ if (ps == 30) set rmargin at screen 0.9; else set rmargin at screen 1;
 
 unset xlabel
 unset ylabel
-set xrange [0:1]
+set xrange [0:1 + (0.5 / ps)]
 set noxtics
 set yrange [0:1]
 set noytics
