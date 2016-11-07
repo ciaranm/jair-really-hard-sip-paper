@@ -26,6 +26,8 @@
 % http://tex.stackexchange.com/questions/22100/the-bar-and-overline-commands
 \newcommand{\shortoverline}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 
+\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
+
 \definecolor{uofgsandstone}{rgb}{0.321569, 0.278431, 0.231373}
 \definecolor{uofglawn}{rgb}{0.517647, 0.741176, 0}
 \definecolor{uofgcobalt}{rgb}{0, 0.615686, 0.92549}
@@ -40,10 +42,9 @@ Graph Databases \thanks{Part of this paper appeared at IJCAI 2016
 \cref{section:models,section:labelled,section:filterverify} are new material.}}
 
 \author{\name Ciaran McCreesh \thanks{This work was supported by the Engineering and Physical Sciences
-           Research Council [grant number EP/K503058/1]} \email c.mccreesh.1@research.gla.ac.uk \\
+           Research Council [grant numbers EP/K503058/1 and EP/M508056/1]} \email c.mccreesh.1@research.gla.ac.uk \\
        \name Patrick Prosser \email patrick.prosser@glasgow.ac.uk \\
-       \name James Trimble \thanks{This work was supported by the Engineering and Physical Sciences
-           Research Council [grant number EP/M508056/1]} \email j.trimble.1@research.gla.ac.uk \\
+       \name James Trimble \samethanks \email j.trimble.1@research.gla.ac.uk \\
    \addr University of Glasgow, Glasgow, Scotland}
 \maketitle
 
