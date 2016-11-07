@@ -52,12 +52,12 @@ Graph Databases \thanks{Part of this paper appeared at IJCAI
     Despite subgraph isomorphism being \NP-complete, modern algorithms can operate comfortably on
     most real-world graphs with thousands of vertices. However, they cannot handle arbitrary instances of
     this size. We show how to generate ``really hard'' random instances for subgraph isomorphism
-    problems, which are computationally challenging with only a couple of hundred vertices. For the
-    non-induced version of the problem, these instances lie on a satisfiable / unsatisfiable phase
-    transition, whose location we can predict; for the induced variant, much richer behaviour is
-    observed, and constrainedness gives a better measure of difficulty than does proximity to a
-    phase transition. In both cases, we can use this to understand and improve variable and value
-    ordering heuristics.
+    problems, which are computationally challenging with only a couple of hundred vertices in the
+    target, and only twenty to thirty pattern vertices. For the non-induced version of the problem,
+    these instances lie on a satisfiable / unsatisfiable phase transition, whose location we can
+    predict; for the induced variant, much richer behaviour is observed, and constrainedness gives a
+    better measure of difficulty than does proximity to a phase transition. In both cases, we can
+    use this to understand and improve variable and value ordering heuristics.
 
     When labels are introduced, as commonly seen in real-world applications and in graph databases,
     additional rich behaviour arises.  We show that when only slightly better algorithms are used,
@@ -66,7 +66,7 @@ Graph Databases \thanks{Part of this paper appeared at IJCAI
     performance from overly simplistic subgraph isomorphism algorithms. With this in mind, we argue
     that the widely researched ``filter / verify'' indexing technique used in graph databases is a
     flawed design based upon a repeated misunderstanding of what makes subgraph isomorphism hard. We
-    explain why this technique would not be beneficial, even with harder instances than those
+    explain why filter / verify cannot be beneficial, even with harder instances than those
     currently used, when paired with any reasonable modern subgraph isomorphism algorithm.
 \end{abstract}
 
