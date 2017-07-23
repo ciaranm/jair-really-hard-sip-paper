@@ -16,7 +16,7 @@
 \usetikzlibrary{decorations, decorations.pathreplacing, calc, backgrounds}
 
 \jairheading{1}{2016}{0-0}{0/0}{0/0}
-\ShortHeadings{Why Real-World Subgraph Matching is Easy}
+\ShortHeadings{Why Real-World Subgraph Isomorphism is Easy}
 {McCreesh, Prosser \& Trimble}
 \firstpageno{1}
 
@@ -56,7 +56,7 @@
 
 \begin{document}
 
-\title{Why Real-World Subgraph Matching is Easy, and \\ What This Means for Filter / Verify in
+\title{Why Real-World Subgraph Isomorphism is Easy, and \\ What This Means for Filter / Verify in
 Graph Databases \thanks{Part of this paper appeared at IJCAI
 \citep{DBLP:conf/ijcai/McCreeshPT16}; \cref{section:introduction} has been expanded and
 \cref{section:models,section:labelled,section:filterverify} are new material.}}
@@ -251,15 +251,15 @@ second contribution of this paper.
 For certain choices of parameters for induced isomorphisms, there are two phase transitions, going
 from satisfiable to unsatisfiable, and then from unsatisfiable back to satisfiable. Again, when
 going from satisfiable to unsatisfiable (from either direction), instances go from being trivial to
-really hard to solve. However, each of the three solvers we tested also finds the central
+really hard to solve. However, each of the three solvers we test also finds the central
 unsatisfiable region to be hard, despite it not being near a phase transition. To show that this is
 not a simple weakness of current subgraph isomorphism algorithms, we verify that this region is also
-hard when using a pseudo-boolean encoding, and under reduction to the clique problem. Interestingly,
-the constrainedness measure proposed by \citet{DBLP:conf/aaai/GentMPW96} \emph{does} predict this difficult
-region---the third contribution of this paper is to use these instances to provide evidence in
-favour of constrainedness, rather than proximity to a phase transition, being an accurate predictor
-of difficulty, and to show that constrainedness is not simply a refinement of a phase transition
-prediction.
+hard for boolean satisfiability, pseudo-boolean, and mixed integer solvers, and under reduction to
+the clique problem. Interestingly, the constrainedness measure proposed by
+\citet{DBLP:conf/aaai/GentMPW96} \emph{does} predict this difficult region---the third contribution
+of this paper is to use these instances to provide evidence in favour of constrainedness, rather
+than proximity to a phase transition, being an accurate predictor of difficulty, and to show that
+constrainedness is not simply a refinement of a phase transition prediction.
 
 % What about other random graph models? Graphs where every vertex has the same degree, which are known
 % as $k$-regular, exhibit very similar characteristics.
@@ -971,6 +971,27 @@ this in reference to work by \citet{DBLP:conf/edbt/KatsarouNT17} in the followin
 It is also important to note for later that both VF2 variations find some satisfiable and some
 unsatisfiable instances extremely hard.
 
+An even more extreme example of VF2's misbehaviour can be seen in \cref{figure:vf2-stupidity}. Here
+we have a pattern graph and a target graph, both of which are cliques plus one isolated vertex, and
+the isolated vertices have different unique labels. This is trivially unsatisfiable (and Glasgow and
+LAD detect this without search), but unless the labelled vertex is given the lowest vertex number
+(so it is branched on first), VF2 takes nearly a million recursive calls to detect this: VF2 will
+try to map every adjacent vertex in the clique before considering the difficult isolated vertex.
+This example can also be extended slightly to fool any simple static heuristic, or any simple label
+counting mechanism.
+
+These experiments further highlight that VF2 occasionally finds some instances which should be easy hard.
+But does this cause problems in practice? The literature suggests that it does. For example,
+\citet{o:Gromping14} uses VF2 in a package for the R statistics language, and states
+\begin{displayquote}``There are (not so many) instances for which creation of a clear design is
+    prohibitively slow in the current implementation that evaluates subgraph isomorphism with the
+    VF2 algorithm \ldots Recent experiences with a few of these showed that the LAD algorithm was
+    very fast in ruling out impossible matches, where VF2 took a long time.''\end{displayquote}
+Similarly, \citet{o:Murray12} uses VF2 inside a compiler, and observes extremely variable
+(and prohibitively high) compile times in some cases due to the expense of subgraph isomorphism
+calls---given the heavily labelled nature of these graphs, we conjecture that any domain-based
+algorithm would eliminate this cost.
+
 \begin{figure}[tb]
     \centering
     \begin{tikzpicture}[scale=0.5,every node/.style={font=\footnotesize}]
@@ -1018,26 +1039,6 @@ unsatisfiable instances extremely hard.
     which has a different label in each graph.}\label{figure:vf2-stupidity}
 \end{figure}
 
-An even more extreme example of VF2's misbehaviour can be seen in \cref{figure:vf2-stupidity}. Here
-we have a pattern graph and a target graph, both of which are cliques plus one isolated vertex, and
-the isolated vertices have different unique labels. This is trivially unsatisfiable (and Glasgow and
-LAD detect this without search), but unless the labelled vertex is given the lowest vertex number
-(so it is branched on first), VF2 takes nearly a million recursive calls to detect this: VF2 will
-try to map every adjacent vertex in the clique before considering the difficult isolated vertex.
-This example can also be extended slightly to fool any simple static heuristic, or any simple label
-counting mechanism.
-
-These experiments further highlight that VF2 occasionally finds some instances which should be easy hard.
-But does this cause problems in practice? The literature suggests that it does. For example,
-\citet{o:Gromping14} uses VF2 in a package for the R statistics language, and states
-\begin{displayquote}``There are (not so many) instances for which creation of a clear design is
-    prohibitively slow in the current implementation that evaluates subgraph isomorphism with the
-    VF2 algorithm \ldots Recent experiences with a few of these showed that the LAD algorithm was
-    very fast in ruling out impossible matches, where VF2 took a long time.''\end{displayquote}
-Similarly, \citet{o:Murray12} uses VF2 inside a compiler, and observes extremely variable
-(and prohibitively high) compile times in some cases due to the expense of subgraph isomorphism
-calls---given the heavily labelled nature of these graphs, we conjecture that any domain-based
-algorithm would eliminate this cost.
 
 However, by far the biggest problem is in graph databases. The following section shows how
 widespread use of VF2 has not just lead to overly pessimistic conclusions regarding performance, but
