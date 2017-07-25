@@ -13,6 +13,8 @@
 \usepackage{nicefrac}
 \usepackage{csquotes}
 
+\usepackage{showframe}
+
 \usetikzlibrary{decorations, decorations.pathreplacing, calc, backgrounds}
 
 \jairheading{1}{2016}{0-0}{0/0}{0/0}
@@ -530,6 +532,14 @@ which gives very little discrimination except on the sparsest of inputs.
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-30-150.pdf}}; \\
             \\
+            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF3}; &
+            \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-10-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-14-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-15-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-16-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-20-150.pdf}}; &
+            \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-30-150.pdf}}; \\
+            \\
             \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Constrainedness}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-14-150.pdf}}; &
@@ -548,12 +558,13 @@ which gives very little discrimination except on the sparsest of inputs.
         };
     \end{tikzpicture}
     \caption{Behaviour of algorithms on the induced variant, shown in the style
-    of \cref{figure:non-induced}. The fifth row plots constrainedness using
+    of \cref{figure:non-induced}. The sixth row plots constrainedness using
     equation~\eqref{equation:constrainedness}: the
     darkest region is where $\kappa = 1$, and the lighter regions show where the problem is either
     over- or under-constrained. The final row shows when the Glasgow algorithm performs better when
     given the complements of the pattern and target graphs as inputs---the solid lines show the
-    location of the phase transition, and the dotted lines are $t_d=0.5$ and the $p_d=t_d$ diagonal.}\label{figure:induced}
+    location of the phase transition, and the dotted lines are $t_d=0.5$ and the $p_d=t_d$
+    diagonal.}\label{figure:induced}
 \end{figure}
 
 In the first four rows of \cref{figure:induced} we repeat our experiments, finding induced

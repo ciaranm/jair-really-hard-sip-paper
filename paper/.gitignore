@@ -7,4 +7,3 @@ gen-*
 *.pdf
 *.bbl
 *.blg
-!plots/*.pdf

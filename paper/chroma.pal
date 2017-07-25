@@ -1,0 +1,16 @@
+set style line 7 lt 1 lc rgb '#ffffe0'
+set style line 6 lt 1 lc rgb '#8fed90'
+set style line 5 lt 1 lc rgb '#68c68f'
+set style line 4 lt 1 lc rgb '#3aa18d'
+set style line 3 lt 1 lc rgb '#4d6eab'
+set style line 2 lt 1 lc rgb '#514196'
+set style line 1 lt 1 lc rgb '#4b0082'
+
+set style line 8 lt 1 lc rgb '#ffd4ac'
+set style line 9 lt 1 lc rgb '#ffa380'
+set style line 10 lt 1 lc rgb '#ff6a62'
+set style line 11 lt 1 lc rgb '#e53652'
+set style line 12 lt 1 lc rgb '#bb0d36'
+set style line 13 lt 1 lc rgb '#8b0000'
+
+set style line 101 lc rgb '#a0a0a0' lw 1 dt '.'
