@@ -479,10 +479,10 @@ variable corresponding to a pattern vertex of highest degree. This strategy was 
 empirically, but could have been derived from the $\langle Sol \rangle$ formula: picking a pattern
 vertex of high degree will make the remaining pattern subgraph sparser, which will decrease the
 exponent in the second half of the formula, maximising the overall value. LAD does not apply a value
-ordering heuristic, but Glasgow does: it prefers target vertices of lowest degree.  Again, this was
-determined empirically, but it has the effect of increasing $\langle Sol \rangle$ by increasing the
-remaining target density. The VF2 heuristics, in contrast, are based around preserving connectivity,
-which gives very little discrimination except on the sparsest of inputs.
+ordering heuristic, but Glasgow does: it prefers target vertices of highest degree.  Again, this was
+determined empirically, but it has the effect of increasing $\langle Sol \rangle$ by leaving as many
+vertices as possible available for future use. The VF2 heuristics, in contrast, are based around
+preserving connectivity, which gives very little discrimination except on the sparsest of inputs.
 
 \section{Induced Subgraph Isomorphisms}
 

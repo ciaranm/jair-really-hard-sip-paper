@@ -1,7 +1,7 @@
 # vim: set et ft=gnuplot sw=4 :
 
 outputfile="graph-" . format . "-nodes-" . ps . "-" . ts . ".tex"
-nodesfile="../data/ps" . ps . "-ts" . ts . "." . format . ".average-nodes.plot"
+nodesfile="../../experiments/flint-results/" . format . "-" . ps . "-" . ts . "-nodes.plot"
 
 if (ps == (ts == 150 ? 30 : 25)) { \
     set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
@@ -9,9 +9,11 @@ if (ps == (ts == 150 ? 30 : 25)) { \
     set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
 }
 
-load "../chromasequencefromwhite.pal"
+load "../chromasequencefromwhitetoblack.pal"
 
 set output outputfile
+
+set datafile missing "fail"
 
 set lmargin screen 0
 set tmargin screen 0.95
@@ -26,11 +28,11 @@ set yrange [0:1]
 set noytics
 set size square
 set cbtics out scale 0.5 nomirror offset -1
-set cbtics 2 add ('fail' 8)
+set cbtics 2 add ('fail' 10)
 
 set palette positive
 set format cb '$10^{%.0f}$'
 if (ps==(ts == 150 ? 30 : 25)) set colorbox; else unset colorbox;
-set cbrange [0:8]
+set cbrange [0:10]
 
-plot nodesfile u ($2/divide):($1/divide):(log10($3+1)) matrix w image notitle
+plot nodesfile u ($1/divide):($2/divide):($3>=0?log10($3+1):1e10) matrix w image notitle

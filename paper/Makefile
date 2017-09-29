@@ -89,7 +89,11 @@ $(foreach ps, 10 20 30, \
     $(eval $(call hardsip_GRAPH_template,$(f),$(ps),150,1,100))))
 
 $(foreach ps, 10 14 15 16 20 30, \
-    $(foreach f, induced lad-induced vf2-induced vf3-induced, \
+    $(foreach f, induced lad-induced vf2-induced, \
+    $(eval $(call hardsip_GRAPH_template,$(f),$(ps),150,2,100))))
+
+$(foreach ps, 10 14 15 16 20 30, \
+    $(foreach f, vf3-induced, \
     $(eval $(call hardsip_GRAPH_template,$(f),$(ps),150,2,100))))
 
 $(foreach ps, 10 12 14 16 18 25, \

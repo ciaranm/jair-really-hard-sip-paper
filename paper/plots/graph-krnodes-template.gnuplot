@@ -1,7 +1,7 @@
 # vim: set et ft=gnuplot sw=4 :
 
 outputfile="graph-" . format . "-kr-nodes-" . ps . "-" . ts . ".tex"
-nodesfile="../data/ps" . ps . "-ts" . ts . "-kr." . format . ".average-nodes.plot"
+nodesfile="../../experiments/flint-results/" . format . "-" . ps . "-" . ts . "-kr-nodes.plot"
 
 if (ps == 30) { \
     set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
@@ -9,9 +9,11 @@ if (ps == 30) { \
     set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
 }
 
-load "../chromasequencefromwhite.pal"
+load "../chromasequencefromwhitetoblack.pal"
 
 set output outputfile
+
+set datafile missing "fail"
 
 set lmargin screen 0
 set tmargin screen 0.95
