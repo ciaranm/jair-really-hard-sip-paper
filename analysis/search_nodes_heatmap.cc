@@ -25,14 +25,14 @@ using boost::str;
 auto add_results(
         const string & dir, const string & alg,
         int ps, int ts, int pd, int td, int r,
-        const std::string & pd_p, const std::string & td_p,
+        const string & pd_p, const string & td_p, const string & ed,
         int & failures, unsigned long long & total_nodes) -> void
 {
     string pd_s = (pd_p == "pkr" ? to_string(pd) : str(format("%|1|.%|02|") % (pd / 100) % (pd % 100)));
     string td_s = (td_p == "tkr" ? to_string(td) : str(format("%|1|.%|02|") % (td / 100) % (td % 100)));
     string r_s = str(format("%|02|") % r);
 
-    string filename{dir + "/ps" + to_string(ps) + "-ts" + to_string(ts) + "/" + pd_p + pd_s + "-" + td_p + td_s + "/" + r_s + "." + alg + ".out"};
+    string filename{dir + "/ps" + to_string(ps) + "-ts" + to_string(ts) + "/" + pd_p + pd_s + "-" + td_p + td_s + "/" + ed + r_s + "." + alg + ".out"};
     ifstream infile{filename};
     if (! infile) {
         cerr << "missing " << filename << endl;
@@ -185,21 +185,22 @@ auto add_results(
 
 auto main(int argc, char * argv[]) -> int
 {
-    if (argc != 11) {
-        cerr << "Usage: " << argv[0] << " " << "directory algorithm pattern_size target_size pattern_prefix target_prefix density_increment repeats pattern_stop target_stop" << endl;
+    if (argc != 12) {
+        cerr << "Usage: " << argv[0] << " " << "directory extra-directory algorithm pattern_size target_size pattern_prefix target_prefix density_increment repeats pattern_stop target_stop" << endl;
         return EXIT_FAILURE;
     }
 
     string dir = argv[1];
-    string alg = argv[2];
-    int ps = stoi(argv[3]);
-    int ts = stoi(argv[4]);
-    string pd_p = argv[5];
-    string td_p = argv[6];
-    int di = stoi(argv[7]);
-    int nr = stoi(argv[8]);
-    int px = stoi(argv[9]);
-    int tx = stoi(argv[10]);
+    string ed = argv[2];
+    string alg = argv[3];
+    int ps = stoi(argv[4]);
+    int ts = stoi(argv[5]);
+    string pd_p = argv[6];
+    string td_p = argv[7];
+    int di = stoi(argv[8]);
+    int nr = stoi(argv[9]);
+    int px = stoi(argv[10]);
+    int tx = stoi(argv[11]);
 
     unsigned long long max_nodes = 0;
 
@@ -208,7 +209,7 @@ auto main(int argc, char * argv[]) -> int
             int failures = 0;
             unsigned long long nodes = 0;
             for (int r = 1 ; r <= nr ; ++r)
-                add_results(dir, alg, ps, ts, pd, td, r, pd_p, td_p, failures, nodes);
+                add_results(dir, alg, ps, ts, pd, td, r, pd_p, td_p, ed, failures, nodes);
 
             if (failures > 0)
                 cout << "fail ";
