@@ -22,7 +22,7 @@ if (ps == 30) set rmargin at screen 0.9; else set rmargin at screen 1;
 
 unset xlabel
 unset ylabel
-set xrange [0:1 + (0.5 / ps)]
+set xrange [0:1]
 set noxtics
 set yrange [0:1]
 set noytics
@@ -35,4 +35,4 @@ set format cb '$10^{%.0f}$'
 if (ps==30) set colorbox; else unset colorbox;
 set cbrange [0:8]
 
-plot nodesfile u ($2/(ps-1)):($1/divide):(log10($3+1)) matrix w image notitle
+plot nodesfile u ($1/(ps-1)):($2/divide):($3>=0?log10($3+1):1e10) matrix w image notitle
