@@ -1,5 +1,7 @@
 # vim: set et ft=gnuplot sw=4 :
 
+set border lc 'red'
+
 outputfile="graph-" . format . "-nodes-" . ps . "-" . ts . ".tex"
 nodesfile="../../experiments/flint-results/" . format . "-" . ps . "-" . ts . "-nodes.plot"
 
