@@ -17,7 +17,7 @@
 
 \usetikzlibrary{decorations, decorations.pathreplacing, calc, backgrounds}
 
-\jairheading{1}{2016}{0-0}{0/0}{0/0}
+\jairheading{1}{2017}{0-0}{0/0}{0/0}
 \ShortHeadings{When Subgraph Isomorphism is Really Hard}
 {McCreesh, Prosser, Solnon \& Trimble}
 \firstpageno{1}
@@ -31,16 +31,10 @@
 \definecolor{chromaygb6}{rgb}{0.317647,0.254902,0.588235}
 \definecolor{chromaygb7}{rgb}{0.294118,0.0,0.509804}
 
-\crefname{algorithm}{Algorithm}{Algorithms}
-\Crefname{algorithm}{Algorithm}{Algorithms}
 \crefname{figure}{Figure}{Figures}
 \Crefname{figure}{Figure}{Figures}
-\crefname{table}{Table}{Tables}
-\Crefname{table}{Table}{Tables}
 \crefname{section}{Section}{Sections}
 \Crefname{section}{Section}{Sections}
-\crefname{proposition}{Proposition}{Propositions}
-\Crefname{proposition}{Proposition}{Propositions}
 
 \newcommand{\citet}[1]{\citeA{#1}}
 \newcommand{\citep}[1]{\cite{#1}}
@@ -50,18 +44,10 @@
 
 \newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
 
-\definecolor{uofgsandstone}{rgb}{0.321569, 0.278431, 0.231373}
-\definecolor{uofglawn}{rgb}{0.517647, 0.741176, 0}
-\definecolor{uofgcobalt}{rgb}{0, 0.615686, 0.92549}
-\definecolor{uofgpumpkin}{rgb}{1.0, 0.72549, 0.282353}
-\definecolor{uofgthistle}{rgb}{0.584314, 0.070588, 0.447059}
-
 \begin{document}
 
 \title{When Subgraph Isomorphism is Really Hard, and Why This Matters for Graph
-Databases\thanks{Part of this paper appeared at IJCAI \citep{DBLP:conf/ijcai/McCreeshPT16};
-\cref{section:introduction} has been expanded and
-\cref{section:models,section:labelled,section:filterverify} are new material.}}
+Databases}
 
 \author{\name Ciaran McCreesh \thanks{This work was supported by the Engineering and Physical Sciences
            Research Council [grant numbers EP/K503058/1, EP/M508056/1, and EP/P026842/1]} \email
@@ -88,7 +74,7 @@ Databases\thanks{Part of this paper appeared at IJCAI \citep{DBLP:conf/ijcai/McC
     unsatisfiable phase transition, whose location we can predict; for the induced variant, much
     richer behaviour is observed, and constrainedness gives a better measure of difficulty than does
     proximity to a phase transition. In both cases, we can use this to understand and improve
-    variable and value ordering heuristics.
+    variable- and value-ordering heuristics.
 
     When labels are introduced, as commonly seen in real-world applications and in graph databases,
     additional rich behaviour arises.  We show that when even the simplest constraint programming
@@ -117,16 +103,16 @@ leading to successful applications in areas such as computer vision
 \citep{DBLP:journals/cviu/DamiandSHJS11,DBLP:journals/pr/SolnonDHJ15}, biochemistry
 \citep{o:10.1371/journal.pone.0076911,DBLP:conf/gbrpr/CarlettiFV15}, and pattern recognition
 \citep{DBLP:journals/ijprai/ConteFSV04}.  In particular, a labelled version of subgraph isomorphism
-is one of the key components in supporting complex queries in graph databases---typically, these
-systems store a fixed set of target graphs, and for a sequence of pattern queries, they must return
-every target graph which contains that pattern.  One common approach to this problem is to combine a
-subgraph isomorphism algorithm with an indexing system in a so-called ``filter~/ verify'' model,
-where invariants are used to attempt to pre-exclude unsatisfiable instances to avoid the cost of a
-subgraph isomorphism call. In this context, the terms \emph{matching} and \emph{verification} are
-often used for the subgraph isomorphism step (or a slightly broader problem, for example permitting
-wildcards).
+is one of the key components in supporting complex queries in graph databases, which we discuss in
+detail in \cref{section:filterverify}. Typically, these systems store a fixed set of target graphs,
+and for a sequence of pattern queries, they must return every target graph which contains that
+pattern.  One common approach to this problem is to combine a subgraph isomorphism algorithm with an
+indexing system in a so-called ``filter~/ verify'' model, where invariants are used to attempt to
+pre-exclude unsatisfiable instances to avoid the cost of a subgraph isomorphism call. In this
+context, the terms \emph{matching} and \emph{verification} are often used for the subgraph
+isomorphism step (or a slightly broader problem, for example permitting wildcards).
 
-\begin{figure}[t]
+\begin{figure}[tb]
     \centering
     \begin{tikzpicture}[scale=0.3,every node/.style={font=\footnotesize}]
         \begin{scope}
@@ -206,7 +192,6 @@ wildcards).
     \label{figure:sip}
 \end{figure}
 
-
 However, subgraph isomorphism algorithms cannot handle \emph{arbitrary} instances involving hundreds
 or thousands of vertices. Experimental evaluations of subgraph isomorphism algorithms are usually
 performed using randomly generated graph pairs, sometimes together with a mix of real-world graphs,
@@ -230,9 +215,9 @@ model. This has lead to bias in algorithm design, to the extent that some propos
 as those of \citet{DBLP:conf/sls/BattitiM07}, will \emph{only} work on satisfiable instances.
 
 The first contribution of this paper is to present and evaluate new methods for creating random
-pattern~/ target pairs.  The method we introduce generates both satisfiable and unsatisfiable
-instances, and can produce computationally challenging instances with only a few tens of vertices in
-the pattern, and 150 vertices in the target. Note that the lack of
+pattern~/ target pairs.  The method we introduce in \cref{section:non-induced} generates both
+satisfiable and unsatisfiable instances, and can produce computationally challenging instances with
+only a few tens of vertices in the pattern, and 150 vertices in the target. Note that the lack of
 unsatisfiable instances for testing purposes cannot be addressed simply by taking a pattern graph
 from one of the existing random suites with the ``wrong'' target graph, as this tends to give either
 a trivially unsatisfiable instance, or a satisfiable instance. (In particular, it is \emph{not} the
@@ -250,27 +235,27 @@ we see a solver-independent complexity peak near this phase transition. Addition
 this behaviour helps us to select better variable- and value-ordering heuristics---this is the
 second contribution of this paper.
 
-For certain choices of parameters for induced isomorphisms, there are two phase transitions, going
-from satisfiable to unsatisfiable, and then from unsatisfiable back to satisfiable. Again, when
-going from satisfiable to unsatisfiable (from either direction), instances go from being trivial to
-really hard to solve. However, each of the three solvers we test also finds the central
-unsatisfiable region to be hard, despite it not being near a phase transition. To show that this is
-not a simple weakness of current subgraph isomorphism algorithms, we verify that this region is also
-hard for boolean satisfiability, pseudo-boolean, and mixed integer solvers, and under reduction to
-the clique problem. Interestingly, the constrainedness measure proposed by
-\citet{DBLP:conf/aaai/GentMPW96} \emph{does} predict this difficult region---the third contribution
-of this paper is to use these instances to provide evidence in favour of constrainedness, rather
-than proximity to a phase transition, being an accurate predictor of difficulty, and to show that
-constrainedness is not simply a refinement of a phase transition prediction.
+In \cref{section:induced} we look at the induced isomorphism problem.  For certain choices of
+parameters, there are two phase transitions, going from satisfiable to unsatisfiable, and then from
+unsatisfiable back to satisfiable. Again, when going from satisfiable to unsatisfiable (from either
+direction), instances go from being trivial to really hard to solve. However, each of the three
+solvers we test also finds the central unsatisfiable region to be hard, despite it not being near a
+phase transition. To show that this is not a simple weakness of current subgraph isomorphism
+algorithms, we verify that this region is also hard for boolean satisfiability, pseudo-boolean, and
+mixed integer solvers, and under reduction to the clique problem. Interestingly, the constrainedness
+measure proposed by \citet{DBLP:conf/aaai/GentMPW96} \emph{does} predict this difficult region---the
+third contribution of this paper is to use these instances to provide evidence in favour of
+constrainedness, rather than proximity to a phase transition, being an accurate predictor of
+difficulty, and to show that constrainedness is not simply a refinement of a phase transition
+prediction.
 
-% What about other random graph models? Graphs where every vertex has the same degree, which are known
-% as $k$-regular, exhibit very similar characteristics.
-
-When labels on vertices are introduced, as is commonly seen in real-world applications and in graph
-database systems, richer behaviour emerges, particularly when moving away from a uniform labelling
-scheme, and we see that the popular VF2 algorithm behaves much worse than two more recent
-constraint-based algorithms in certain cases.  A close look shows that these cases \emph{should} be
-easy to solve.
+What about other random graph models? In \cref{section:regular} we see that graphs where every vertex
+has the same degree (known as $k$-regular) exhibit very similar characteristics.  However, when
+labels on vertices are introduced (as is commonly seen in real-world applications and in graph
+database systems), richer behaviour emerges, particularly when moving away from a uniform labelling
+scheme, and the popular VF2 algorithm behaves much worse than two more recent
+constraint-based algorithms in certain cases. In \cref{section:labelled} we take a close look at
+these cases, and argue that they \emph{should} be easy to solve.
 
 This is not simply a theoretical curiosity. A labelled version of subgraph isomorphism is one of
 the key components in supporting complex queries in graph databases---typically, these systems store
@@ -282,64 +267,75 @@ subgraph isomorphism call. In this context, the terms \emph{matching} and \emph{
 often used for the subgraph isomorphism step (or a slightly broader problem, for example permitting
 wildcards).
 
-We look at some of the datasets commonly used to test graph database systems, which the literature
-suggests are hard to solve. Simple experiments show that the entire perceived difficulty
-of each of these datasets comes down to the widespread use of especially poor subgraph isomorphism
-algorithms. Our fourth contribution is to show that the use of forward-checking and the right
-variable ordering heuristic, even without the more sophisticated recent advances in subgraph
-algorithms, makes the entire graph database filter~/ verify paradigm unnecessary.  Finally, we
-explain why filter~/ verify (and other recently proposed techniques) cannot be beneficial even on
+In \cref{section:filterverify} we look at some of the datasets commonly used to test graph database
+systems, which the literature suggests are hard to solve. Simple experiments show that the entire
+perceived difficulty of each of these datasets comes down to the widespread use of especially poor
+subgraph isomorphism algorithms. Our fourth contribution is to show that the use of forward-checking
+and the right variable ordering heuristic, even without the more sophisticated recent advances in
+subgraph algorithms, makes the entire graph database filter~/ verify paradigm unnecessary.  Finally,
+we explain why filter~/ verify (and other recently proposed techniques) cannot be beneficial even on
 more challenging instances except if an extremely poor choice of subgraph isomorphism algorithm is
 made.
 
+\bigskip
+
+Part of this paper appeared at IJCAI \citep{DBLP:conf/ijcai/McCreeshPT16};
+\cref{section:introduction} has been expanded and
+\cref{section:regular,section:labelled,section:filterverify} are new material.
+
 \subsection{Definitions}
 
-Throughout, our graphs are unlabelled, undirected, and do not have any loops.  The \emph{order} of a
-graph is the cardinality of its vertex set. We write $\operatorname{V}(G)$ for the vertex set of a
-graph $G$. The \emph{complement} of a graph $G$, denoted $\shortoverline{G}$, is the graph with the
-same vertex set as $G$, and with an edge between distinct vertices $v$ and $w$ if and only if $v$
-and $w$ are not adjacent in $G$. We write $G(n, p)$ for an Erd\H{o}s-R\'enyi random graph with $n$
-vertices, and an edge between each distinct pair of vertices with independent probability $p$.
+Throughout, our graphs are undirected, and do not have any loops. In some cases vertices have
+labels, which are treated as integers; we write $\ell(v)$ for the label of vertex $v$. The
+\emph{order} of a graph is the cardinality of its vertex set. We write $\operatorname{V}(G)$ for the
+vertex set of a graph $G$. The \emph{complement} of a graph $G$, denoted $\shortoverline{G}$, is the
+graph with the same vertex set as $G$, and with an edge between distinct vertices $v$ and $w$ if and
+only if $v$ and $w$ are not adjacent in $G$. We write $G(n, p)$ for an Erd\H{o}s-R\'enyi random
+graph with $n$ vertices, and an edge between each distinct pair of vertices with independent
+probability $p$.
 
 A \emph{non-induced subgraph isomorphism} from a graph $P$ (called the \emph{pattern}) to a graph
 $T$ (called the \emph{target}) is an injective mapping from $\operatorname{V}(P)$ to
 $\operatorname{V}(T)$ which preserves adjacency---that is, for every adjacent $v$ and $w$ in
-$\operatorname{V}(P)$, the vertices $i(v)$ and $i(w)$ are adjacent in $T$. An \emph{induced subgraph
-isomorphism} additionally preserves non-adjacency---that is, if $v$ and $w$ are not adjacent in $P$,
-then $i(v)$ and $i(w)$ must not be adjacent in $T$. We use the notation $i : P \rightarrowtail T$
-for a non-induced isomorphism, and $i : P \hookrightarrow T$ for an induced isomorphism. Observe
-that an induced isomorphism $i : P \hookrightarrow T$ is a non-induced isomorphism $i : P
-\rightarrowtail T$ which is also a non-induced isomorphism $\shortoverline{i} : \shortoverline{P}
-\rightarrowtail \shortoverline{T}$.
+$\operatorname{V}(P)$, the vertices $i(v)$ and $i(w)$ are adjacent in $T$. Where labels are present,
+the mapping must also preserve labels, so $\ell(v) = \ell(i(v))$ for any $v$. An \emph{induced
+subgraph isomorphism} additionally preserves non-adjacency---that is, if $v$ and $w$ are not
+adjacent in $P$, then $i(v)$ and $i(w)$ must not be adjacent in $T$. We use the notation $i : P
+\rightarrowtail T$ for a non-induced isomorphism, and $i : P \hookrightarrow T$ for an induced
+isomorphism. Observe that an induced isomorphism $i : P \hookrightarrow T$ is a non-induced
+isomorphism $i : P \rightarrowtail T$ which is also a non-induced isomorphism $\shortoverline{i} :
+\shortoverline{P} \rightarrowtail \shortoverline{T}$.
 
 \subsection{Experimental Setup}
 
 The experiments in this paper are performed on systems with Intel Xeon E5-4650 v2 CPUs, running
-Scientific Linux release 6.7. We will be working with three subgraph isomorphism solvers: the
-Glasgow solver \citet{DBLP:conf/cp/McCreeshP15}; LAD \citep{DBLP:journals/ai/Solnon10}; and VF2
-\citep{DBLP:journals/pami/CordellaFSV04}. Each was compiled using GCC 4.9.
+Scientific Linux release 6.7. We will be working with four subgraph isomorphism solvers: the Glasgow
+solver \citet{DBLP:conf/cp/McCreeshP15}; LAD \citep{DBLP:journals/ai/Solnon10}; VF2
+\citep{DBLP:journals/pami/CordellaFSV04}; and VF3 \citep{DBLP:conf/gbrpr/CarlettiFSV17}. Each was
+compiled using GCC 4.9.
 
 The Glasgow and LAD solvers store domains, and use backtracking search to build up an assignment of
 target vertices (values) to pattern vertices (variables), but differ in terms of inference and
-ordering heuristics.  The approach used by VF2 is similar, although the domains of variables are not
-stored (in the style of conventional backtracking, rather than forward-checking), and so domain
-wipeouts are not detected until an assignment is made. Both the Glasgow and LAD solvers use domain
-sizes to guide search, whilst VF2 uses adjacency to previously-assigned vertices.
+ordering heuristics.  The approach used by VF2 and VF3 is similar, although the domains of variables
+are not stored (in the style of conventional backtracking, rather than forward-checking), and so
+domain wipeouts are not detected until an assignment is made. Both the Glasgow and LAD solvers use
+domain sizes to guide search, whilst VF2 and VF3 use adjacency to previously-assigned vertices.
 
 We measure only the number of recursive calls (guessed assignments) made, not
 runtimes. We are not aiming to compare absolute performance between solvers; rather, we are looking
 for solver-independent patterns of difficulty. All experiments use a timeout of 1,000 seconds, which
 is enough for the Glasgow solver to solve nearly all instances (whose orders were selected with this
 timeout in mind), although we may slightly overestimate the proportion of unsatisfiable instances
-for extremely sparse or dense pattern graphs. The LAD and VF2 solvers experienced many more failures
+for extremely sparse or dense pattern graphs. The LAD, VF2, and VF3 solvers experienced many more failures
 with this timeout, so our picture of just how hard the hardest instances are with these solvers is
 less detailed.
 
-?? Glasgow not parallel
+The Glasgow, LAD, and VF2 solvers support both non-induced and induced isomorphisms (although
+neither Glasgow nor LAD were designed with the induced version in mind), whilst VF3 supports only
+the induced problem. Note also that VF3 will sometimes crash on especially sparse graphs: we have
+treated these instances as timeouts.
 
-?? VF3 does not do non-induced
-
-\section{Non-Induced Subgraph Isomorphisms}
+\section{Non-Induced Subgraph Isomorphisms}\label{section:non-induced}
 
 \begin{figure}[t]
     \centering
@@ -380,33 +376,34 @@ measurements under parallelism.)
     \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
             \node [anchor=center] {}; &
-            \node [anchor=center] {\scriptsize $G(10, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(20, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(30, x)$\hspace*{3em}}; &
+            \node [anchor=center] {\scriptsize $G(10, x) \rightarrowtail G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(20, x) \rightarrowtail G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(30, x) \rightarrowtail G(150, y)$\hspace*{3em}}; &
             \\
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize Satisfiable?}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-30-150.pdf}}; &
             \\[0.3cm]
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize Glasgow}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-30-150.pdf}}; &
             \\[0.3cm]
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize LAD}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-30-150.pdf}}; &
             \\[0.3cm]
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize VF2}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-30-150.pdf}}; \\
         };
     \end{tikzpicture}
 
-    \caption{Behaviour of algorithms on the non-induced variant. For each plot, the x-axis is the
+    \caption{Behaviour of algorithms on the non-induced variant, using target graphs of 150
+        vertices, and pattern graphs of 10, 20, or 30 vertices. For each plot, the x-axis is the
         pattern edge probability and the y-axis is the target edge probability, both from 0 to 1.
         Along the top row, we show the proportion of instances which are satisfiable; the white
         bands show the phase transitions, and the black lines are the predictions using
@@ -430,16 +427,18 @@ have to preserve adjacency, not non-adjacency). The white band between the regio
 location of the phase transition: here, roughly half the instances are satisfiable. (We discuss the
 black line below.)
 
-On subsequent rows, we show the average number of search nodes used by the different algorithms. In
-general, satisfiable instances are easy, until very close to the phase transition. As we hit the
-phase transition and move into the unsatisfiable region, we see complexity increase. Finally, as we
-pass through the phase transition and move deeper into the unsatisfiable region, instances become
-easier again. This behaviour is largely solver-independent, although VF2 has a larger hard region
-than Glasgow or LAD. VF2 also finds some instances extremely hard when the target is empty but the
-pattern is not---this turns out to be extremely important, and we return to it in
-\cref{section:labelled,section:filterverify}. Thus, although we have moved away from a single
-control parameter, we still observe the easy-hard-easy pattern seen in many \NP-complete
-problems.
+On subsequent rows, we show the average number of search nodes used by the different algorithms.
+Darker regions indicate harder difficulties, and black is used to indicate that at least one timeout
+occurred. In general, satisfiable instances are easy, until very close to the phase transition. As
+we hit the phase transition and move into the unsatisfiable region, we see complexity increase.
+Finally, as we pass through the phase transition and move deeper into the unsatisfiable region,
+instances become easier again. This behaviour is largely solver-independent, although VF2 has a
+larger hard region than Glasgow or LAD. Thus, although we have moved away from a single control
+parameter, we still observe the easy-hard-easy pattern seen in many \NP-complete problems.
+
+Finally, a close look at the very bottom left of the plots shows that VF2 will sometimes give a
+timeout on instances where the target is empty but the pattern is not---this turns out to be
+extremely important, and we return to it in \cref{section:labelled,section:filterverify}.
 
 \subsection{Locating the Phase Transition}
 
@@ -471,85 +470,100 @@ similar behaviour is seen with random constraint satisfaction problems
 
 Various general principles have been considered when designing variable and value ordering
 heuristics for backtracking search algorithms---one of these is to try to maximise the expected
-number of solutions inside any subproblem considered during search \citep{DBLP:conf/cp/GentMPSW96}.  This is
-usually done by cheaper surrogates, rather than direct calculation. When branching, both LAD and
-Glasgow pick a variable with fewest remaining values in its domain: doing this will generally reduce
-the first part of the $\langle Sol \rangle$ equation by as little as possible. When two or more
-domains are of equal size, LAD simply breaks ties lexicographically, whereas Glasgow will pick a
-variable corresponding to a pattern vertex of highest degree. This strategy was determined
-empirically, but could have been derived from the $\langle Sol \rangle$ formula: picking a pattern
-vertex of high degree will make the remaining pattern subgraph sparser, which will decrease the
-exponent in the second half of the formula, maximising the overall value. LAD does not apply a value
-ordering heuristic, but Glasgow does: it prefers target vertices of highest degree.  Again, this was
-determined empirically, but it has the effect of increasing $\langle Sol \rangle$ by leaving as many
-vertices as possible available for future use. The VF2 heuristics, in contrast, are based around
-preserving connectivity, which gives very little discrimination except on the sparsest of inputs.
+number of solutions inside any subproblem considered during search \citep{DBLP:conf/cp/GentMPSW96}.
+This is usually done by cheaper surrogates, rather than direct calculation. When branching, both LAD
+and Glasgow pick a variable with fewest remaining values in its domain: doing this will generally
+reduce the first part of the $\langle Sol \rangle$ equation by as little as possible. When two or
+more domains are of equal size, LAD simply breaks ties lexicographically, whereas Glasgow will pick
+a variable corresponding to a pattern vertex of highest degree (?? check carefully!). This strategy
+was determined empirically, but could have been derived from the $\langle Sol \rangle$ formula:
+picking a pattern vertex of high degree will make the remaining pattern subgraph sparser, which will
+decrease the exponent in the second half of the formula, maximising the overall value. LAD does not
+apply a value ordering heuristic, but Glasgow does: it prefers target vertices of highest degree (??
+check carefully!).  Again, this was determined empirically, but it has the effect of increasing
+$\langle Sol \rangle$ by leaving as many vertices as possible available for future use. The VF2
+heuristics, in contrast, are based around preserving connectivity, which gives very little
+discrimination except on the sparsest of inputs.
 
-\section{Induced Subgraph Isomorphisms}
+\subsection{Instances for Benchmarking}
 
-?? LAD and Glasgow not really designed for induced
+?? Instances for benchmarking
+
+?? Something about distance-based filtering being no use on these instances
+
+?? Low degree spread
+
+\section{Induced Subgraph Isomorphisms}\label{section:induced}
 
 \begin{figure}[p]
     \centering
     \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
             \node [anchor=center] {}; &
-            \node [anchor=center] {\scriptsize $G(10, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(14, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(15, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(16, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(20, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(30, x)$\hspace*{3em}}; &
+            \node [anchor=center] {\scriptsize $G(10, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(14, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(15, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(16, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(20, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(30, x) \hookrightarrow$\hspace*{3em}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize $G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(150, y)$\hspace*{3em}}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Satisfiable?}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-15-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-16-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-30-150.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glasgow}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Glasgow}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-15-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-16-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-30-150.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize LAD}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize LAD}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-induced-nodes-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-induced-nodes-15-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-induced-nodes-16-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-induced-nodes-30-150.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF2}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize VF2}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-15-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-16-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-induced-nodes-30-150.pdf}}; \\
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF3}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize VF3}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-15-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-16-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf3-induced-nodes-30-150.pdf}}; \\
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Constrainedness}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Constrainedness}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-15-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-16-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-kappa-30-150.pdf}}; \\
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Complement?}; &
+            \\[-0.08cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Complement?}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-which-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-which-14-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-which-15-150.pdf}}; &
@@ -558,17 +572,16 @@ preserving connectivity, which gives very little discrimination except on the sp
             \node [anchor=center] {\includegraphics*{plots/graph-induced-which-30-150.pdf}}; \\
         };
     \end{tikzpicture}
-    \caption{Behaviour of algorithms on the induced variant, shown in the style
-    of \cref{figure:non-induced}. The sixth row plots constrainedness using
-    equation~\eqref{equation:constrainedness}: the
-    darkest region is where $\kappa = 1$, and the lighter regions show where the problem is either
-    over- or under-constrained. The final row shows when the Glasgow algorithm performs better when
-    given the complements of the pattern and target graphs as inputs---the solid lines show the
-    location of the phase transition, and the dotted lines are $t_d=0.5$ and the $p_d=t_d$
-    diagonal.}\label{figure:induced}
+    \caption{Behaviour of algorithms on the induced variant with target graphs of 150 vertices,
+    shown in the style of \cref{figure:non-induced}. The sixth row plots constrainedness using
+    equation~\eqref{equation:constrainedness}: the darkest region is where $\kappa = 1$, and the
+    lighter regions show where the problem is either over- or under-constrained. The final row shows
+    when the Glasgow algorithm performs better when given the complements of the pattern and target
+    graphs as inputs---the solid lines show the location of the phase transition, and the dotted
+    lines are $t_d=0.5$ and the $p_d=t_d$ diagonal.}\label{figure:induced}
 \end{figure}
 
-In the first four rows of \cref{figure:induced} we repeat our experiments, finding induced
+In the first four rows of \cref{figure:induced} we repeat our experiments, now finding induced
 isomorphisms. With a pattern of order 10, we get two independent phase transitions: the bottom right
 halves of the plots resemble the non-induced results, and the top left halves are close to a mirror
 image. The central satisfiable region, which is away from either phase transition, is
@@ -585,7 +598,8 @@ precisely how the Glasgow solver handles the induced variant (although the heuri
 between the two, which we discuss below). For LAD, some of the very dense patterns are slightly
 harder than their diagonal opposites (LAD reasons about degrees, but not about complement-degrees);
 it is interesting to note that for larger target graphs, VF2 finds \emph{all} dense pattern graphs
-difficult.
+difficult. Finally, VF3's performance generally improves upon VF2's on instances that VF2 finds easy
+(except in the cases where VF3 crashes), but worsens on instances that VF2 finds hard.
 
 \subsection{Predictions and Heuristics}
 
@@ -633,54 +647,62 @@ non-induced heuristics on induced problems.
     \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
             \node [anchor=center] {}; &
-            \node [anchor=center] {\scriptsize $G(10, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(12, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(14, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(16, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(18, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $G(25, x)$\hspace*{3em}}; &
+            \node [anchor=center] {\scriptsize $G(10, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(12, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(14, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(16, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(18, x) \hookrightarrow$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(25, x) \hookrightarrow$\hspace*{3em}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center] {}; &
+            \node [anchor=center] {\scriptsize $G(75, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(75, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(75, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(75, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(75, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $G(75, y)$\hspace*{3em}}; &
+            \\
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Satisfiable?}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-10-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-12-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-14-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-16-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-18-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-satisfiable-25-75.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glasgow}; &
+            \\[0.3cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Glasgow}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-10-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-12-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-14-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-16-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-18-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-induced-nodes-25-75.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Clasp (PB)}; &
+            \\[0.3cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Clasp (PB)}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clasp-induced-nodes-10-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clasp-induced-nodes-12-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clasp-induced-nodes-14-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clasp-induced-nodes-16-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clasp-induced-nodes-18-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clasp-induced-nodes-25-75.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glucose (SAT)}; &
+            \\[0.3cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Glucose (SAT)}; &
             \node [anchor=center] {\includegraphics*{plots/graph-glucose-induced-nodes-10-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-glucose-induced-nodes-12-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-glucose-induced-nodes-14-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-glucose-induced-nodes-16-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-glucose-induced-nodes-18-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-glucose-induced-nodes-25-75.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Gurobi (MIP)}; &
+            \\[0.3cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Gurobi (MIP)}; &
             \node [anchor=center] {\includegraphics*{plots/graph-gurobi-induced-nodes-10-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-gurobi-induced-nodes-12-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-gurobi-induced-nodes-14-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-gurobi-induced-nodes-16-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-gurobi-induced-nodes-18-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-gurobi-induced-nodes-25-75.pdf}}; &
-            \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize BBMC (Clique)}; &
+            \\[0.3cm]
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize BBMC (Clique)}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clique-induced-nodes-10-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clique-induced-nodes-12-75.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-clique-induced-nodes-14-75.pdf}}; &
@@ -690,11 +712,12 @@ non-induced heuristics on induced problems.
             \\
         };
     \end{tikzpicture}
-    \caption{Behaviour of other solvers on the induced variant on smaller graphs, shown in the style of
-        \cref{figure:non-induced}. The second row shows the number of search nodes used by the
-    Glasgow algorithm, the third and fourth rows show the number of decisions made by the pseudo-boolean
-and SAT solvers, the fifth shows the number of search nodes used on the MIP encoding, and the
-final row the clique encoding.}\label{figure:alt}
+    \caption{Behaviour of other solvers on the induced variant using smaller target graphs with 75
+        vertices, shown in the style of \cref{figure:non-induced}. The second row shows the number
+        of search nodes used by the Glasgow algorithm, the third and fourth rows show the number of
+        decisions made by the pseudo-boolean and SAT solvers, the fifth shows the number of search
+        nodes used on the MIP encoding, and the
+    final row the clique encoding.}\label{figure:alt}
 \end{figure}
 
 The region in the parameter space where both pattern and target have medium density is far from a
@@ -761,33 +784,33 @@ transition'' give very different predictions, and constrainedness gives the bett
 Unfortunately, constrainedness does not help us with heuristics: minimising constrainedness gives
 the same predictions as maximising the expected number of solutions.
 
-\section{$k$-Regular Graphs}\label{section:models}
+\section{$k$-Regular Graphs}\label{section:regular}
 
 \begin{figure}[tb]
     \centering
     \begin{tikzpicture}[every node/.style={inner sep=0pt, outer sep=0pt}]
         \matrix {
             \node [anchor=center] {}; &
-            \node [anchor=center] {\scriptsize $R(10, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $R(20, x)$\hspace*{1em}}; &
-            \node [anchor=center] {\scriptsize $R(30, x)$\hspace*{3em}}; &
+            \node [anchor=center] {\scriptsize $R(10, x) \rightarrowtail R(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $R(20, x) \rightarrowtail R(150, y)$\hspace*{1em}}; &
+            \node [anchor=center] {\scriptsize $R(30, x) \rightarrowtail R(150, y)$\hspace*{3em}}; &
             \\
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize Satisfiable?}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-kr-satisfiable-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-kr-satisfiable-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-kr-satisfiable-30-150.pdf}}; &
             \\[0.3cm]
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize Glasgow}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-kr-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-kr-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-kr-nodes-30-150.pdf}}; &
             \\[0.3cm]
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize LAD}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-kr-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-kr-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-kr-nodes-30-150.pdf}}; &
             \\[0.3cm]
-            \node [anchor=center, inner sep=4pt] [rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center, inner sep=2pt] [rotate=90] {\scriptsize VF2}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-kr-nodes-10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-kr-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-kr-nodes-30-150.pdf}}; &
@@ -797,17 +820,15 @@ the same predictions as maximising the expected number of solutions.
 
     \caption{Behaviour of algorithms on the non-induced problem on random $k$-regular graphs, as the
     pattern degree (x-axis) and target degree (y-axis) are varied from 0 to
-    $\left|\operatorname{V}\right| - 1$.}
+    $\left|\operatorname{V}\right| - 1$, using target graphs of 150 vertices.}
     \label{figure:kr}
 \end{figure}
 
 What about richer graph structures? We now look at what happens with the non-induced problem if we
-use $k$-regular graphs rather than the Erd\H{o}s-R\'enyi model, and then see the effects of
-introducing vertex labels. Both models still exhibit phase transition behaviour, although with
-sufficiently many labels the ``satisfiable'' region now contains a mix of satisfiable and
-unsatisfiable instances.
-
-?? We then move on to more structured instances.
+use $k$-regular graphs rather than the Erd\H{o}s-R\'enyi model, and then in the following section we
+see the effects of introducing vertex labels. Both models still exhibit phase transition behaviour,
+although with sufficiently many labels the ``satisfiable'' region now contains a mix of satisfiable
+and unsatisfiable instances.
 
 By $R(n, k)$ we mean a random graph with $k$ vertices, each of which has degree $k$. In
 \cref{figure:kr} we recreate \cref{figure:non-induced}, using the NetworkX implementation
@@ -831,10 +852,10 @@ seems to be more common in the literature.
 \subsection{Predictions and Empirical Hardness}
 
 Suppose our labels are drawn randomly from a set $L = \{ 1, \ldots, k \}$, where $k$ is reasonably
-small compared to $p$. Let $\ell(v)$ be the label of vertex $v$. By defining \[
+small compared to $p$. Recall that $\ell(v)$ is the label of vertex $v$. By defining \[
     \operatorname{V}(P)\vert_n = \{ v \in \operatorname{V}(P) : \ell(v) = n \} \] to be the set of
-vertices with label $k$, we can partition the pattern vertices by label into disjoint sets \[\{
-    \operatorname{V}(P)\vert_1, \ldots, \operatorname{V}(P)\vert_k \}\textnormal{\,,}\] each of
+vertices with label $k$, we can partition the pattern vertices by label into disjoint sets
+$\{\operatorname{V}(P)\vert_1, \ldots, \operatorname{V}(P)\vert_k \}\textnormal{\,,}$ each of
 which is expected to contain $\nicefrac{p}{k}$ vertices. Similarly, we may partition the target
 vertices into disjoint sets $\{ \operatorname{V}(T)\vert_1, \ldots, \operatorname{V}(T)\vert_k \}$.
 
@@ -849,7 +870,7 @@ fractional. The gamma function $\Gamma(n)$ is equal to $(n - 1)!$ for integers $
 defined for positive real numbers, obeying the identify $\Gamma(x + 1) = x\Gamma(x)$. By noting that
 $t^{\underline{p}} = \nicefrac{t!}{(t - p)!}$, we may obtain a reasonable
 continuous extension by taking \[ |S| = \left(\frac{\Gamma\left(\nicefrac{t}{k} +
-1\right)}{\Gamma\left(\nicefrac{t}{k} - \nicefrac{p}{k} + 1\right)}\right)^{k} \textnormal{\,,} \]
+1\right)}{\Gamma\left(\nicefrac{t}{k} - \nicefrac{p}{k} + 1\right)}\right)^{k} \textnormal{\,.} \]
 
 As before, we expect the pattern to have $d_p \cdot \binom{p}{2}$ edges, and so if we simplify by
 assuming the pattern will have \emph{exactly} this many edges, we obtain the
@@ -871,7 +892,7 @@ power, giving an estimate of \begin{equation}\label{equation:non-induced-labelle
             \node [anchor=center] {\scriptsize 10 labels\hspace*{1em}}; &
             \node [anchor=center] {\scriptsize 20 labels\hspace*{2em}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Satisfiable?}; &
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Satisfiable?}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-20-l2-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-20-l3-150.pdf}}; &
@@ -879,7 +900,7 @@ power, giving an estimate of \begin{equation}\label{equation:non-induced-labelle
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-20-l10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-satisfiable-20-l20-150.pdf}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize Glasgow}; &
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize Glasgow}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-20-l2-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-20-l3-150.pdf}}; &
@@ -887,7 +908,7 @@ power, giving an estimate of \begin{equation}\label{equation:non-induced-labelle
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-20-l10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-non-induced-nodes-20-l20-150.pdf}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize LAD}; &
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize LAD}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-20-l2-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-20-l3-150.pdf}}; &
@@ -895,7 +916,7 @@ power, giving an estimate of \begin{equation}\label{equation:non-induced-labelle
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-20-l10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-lad-non-induced-nodes-20-l20-150.pdf}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF2}; &
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize VF2}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-20-l2-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-20-l3-150.pdf}}; &
@@ -903,7 +924,7 @@ power, giving an estimate of \begin{equation}\label{equation:non-induced-labelle
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-20-l10-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-nodes-20-l20-150.pdf}}; &
             \\
-            \node [anchor=center, inner sep=4pt, rotate=90] {\scriptsize VF2 Failures}; &
+            \node [anchor=center, inner sep=2pt, rotate=90] {\scriptsize VF2 Failures}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-abortions-20-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-abortions-20-l2-150.pdf}}; &
             \node [anchor=center] {\includegraphics*{plots/graph-vf2-non-induced-abortions-20-l3-150.pdf}}; &
@@ -944,20 +965,21 @@ region.  It is interesting to observe that all such unsatisfiable instances that
 have a very small proof of unsatisfiability, with neither Glasgow nor LAD requiring more than one
 hundred recursive calls.
 
-\subsection{Richer Label Models, and VF2's Deficiencies}\label{subsection:richer-labels}
+\subsection{VF2's Struggles on Richer Label Models}\label{subsection:richer-labels}
 
-Why does VF2 find some of these instances so hard? VF2 does not track domains, like other
-algorithms, and does not detect a domain wipeout until it branches on a particular vertex.  It also
-cannot detect small domains, and only uses ``adjacency to an existing assignment'' as a branching
-heuristic. This can make it very hard for VF2 to detect that it is in an obviously failed state, or
-that an instance or subproblem is trivially unsatisfiable.
+Why does VF2 find some of these instances so hard? Unlike Glasgow and LAD, VF2 does not track
+domains, and so cannot detect that there are no suitable target vertices available for a given
+pattern vertex until it branches on that vertex.  It also cannot detect small domains, and only uses
+``adjacency to an existing assignment'' as a branching heuristic. This can make it very hard for VF2
+to detect that it is in an obviously failed state, or that an instance or subproblem is trivially
+unsatisfiable.
 
 \begin{figure}[t]
     \centering
     \includegraphics*{plots/skewed.pdf}
 
-    \caption{Cumulative number of instances solved over time, using the richer model of randomness
-    described in \cref{subsection:richer-labels}.}
+    \caption{The cumulative number of instances solved over time, using the richer model of
+    randomness described in \cref{subsection:richer-labels}.}
     \label{figure:skewed-cumulative}
 \end{figure}
 
@@ -975,14 +997,20 @@ which often contain a lot of carbon in the centre, and other atoms around the ou
 of one thousand such instances, sixty six are satisfiable.
 
 We plot the cumulative number of instances solved over time for these instances in
-\cref{figure:skewed-cumulative}. Both Glasgow and LAD find all of these instances trivial, but VF2
-finds many of them extremely difficult.  The ``VF2${\leftrightarrow}$'' line shows what happens with
-VF2 if the graphs are permuted, so that the non-zero labelled vertices are given lower vertex
-numbers rather than higher vertex numbers. This
-makes VF2 behave better, but still extremely poorly compared to the other two solvers; we return to
-this in reference to work by \citet{DBLP:conf/edbt/KatsarouNT17} in the following section.
-It is also important to note for later that both VF2 variations find some satisfiable and some
-unsatisfiable instances extremely hard.
+\cref{figure:skewed-cumulative}: for a given runtime choice along the $x$-axis, the $y$ value for a
+given algorithm shows how many instances, individually, took at most $x$ milliseconds to solve with
+that algorithm. Both Glasgow and LAD find all of these instances trivial, with no instance requiring
+even ten milliseconds to solve. VF2, in contrast, finds many of them extremely difficult, and cannot
+solve 352 of the 1,000 instances with a one thousand second timeout.
+
+The ``VF2${\leftrightarrow}$'' line shows what happens with VF2 if the graphs
+are permuted, so that the non-zero labelled vertices are given lower vertex numbers rather than
+higher vertex numbers.  This makes VF2 behave better, but still extremely poorly compared to the
+other two solvers; the motivation behind this will become clear in the following section.  It is
+also important to note for the following section that both VF2 variations find some satisfiable
+\emph{and} some unsatisfiable instances extremely hard.
+
+?? Also plot CP
 
 An even more extreme example of VF2's misbehaviour can be seen in \cref{figure:vf2-stupidity}. Here
 we have a pattern graph and a target graph, both of which are cliques plus one isolated vertex, and
@@ -1054,8 +1082,8 @@ algorithm would eliminate this cost.
 
 
 However, by far the biggest problem is in graph databases. The following section shows how
-widespread use of VF2 has not just lead to overly pessimistic conclusions regarding performance, but
-has misdirected the design of larger systems.
+widespread use of poor subgraph isomorphism algorithms has not just lead to overly pessimistic
+conclusions regarding performance, but has misdirected the design of larger systems.
 
 \section{Querying Graph Databases}\label{section:filterverify}
 
@@ -1175,9 +1203,13 @@ suggest that it is ``NP-hard to check the graph isomorphism'' (meaning subgraph 
 ``in order to improve the time efficiency'' they use an indexing system to ``avoid as many costly
 subgraph isomorphism checkings as possible''. Their index takes tens of thousands of seconds to
 build, and they suggest that Ullmann's algorithm and VF2 are state of the art for verification.
-And \citet{DBLP:journals/www/PengZ0LZ16} state that ``obviously, it is impossible to employ some
+\citet{DBLP:journals/www/PengZ0LZ16} state that ``obviously, it is impossible to employ some
 subgraph isomorphism algorithm, such as Ullmann or VF2'', and argue that ``in order to speed up
-query processing'', they need to create indices.
+query processing'', they need to create indices.  And \citet{DBLP:conf/isda/AzaouziR16} argue that
+``since the subgraph isomorphism test is expensive, checking all graphs of a large database can be
+unfeasible'', saying that ``naturally, the verification step is computationally more expensive since
+it requires a subgraph isomorphism''; their experiments look at candidate set reduction sizes, and
+their choice of subgraph matching algorithm is not mentioned.
 
 The filter~/ verify paradigm also influences other research. For example, it is used by
 \citet{DBLP:conf/icde/TianP08} in an approximate subgraph searching system: they state that
@@ -1190,8 +1222,8 @@ matching with an additional set-similarity constraint, and state that Ullmann's 
 are ``usually costly for large graphs'' because they ``do not utilize any index structure''. They
 propose an indexing structure, which takes over 2,000 seconds to construct, and uses nearly 2GBytes
 of space.  There is also research into maintaining indices when the set of target graph changes: for
-example \citet{DBLP:conf/sigmod/YuanMYG15} look at algorithms for updating graph indices. And in
-describing a system for reusing results of queries which are sub- or super-graphs of previous
+example \citet{DBLP:conf/sigmod/YuanMYG15} look at algorithms for updating graph indices.
+And describing a system for reusing results of queries which are sub- or super-graphs of previous
 queries, \citet{DBLP:conf/edbt/WangNT16} state that querying is a ``very costly operation as it
 entails the \NP-complete problem of subgraph isomorphism'', and place ``an emphasis on the number of
 unnecessary subgraph isomorphism tests''.
@@ -1276,6 +1308,8 @@ that the associated queries are sensible, merely that they are widely used.
     $x$-axis shows recursive calls, and does \emph{not} use a log scale.}
     \label{figure:biiiig-data}
 \end{figure}
+
+?? Redo these using CP.
 
 Rather than the modern techniques discussed used by Glasgow and LAD, we deliberately select a very
 simple starting point: a forward-checking algorithm which uses the smallest domain first heuristic,
@@ -1404,19 +1438,23 @@ genuine improvement over the state of the art.
 We have seen, then, that domain tracking and domain-based ordering heuristics are critical, and we
 have seen that these alone are enough to make indexing and other techniques irrelevant. There
 is therefore no point in continued research such as that by
-\citet{DBLP:conf/gbrpr/CarlettiFV15,o:Carletti16}
-into tweaking VF2's connectivity-based heuristics.  However, we do not claim that the ultimate
-``big data'' subgraph matching algorithm already exists: on the contrary, there is likely to be
-plenty of room for future improvement now that we understand the importance of getting algorithm
-design right.  For example, a major disadvantage of using domains is the relatively expensive
-initialisation costs, which quickly add up when dealing with large numbers of trivial instances.
-Employing a presolver is an obvious approach---and VF2 is actually good in this role
-\citep{DBLP:conf/lion/KotthoffMS16}---but there are other possibilities. For example,
-minimal or lazy forward-checking
+\citet{DBLP:conf/gbrpr/CarlettiFV15} and \citet{o:Carletti16}
+into tweaking VF2's connectivity-based heuristics.
+
+?? In particular, we saw that VF3 \citep{DBLP:conf/gbrpr/CarlettiFSV17} performed \emph{worse} than
+VF2 on harder instances.
+
+However, we do not claim that the ultimate ``big data'' subgraph matching algorithm already exists:
+on the contrary, there is likely to be plenty of room for future improvement now that we understand
+the importance of getting algorithm design right.  For example, a major disadvantage of using
+domains is the relatively expensive initialisation costs, which quickly add up when dealing with
+large numbers of trivial instances.  Employing a presolver is an obvious approach---and VF2 is
+actually good in this role \citep{DBLP:conf/lion/KotthoffMS16}---but there are other possibilities.
+For example, minimal or lazy forward-checking
 \citep{DBLP:conf/ictai/DentM94,DBLP:conf/cp/BacchusG95,o:Dent96,DBLP:conf/ecai/LarrosaM98} avoids
-constructing every domain upfront, although adopting this require alternatives to smallest domain first
-and to all-different. Such an approach may also be beneficial for huge target graphs, where having
-domains range over the entire target is impractical.
+constructing every domain upfront, although adopting this require alternatives to smallest domain
+first and to all-different. Such an approach may also be beneficial for huge target graphs, where
+having domains range over the entire target is impractical.
 
 There is also scope for precalculating supporting information about target graphs. For example,
 neighbourhood degree sequences and supplemental graphs could both be pre-computed and stored. The aim

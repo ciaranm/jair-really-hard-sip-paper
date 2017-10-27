@@ -1,6 +1,13 @@
 # vim: set et ft=gnuplot sw=4 :
 
-set terminal tikz standalone color size 2.6in,2.2in font '\footnotesize' preamble '\usepackage{microtype,times}'
+set style line 102 lc rgb '#a0a0a0' lt 1 lw 1
+set border ls 102
+set colorbox border 102
+set key textcolor rgb "black"
+set tics textcolor rgb "black"
+set label textcolor rgb "black"
+
+set terminal tikz standalone color size 2.6in,2.2in font '\footnotesize' preamble '\usepackage{microtype}'
 set output "biiiig-data-ppigo.tex"
 
 load "../chroma.pal"

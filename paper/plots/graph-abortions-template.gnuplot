@@ -3,7 +3,7 @@
 outputfile="graph-" . format . "-abortions-" . ps . "-" . ts . ".tex"
 nodesfile="../data/ps" . ps . "-ts" . ts . "." . format . ".proportion-aborted.plot"
 
-set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 
 set output outputfile
 

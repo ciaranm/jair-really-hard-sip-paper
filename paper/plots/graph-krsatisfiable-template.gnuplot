@@ -1,12 +1,19 @@
 # vim: set et ft=gnuplot sw=4 :
 
+set style line 102 lc rgb '#a0a0a0' lt 1 lw 1
+set border ls 102
+set colorbox border 102
+set key textcolor rgb "black"
+set tics textcolor rgb "black"
+set label textcolor rgb "black"
+
 outputfile="graph-" . format . "-kr-satisfiable-" . ps . "-" . ts . ".tex"
-proportionsat="../data/ps" . ps . "-ts" . ts . "-kr." . format . ".proportion-sat.plot"
+proportionsat="../../experiments/flint-results/" . format . "-" . ps . "-" . ts . "-kr-satisfiable.plot"
 
 if (ps == 30) { \
-    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 1.3in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } else { \
-    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 }
 
 load "../chromadiverge.pal"
@@ -26,9 +33,10 @@ set yrange [0:1]
 set noytics
 set size square
 set cbtics out scale 0.5 nomirror offset -1
-set cbtics 0.5
+set cbrange [0:1]
+set cbtics 1 add ('all$^{\,}$' 1) add ('none' 0) add ('half' 0.5)
 
 if (ps==30) set colorbox; else unset colorbox;
 
-plot proportionsat u ($2/(ps-1)):($1/divide):($3) matrix w image notitle
+plot proportionsat u ($1/(ps - 1)):($2/(divide)):($3) matrix w image notitle
 

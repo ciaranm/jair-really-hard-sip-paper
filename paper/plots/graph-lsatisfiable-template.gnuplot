@@ -5,9 +5,9 @@ proportionsat="../data/ps" . ps . "-ts" . ts . "-l" . l . "." . format . ".propo
 predictedline="../data/ps" . ps . "-ts" . ts . "-l" . l . "." . format . ".predicted-line.plot"
 
 if (l == 20) { \
-    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } else { \
-    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } \
 
 load "../chromadiverge.pal"

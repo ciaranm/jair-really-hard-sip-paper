@@ -1,6 +1,11 @@
 # vim: set et ft=gnuplot sw=4 :
 
-set border lc 'red'
+set style line 102 lc rgb '#a0a0a0' lt 1 lw 1
+set border ls 102
+set colorbox border 102
+set key textcolor rgb "black"
+set tics textcolor rgb "black"
+set label textcolor rgb "black"
 
 outputfile="graph-" . format . "-nodes-" . ps . "-l" . l . "-" . ts . ".tex"
 nodesfile="../data/ps" . ps . "-ts" . ts . "-l" . l . "." . format . ".average-nodes.plot"
@@ -9,9 +14,9 @@ outputfile="graph-" . format . "-nodes-" . ps . "-l" . l . "-" . ts . ".tex"
 nodesfile="../../experiments/flint-results/" . format . "-" . ps . "-" . ts . "-l" . l . "-nodes.plot"
 
 if (l == 20) { \
-    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } else { \
-    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 }
 
 load "../chromasequencefromwhitetoblack.pal"

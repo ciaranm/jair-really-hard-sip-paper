@@ -4,9 +4,9 @@ outputfile="graph-" . format . "-kr-abortions-" . ps . "-" . ts . ".tex"
 nodesfile="../data/ps" . ps . "-ts" . ts . "-kr." . format . ".proportion-aborted.plot"
 
 if (ps == 30) { \
-    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } else { \
-    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 }
 
 load "../chromasequencetoblack.pal"

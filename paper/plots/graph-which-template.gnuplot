@@ -5,9 +5,9 @@ nodesfile="../data/ps" . ps . "-ts" . ts . "." . format . "-which-counts-rev-bot
 linefile="../data/ps" . ps . "-ts" . ts . "." . format . ".actual-line.plot"
 
 if (ps == 30) { \
-    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 1.1in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 } else { \
-    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath,times}' \
+    set terminal tikz standalone color size 0.9in,0.9in font '\footnotesize' preamble '\usepackage{microtype,amssymb,amsmath}' \
 }
 
 load "../chromadiverge.pal"
