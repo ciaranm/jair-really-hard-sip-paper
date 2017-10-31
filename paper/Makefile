@@ -28,15 +28,12 @@ GRAPHS = \
 		 plots/graph-non-induced-kr-satisfiable-$(ps)-150.pdf \
 		 plots/graph-non-induced-kr-nodes-$(ps)-150.pdf \
 		 plots/graph-lad-non-induced-kr-nodes-$(ps)-150.pdf \
-		 plots/graph-vf2-non-induced-kr-nodes-$(ps)-150.pdf \
-		 plots/graph-vf2-non-induced-kr-abortions-$(ps)-150.pdf ) \
+		 plots/graph-vf2-non-induced-kr-nodes-$(ps)-150.pdf ) \
 	$(foreach l, 2 3 5 10 20, \
 		 plots/graph-non-induced-satisfiable-20-l$(l)-150.pdf \
 		 plots/graph-non-induced-nodes-20-l$(l)-150.pdf \
 		 plots/graph-lad-non-induced-nodes-20-l$(l)-150.pdf \
-		 plots/graph-vf2-non-induced-nodes-20-l$(l)-150.pdf \
-		 plots/graph-vf2-non-induced-abortions-20-l$(l)-150.pdf ) \
-	plots/graph-vf2-non-induced-abortions-20-150.pdf \
+		 plots/graph-vf2-non-induced-nodes-20-l$(l)-150.pdf ) \
 	plots/skewed.pdf \
 	plots/biiiig-data-aids.pdf \
 	plots/biiiig-data-pcms.pdf \
@@ -66,11 +63,6 @@ plots/graph-$(1)-nodes-$(2)-$(3).pdf : plots/graph-nodes-template.gnuplot
 	cd plots && \
 	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(5)" `basename $$<` && \
 	latexmk -pdf graph-$(1)-nodes-$(2)-$(3)
-
-plots/graph-$(1)-abortions-$(2)-$(3).pdf : plots/graph-abortions-template.gnuplot
-	cd plots && \
-	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(5)" `basename $$<` && \
-	latexmk -pdf graph-$(1)-abortions-$(2)-$(3)
 
 plots/graph-$(1)-kappa-$(2)-$(3).pdf : plots/graph-kappa-template.gnuplot
 	cd plots && \
@@ -110,11 +102,6 @@ plots/graph-$(1)-kr-nodes-$(2)-$(3).pdf : plots/graph-krnodes-template.gnuplot
 	cd plots && \
 	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(4)" `basename $$<` && \
 	latexmk -pdf graph-$(1)-kr-nodes-$(2)-$(3)
-
-plots/graph-$(1)-kr-abortions-$(2)-$(3).pdf : plots/graph-krabortions-template.gnuplot
-	cd plots && \
-	gnuplot -e "ps=$(2)" -e "ts=$(3)" -e "format='$(1)'" -e "divide=$(4)" `basename $$<` && \
-	latexmk -pdf graph-$(1)-kr-abortions-$(2)-$(3)
 endef
 
 $(foreach ps, 10 20 30, \
@@ -131,11 +118,6 @@ plots/graph-$(1)-nodes-$(2)-l$(3)-$(4).pdf : plots/graph-lnodes-template.gnuplot
 	cd plots && \
 	gnuplot -e "ps=$(2)" -e "ts=$(4)" -e "l=$(3)" -e "format='$(1)'" -e "plotsize='$(5)'" -e "divide=$(6)" `basename $$<` && \
 	latexmk -pdf graph-$(1)-nodes-$(2)-l$(3)-$(4)
-
-plots/graph-$(1)-abortions-$(2)-l$(3)-$(4).pdf : plots/graph-labortions-template.gnuplot
-	cd plots && \
-	gnuplot -e "ps=$(2)" -e "ts=$(4)" -e "l=$(3)" -e "format='$(1)'" -e "plotsize='$(5)'" -e "divide=$(6)" `basename $$<` && \
-	latexmk -pdf graph-$(1)-abortions-$(2)-l$(3)-$(4)
 endef
 
 $(foreach l, 2 3 5 10 20, \

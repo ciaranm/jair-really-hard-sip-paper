@@ -7,7 +7,7 @@ set key textcolor rgb "black"
 set tics textcolor rgb "black"
 set label textcolor rgb "black"
 
-set terminal tikz standalone color size 5in,3in font '\footnotesize' preamble '\usepackage{microtype}'
+set terminal tikz standalone color size 5in,2.5in font '\footnotesize' preamble '\usepackage{microtype}'
 set output "phase-transition.tex"
 
 load "../chroma.pal"

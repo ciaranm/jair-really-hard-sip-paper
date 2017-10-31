@@ -21,9 +21,9 @@ if (l == 20) set rmargin at screen 0.9; else set rmargin at screen 1;
 
 unset xlabel
 unset ylabel
-set xrange [0:1]
+set xrange [-0.005:1.005]
 set noxtics
-set yrange [0:1]
+set yrange [-0.005:1.005]
 set noytics
 set size square
 set cbtics out scale 0.5 nomirror offset -1
