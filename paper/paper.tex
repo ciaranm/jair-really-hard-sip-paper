@@ -255,18 +255,17 @@ wildcards).
 In \cref{section:filterverify} we look at some of the datasets commonly used to test graph database
 systems, which the literature suggests are hard to solve. Simple experiments show that the entire
 perceived difficulty of each of these datasets comes down to the widespread use of especially poor
-subgraph isomorphism algorithms. Our fourth contribution is to show that the use of forward-checking
-and the right variable-ordering heuristic, even without the more sophisticated recent advances in
-subgraph algorithms, makes the entire graph database filter~/ verify paradigm unnecessary.  Finally,
-we explain why filter~/ verify (and other recently proposed techniques, which we discuss in
-\cref{section:angryranting}) cannot be beneficial even on more challenging instances except if an
-extremely poor choice of subgraph isomorphism algorithm is made.
+subgraph isomorphism algorithms. Our fourth contribution is to show that the simplest constraint
+programming approach, even without the more sophisticated recent advances in subgraph algorithms,
+makes the entire graph database filter~/ verify paradigm unnecessary.  Finally, we explain why
+filter~/ verify and other recently proposed techniques cannot be beneficial even on more challenging
+instances except if an extremely poor choice of subgraph isomorphism algorithm is made.
 
 \bigskip
 
 Part of this paper were presented at IJCAI \citep{DBLP:conf/ijcai/McCreeshPT16}; the first three
 sections have been expanded, whilst
-\cref{section:regular,section:labelled,section:filterverify,section:angryranting} are new material.
+\cref{section:regular,section:labelled,section:filterverify} are new material.
 
 \subsection{Definitions}
 
@@ -293,9 +292,9 @@ isomorphism $i : P \rightarrowtail T$ which is also a non-induced isomorphism $\
 
 \subsection{Experimental Setup}
 
-The experiments in this paper are performed on systems with Intel Xeon E5-4650 v2 CPUs, running
-Scientific Linux release 6.7. We will be working with four subgraph isomorphism solvers: the Glasgow
-solver \citep{DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16}; LAD
+The experiments in this paper are performed on systems with Intel Xeon E5-4650 v2 CPUs and 768GBytes
+RAM, running Scientific Linux release 6.7. We will be working with four subgraph isomorphism
+solvers: the Glasgow solver \citep{DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16}; LAD
 \citep{DBLP:journals/ai/Solnon10}; VF2 \citep{DBLP:journals/pami/CordellaFSV04}; and VF3
 \citep{DBLP:conf/gbrpr/CarlettiFSV17}. Each was compiled using GCC 4.9.
 
@@ -998,8 +997,6 @@ motivation behind this modification will become clear later in this paper.  It w
 important to remember that both VF2 variations find some satisfiable \emph{and} some unsatisfiable
 instances extremely hard.
 
-?? Also plot CP
-
 An even more extreme example of VF2's misbehaviour can be seen in \cref{figure:vf2-stupidity}. Here
 we have a pattern graph and a target graph, both of which are cliques plus one isolated vertex, and
 the isolated vertices have different unique labels. This is trivially unsatisfiable (and Glasgow and
@@ -1248,15 +1245,15 @@ We therefore believe it would be unlikely to cause too much astonishment if we s
 better subgraph isomorphism algorithm could be dropped in as a black box replacement in graph
 databases systems to improve their performance.  This is not our claim. Instead, this paper shows
 that better algorithms invalidate the flawed premise underlying the entire filter~/ verify approach.
-We will now demonstrate that filter~/ verify is simply a poor workaround for the kinds of deficiency
-in VF2 demonstrated towards the end of the previous section.
+We will now demonstrate empirically that filter~/ verify is simply a poor workaround for the kinds
+of deficiency in VF2 demonstrated towards the end of the previous section.
 
 \subsection{Is Filtering Necessary?}
 
-To demonstrate that a pure subgraph isomorphism approach is feasible, with no indexing or supporting
-preprocessing, we look at four datasets commonly used in graph indexing evaluations
-\citep{o:10.1371/journal.pone.0076911}. We do not claim that these are high-quality datasets or
-that the associated queries are sensible, merely that they are widely used.
+To show that a pure subgraph isomorphism approach is feasible, with no indexing or supporting
+preprocessing, we look at four datasets commonly used in graph indexing evaluations. We do not claim
+that these are high-quality datasets or that the associated queries are sensible, merely that
+following the example of \citet{o:10.1371/journal.pone.0076911}, they are widely used.
 
 \begin{itemize}
     \item The AIDS dataset contains graphs representing 40,000 chemical molecules. These graphs are
@@ -1304,18 +1301,21 @@ starting point: a constraint programming model implemented in Gecode 5.1.0 using
 toolkit-provided constraints and heuristics. The model uses a ``smallest domain first'' variable
 ordering heuristic with tie-breaking on degree, an all-different constraint, extensional constraints
 for adjacency, and labelled-degree filtering at the top of search. Even this simple approach finds
-nearly every instance trivial, and no exponential behaviour is observed. As we show in
-\cref{figure:biiiig-data}, the \emph{hardest} instance for the AIDS dataset requires 287 recursive
-calls, and 149,268 of the instances can be solved without search.  For PDBS, the hardest problem
-requires 3,161 recursive calls (which occurs 20 times, due to duplicated queries). For both PCM and
-PPI, the hardest problem requires 23 recursive calls.  In other words, none of these instances are
-in any way computationally hard even for a simple domain-based algorithm, even before introducing
-stronger filtering, inference, or heuristics.  Furthermore it is certainly not the case that a
-sequential scan is infeasible as so many filter~/ verify papers claim.  The exponential behaviour
-seen by others in these instances is purely down to a bad choice of subgraph isomorphism algorithm,
-and these instances are not inherently ``really hard''.
+nearly every instance in each of the four datasets trivial, and no exponential behaviour is
+observed. As we show in \cref{figure:biiiig-data}, the \emph{hardest} instance for the AIDS dataset
+requires 287 recursive calls, and 149,268 of the instances can be solved without search.  For PDBS,
+the hardest problem requires 3,161 recursive calls (which occurs 20 times, due to duplicated
+queries). For both PCM and PPI, the hardest problem requires 23 recursive calls.  In other words,
+none of these instances are in any way computationally hard even for a simple domain-based
+algorithm, even before introducing stronger filtering, inference, or heuristics.  Furthermore it is
+certainly not the case that a sequential scan is infeasible as so many filter~/ verify papers claim.
+The exponential behaviour seen by others in these instances is purely down to a bad choice of
+subgraph isomorphism algorithm, and these instances are not inherently ``really hard''.
 
-There are at least four benefits beyond simplicity towards abolishing filter~/ verify:
+\subsection{Benefits of Constraint Programming over Filter / Verify}
+
+There are at least four benefits beyond simplicity towards abolishing filter~/ verify in favour of a
+purely constraint programming style approach:
 
 \begin{itemize}
     \item Domain filtering is useful on both satisfiable and unsatisfiable instances, whilst
@@ -1342,15 +1342,13 @@ There are at least four benefits beyond simplicity towards abolishing filter~/ v
 In other words, using domain-based algorithms would not simply be a viable alternative to filter~/
 verify with VF2, but rather would be a much better solution.
 
-\section{Further Lessons}\label{section:angryranting}
+\subsection{Other Implications}
 
 Unfortunately, indexing is not the only incorrect design choice being made in systems built around
 subgraph isomorphism algorithms, and lessons from constraint programming can be applied to other
 subgraph-related research. We illustrate this by looking at several recent papers on subgraph
-isomorphism, showing how misleading conclusions are being reached due to domain-based algorithms not
-being used or understood.
-
-\subsection{Straggler Queries?}
+isomorphism, discussing how a deeper understanding of the empirical hardness of subgraph isomorphism
+could lead the reader to different conclusions than the ones presented.
 
 \citet{DBLP:conf/edbt/KatsarouNT17} look at what they call ``straggler'' queries, which they define
 to be the small subset of queries that they observe taking much longer than others to solve. The
@@ -1378,25 +1376,23 @@ combination with alternate per-query sub-iso algorithms that can yield large imp
 believe it is important instead to emphasis previous research directions that have already solved
 most of this problem, and to help ensure that these techniques become more widely known.
 
-\subsection{Portfolios}
-
-\citet{DBLP:conf/edbt/KatsarouNT17}'s second claim is that ``different algorithms find different
-queries hard''. To address this, they run many subgraph isomorphism algorithms and input
-permutations in parallel; the extensive literature on parallel portfolios in general
-\citep{DBLP:journals/ai/GomesS01}, and the approach by \citet{DBLP:conf/sls/BattitiM07} for subgraph
-isomorphism in particular, is not noted (and nor are portfolios mentioned when they say that ``using
-machine learning models to predict which version \ldots to employ per query is of high interest'').
-The evidence so far in this paper suggests that we should be wary. It is certainly true that there
-are some instances that all algorithms find hard, and there are good theoretical reasons to believe
-that these instances genuinely are really hard.  Furthermore, algorithm portfolios are also
-well-known to be a successful technique, and are beneficial even with modern subgraph isomorphism
-algorithms \citep{DBLP:conf/lion/KotthoffMS16}.  However, in \cref{section:labelled} we saw that there
-are many instances that VF2 finds hard that should not be hard, and that are not hard for other
-algorithms.  If permuting graphs sometimes addresses the difficulty of some of these instances, then
-it is likely that they are not genuinely hard instances at all, and perhaps it would be better
-simply to start using an algorithm with domain tracking and domain-based ordering heuristics, rather
-than assembling a portfolio of bad algorithms in the hopes that at least one of them will often get
-lucky.
+\citet{DBLP:conf/edbt/KatsarouNT17}'s second claim is that ``different
+algorithms find different queries hard''. To address this, they run many subgraph isomorphism
+algorithms and input permutations in parallel; the extensive literature on parallel portfolios in
+general \citep{DBLP:journals/ai/GomesS01}, and the approach by \citet{DBLP:conf/sls/BattitiM07} for
+subgraph isomorphism in particular, is not noted (and nor are portfolios mentioned when they say
+that ``using machine learning models to predict which version \ldots to employ per query is of high
+interest'').  The evidence so far in this paper suggests that we should be wary. It is certainly
+true that there are some instances that all algorithms find hard, and there are good theoretical
+reasons to believe that these instances genuinely are really hard.  Furthermore, algorithm
+portfolios are also well-known to be a successful technique, and are beneficial even with modern
+subgraph isomorphism algorithms \citep{DBLP:conf/lion/KotthoffMS16}.  However, in
+\cref{section:labelled} we saw that there are many instances that VF2 finds hard that should not be
+hard, and that are not hard for other algorithms.  If permuting graphs sometimes addresses the
+difficulty of some of these instances, then it is likely that they are not genuinely hard instances
+at all, and perhaps it would be better simply to start using an algorithm with domain tracking and
+domain-based ordering heuristics, rather than assembling a portfolio of bad algorithms in the hopes
+that at least one of them will often get lucky.
 
 To test this suggestion, we return briefly to the experiments on the datasets discussed earlier in
 this section. What if we modify our solver so that it does not use ``smallest domain first'', and
@@ -1406,30 +1402,18 @@ millions of recursive calls, and the PPI dataset now requires hundreds of thousa
 some queries.  Furthermore, slight changes to the input vertex ordering can now make some of these
 ``hard'' instances easy again.  This backs up our suspicions: the apparent success of
 \citet{DBLP:conf/edbt/KatsarouNT17}'s technique is due to the ease of sometimes getting better
-results out of a poor algorithm, rather than being an inherent hardness property, and it would not
-help on really hard problem instances.
+results out of a poor algorithm. Claiming huge improvements from an algorithm portfolio consisting
+only of variations of poor algorithms does not demonstrate a genuine improvement over the state of
+the art.
 
-\subsection{Search Ordering}
-
-We have seen, then, that domain tracking and domain-based ordering heuristics are critical, and we
-have seen that these alone are enough to make indexing and other techniques irrelevant. There
-is therefore no point in continued research such as that by
-\citet{DBLP:conf/gbrpr/CarlettiFV15} and \citet{o:Carletti16}
-into tweaking VF2's connectivity-based heuristics.
-
-?? NVMe \citep{DBLP:conf/wise/ShenZ17}
-
-?? In particular, we saw that VF3 \citep{DBLP:conf/gbrpr/CarlettiFSV17} performed \emph{worse} than
-VF2 on harder instances.
-
-\subsection{Benchmarking on Hard Instances}
-
-?? VF3 milliseconds
-
-?? \citet{DBLP:journals/tcbb/BonniciG17} compare various non-CP approaches to LAD. Benchmark sets
-whose difficulties are measured between microseconds and milliseconds
-
-\citet{DBLP:journals/heuristics/Gent98} describes the importance of hard benchmark instances:
+Improved search orderings for VF2 also appear in recent work by
+\citet{DBLP:conf/gbrpr/CarlettiFV15} and \citet{o:Carletti16}, cumulating in VF3
+\citep{DBLP:conf/gbrpr/CarlettiFSV17}, and by \citet{DBLP:conf/wise/ShenZ17}. We have seen in
+\cref{section:labelled} that such an approach could give improvements, but will not bring an
+algorithm that does not use domains close to the performance of one that does on harder instances.
+Indeed, we saw in \cref{figure:induced} that VF3 performs \emph{worse} than VF2 on harder instances.
+The importance of using hard benchmark instances was stressed by
+\citet{DBLP:journals/heuristics/Gent98}:
 
 \begin{displayquote}
     ``Benchmark problems should be hard. I report on the solution of the five open benchmark
@@ -1441,12 +1425,24 @@ whose difficulties are measured between microseconds and milliseconds
     hard.''
 \end{displayquote}
 
-?? Claiming huge improvements from an algorithm portfolio consisting only of variations of poor
-algorithms does not demonstrate a genuine improvement over the state of the art.
+Unfortunately, this lesson has not sunk in. For example, \citet{DBLP:journals/tcbb/BonniciG17}
+recently compared various non-constraint-based approaches to LAD using benchmark sets whose
+difficulties are measured between microseconds and milliseconds. Their results suggest that LAD is
+an order of magnitude slower than other approaches. This should not surprise us: the initialisation
+costs of LAD are non-trivial due to it constructing domains, calculating neighbourhood degree
+sequences, and performing all-different filtering. However, the risks of occasionally encountering
+exponential performance from weaker algorithms on easy instances should now be clear.
 
-?? Need for more hard instances
-
-?? Something about distance-based filtering being no use on our instances, low degree spread
+Of course, hard random instances of the kind we describe in
+\cref{section:non-induced,section:induced} are also atypical, and should not form the sole basis for
+benchmarking. In particular, distance-based filtering
+\citep{DBLP:conf/cp/AudemardLMGP14,DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16} has little
+to no effect on these instances, but is extremely beneficial on other kinds of graph, including
+those from real-world applications.  These graphs also have a low degree spread and very little
+structure to exploit, which could mislead experimenters as to the value of certain kinds of
+inference. \citet{o:GentW95} give an example of an exam timetabling graph which contains an
+unexpected ten-vertex clique, which would be extremely unlikely in a randomly generated graph with a
+similar order and density.
 
 \section{Conclusion}
 
