@@ -12,7 +12,7 @@ set output "biiiig-data-pcms.tex"
 
 load "../chroma.pal"
 
-set xrange [0:4000]
+set xrange [0:]
 set xlabel "Recursive calls"
 set ylabel "Instances solved"
 set yrange [0:1800]
@@ -24,8 +24,7 @@ set ytics nomirror
 set key off
 set title "PCM"
 set ytics add ("$1800$" 1800)
-set xtics 1000
 
 plot \
-    "<cut -d' ' -f6 ../data/Xpcms-mysip.txt" u 1:(1) smooth cumulative w l ls 1 lw 2
+    "<cut -d' ' -f4 ../../biiiiiig-data/pcms/results" u 1:(1) smooth cumulative w l ls 1 lw 2
 

@@ -1294,27 +1294,26 @@ that the associated queries are sensible, merely that they are widely used.
     \hspace*{1em}
 
     \caption{Cumulative number of instances solved as a function of search space size, using four
-    graph database datasets and a simple domain-based subgraph isomorphism algorithm. Note that the
-    $x$-axis shows recursive calls, and does \emph{not} use a log scale.}
+    graph database datasets and a simple constraint programming subgraph isomorphism algorithm. Note
+    that the $x$-axis shows recursive calls, and does \emph{not} use a log scale.}
     \label{figure:biiiig-data}
 \end{figure}
 
-?? Redo these using CP.
-
-Rather than the modern techniques discussed used by Glasgow and LAD, we deliberately select a very
-simple starting point: a forward-checking algorithm which uses the ``smallest domain first''
-heuristic, the simple counting all-different propagator, and degree and neighbourhood degree
-sequence filtering at the top of search. Even this simple algorithm finds every instance nearly
-trivial, and no exponential behaviour is observed. As we show in \cref{figure:biiiig-data}, the
-\emph{hardest} instance for the AIDS dataset requires 59 recursive calls, and 146,175 of the
-instances can be solved without search.  For PDBS, the hardest problem requires 1,776 recursive
-calls (which occurs 20 times, due to duplicated queries), and none of the rest require more than 182
-calls. For PCM the hardest problem requires 3,261 calls, and for PPI, 26. In other words, none of
-these instances are in any way computationally hard even for a simple domain-based algorithm, even
-before introducing stronger filtering, inference, or heuristics. Furthermore it is certainly not the
-case that a sequential scan is infeasible as so many filter~/ verify papers claim.  The exponential
-behaviour seen by others in these instances is purely down to a bad choice of subgraph isomorphism
-algorithm, and these instances are not inherently ``really hard''.
+Rather than the modern techniques used by Glasgow and LAD, we deliberately select a very simple
+starting point: a constraint programming model implemented in Gecode 5.1.0 using only
+toolkit-provided constraints and heuristics. The model uses a ``smallest domain first'' variable
+ordering heuristic with tie-breaking on degree, an all-different constraint, extensional constraints
+for adjacency, and labelled-degree filtering at the top of search. Even this simple approach finds
+nearly every instance trivial, and no exponential behaviour is observed. As we show in
+\cref{figure:biiiig-data}, the \emph{hardest} instance for the AIDS dataset requires 287 recursive
+calls, and 149,268 of the instances can be solved without search.  For PDBS, the hardest problem
+requires 3,161 recursive calls (which occurs 20 times, due to duplicated queries). For both PCM and
+PPI, the hardest problem requires 23 recursive calls.  In other words, none of these instances are
+in any way computationally hard even for a simple domain-based algorithm, even before introducing
+stronger filtering, inference, or heuristics.  Furthermore it is certainly not the case that a
+sequential scan is infeasible as so many filter~/ verify papers claim.  The exponential behaviour
+seen by others in these instances is purely down to a bad choice of subgraph isomorphism algorithm,
+and these instances are not inherently ``really hard''.
 
 There are at least four benefits beyond simplicity towards abolishing filter~/ verify:
 
@@ -1400,19 +1399,15 @@ than assembling a portfolio of bad algorithms in the hopes that at least one of 
 lucky.
 
 To test this suggestion, we return briefly to the experiments on the datasets discussed earlier in
-this section. What if we had not used a ``smallest domain first'' heuristic, and instead used only
-degree-based heuristics explained earlier in this paper? Although we still find all four of these
-datasets easy, and the changes to the runtimes are hard to detect (more time is spent in
-initialisation than in search), the worst case in the AIDS dataset now takes 4,051 recursive calls
-as opposed to 59.  How about if, additionally, we do not detect domain wipeouts until attempting to
-branch on an empty variable?  Suddenly three of the four datasets become extremely hard, with many
-instances now timing out after making hundreds of millions of recursive calls; the PPI dataset now
-requires up to 168,451 calls for some queries. Furthermore, slight changes to the input vertex
-ordering can now make some of these ``hard'' instances easy again.
-
-This backs up our suspicions: the apparent success of \citet{DBLP:conf/edbt/KatsarouNT17}'s
-technique is due to the ease of sometimes getting better results out of a poor algorithm, rather
-than being an inherent hardness property, and it would not help on really hard problem instances.
+this section. What if we modify our solver so that it does not use ``smallest domain first'', and
+does not detect domain wipeouts until attempting to branch on an empty variable?  Suddenly three of
+the four datasets become extremely hard, with many instances now timing out after making hundreds of
+millions of recursive calls, and the PPI dataset now requires hundreds of thousands of calls for
+some queries.  Furthermore, slight changes to the input vertex ordering can now make some of these
+``hard'' instances easy again.  This backs up our suspicions: the apparent success of
+\citet{DBLP:conf/edbt/KatsarouNT17}'s technique is due to the ease of sometimes getting better
+results out of a poor algorithm, rather than being an inherent hardness property, and it would not
+help on really hard problem instances.
 
 \subsection{Search Ordering}
 

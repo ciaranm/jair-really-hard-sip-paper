@@ -12,7 +12,7 @@ set output "biiiig-data-ppigo.tex"
 
 load "../chroma.pal"
 
-set xrange [0:30]
+set xrange [0:]
 set xlabel "Recursive calls"
 set ylabel "Instances solved"
 set yrange [0:100]
@@ -25,5 +25,5 @@ set key off
 set title "PPI"
 
 plot \
-    "<cut -d' ' -f6 ../data/Xppigo-mysip.txt" u 1:(1) smooth cumulative w l ls 1 lw 2
+    "<cut -d' ' -f4 ../../biiiiiig-data/ppigo/results" u 1:(1) smooth cumulative w l ls 1 lw 2
 

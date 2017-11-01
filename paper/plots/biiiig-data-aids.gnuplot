@@ -12,7 +12,7 @@ set output "biiiig-data-aids.tex"
 
 load "../chroma.pal"
 
-set xrange [0:60]
+set xrange [0:]
 set xlabel "Recursive calls"
 set ylabel "Instances solved (1000s)"
 set yrange [0:240]
@@ -26,5 +26,5 @@ set title "AIDS"
 set ytics add ("$240$" 240)
 
 plot \
-    "<cut -d' ' -f6 ../data/Xaids40000-mysip.txt" u 1:(1e-3) smooth cumulative w l ls 1 lw 2
+    "<cut -d' ' -f4 ../../biiiiiig-data/aids/results" u 1:(1e-3) smooth cumulative w l ls 1 lw 2
 
