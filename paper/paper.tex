@@ -329,8 +329,7 @@ solvers is less detailed.
 
 The Glasgow, LAD, and VF2 solvers support both non-induced and induced isomorphisms (although
 neither Glasgow nor LAD were designed with the induced version in mind), whilst VF3 supports only
-the induced problem. Note also that VF3 will sometimes crash on especially sparse graphs: we have
-treated these instances as timeouts.
+the induced problem.
 
 \section{Non-Induced Subgraph Isomorphisms}\label{section:non-induced}
 
@@ -573,18 +572,26 @@ to a mirror image. The central satisfiable region, which is away from either pha
 computationally easy, but instances near the phase transition are hard.
 
 For larger patterns of order 20 and 30, we have a large unsatisfiable region in the middle. Despite
-not being near either phase transition, instances in the centre remain computationally challenging.
-We also plot patterns of orders 14, 15 and 16, to show the change between the two behaviours.
+not being near either phase transition, instances in the centre remain computationally challenging
+for every solver.  We also plot patterns of orders 14, 15 and 16, to show the change between the two
+behaviours.
 
 We might expect these complexity plots to be symmetric along the diagonal, since for the induced
 problem, if we replace both inputs with their complements, the solutions remain the same.  For the
 Glasgow solver, this is almost the case. This should be expected, because this complement property is
 precisely how the Glasgow solver handles the induced variant (although the heuristics may differ
 between the two, which we discuss below). For LAD, some of the very dense patterns are slightly
-harder than their diagonal opposites (LAD reasons about degrees, but not about complement-degrees);
-it is interesting to note that for larger target graphs, VF2 finds \emph{all} dense pattern graphs
-difficult. Finally, VF3's performance generally improves upon VF2's on instances that VF2 finds easy
-(except in the cases where VF3 crashes), but worsens on instances that VF2 finds hard.
+harder than their diagonal opposites (LAD reasons about degrees, but not about complement-degrees).
+
+It is interesting to note that for larger target graphs, VF2 finds \emph{all} dense pattern graphs
+difficult. Meanwhile, VF3 behaves better than VF2 in some regions, but worse than VF2 in others, and
+has a larger hard region than either domain-based algorithm.\footnote{The version of
+VF3 supplied by its inventors will crash if given an empty pattern graph. We have chosen to treat
+these results as successes taking zero search, even though empty pattern graphs are not trivial for
+the induced problem. If the reader prefers to interpret a crash as a timeout, the VF3 plots would
+contain an additional area of black points down the left-hand side.} VF3 also occasionally finds
+some instances with sparse target graphs (along the bottom of the plot) extremely difficult, whilst
+other solvers do not.
 
 \subsection{Predictions and Heuristics}
 
@@ -1451,11 +1458,14 @@ satisfiable instances created by taking a connected subgraph of a randomly gener
 permuting the nodes. They conclude that VF3 is the best algorithm based upon its performance solving
 the enumeration problem on these new instances.  We urge a more cautious interpretation of these
 results: as we saw in \cref{section:induced}, being genuinely hard (rather than simply larger) is a
-subtle property, and more care must be taken to avoid accidentally measuring which algorithm scales
-best to large, easy instances due to it using the simplest inference routines. Indeed, we saw in
-\cref{figure:induced} that VF3 performs \emph{worse} than VF2 on genuinely harder instances, and an
-induced analogue of \cref{figure:labels} confirms that VF3 still struggles with many obviously
-unsatisfiable instances.
+subtle property, and it is not safe to say that an instance is hard simply because several
+minor variations of a particular kind of algorithm find it hard. More care must thus be taken to
+avoid accidentally measuring which algorithm scales best to large, easy instances due to it using
+the simplest inference routines. Indeed, we saw in \cref{figure:induced} that VF3 performs
+\emph{worse} than VF2 on genuinely harder instances, and additionally behaves erratically in parts
+of the parameter space that every other solver finds easy; finally, an induced analogue of
+\cref{figure:labels} confirms that VF3 also still struggles with many obviously unsatisfiable
+instances.
 
 Of course, hard random instances of the kind we describe in
 \cref{section:non-induced,section:induced} are also atypical, and should not form the sole basis for
