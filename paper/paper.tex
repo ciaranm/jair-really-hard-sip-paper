@@ -217,7 +217,7 @@ vertices) of the pattern and target graphs.  For non-induced isomorphisms, with 
 of parameters we see results very similar to those observed with boolean satisfiability problems:
 there is a phase transition (whose location we can predict) from satisfiable to unsatisfiable, and
 we see a solver-independent complexity peak near this phase transition. Additionally, understanding
-this behaviour helps us to select better variable- and value-ordering heuristics---this is the
+this behaviour helps us to design better variable- and value-ordering heuristics---this is the
 second contribution of this paper.
 
 In \cref{section:induced} we look at the induced isomorphism problem.  For certain choices of
@@ -263,7 +263,7 @@ instances except if an extremely poor choice of subgraph isomorphism algorithm i
 
 \bigskip
 
-Part of this paper were presented at IJCAI \citep{DBLP:conf/ijcai/McCreeshPT16}; the first three
+Parts of this paper were presented at IJCAI \citep{DBLP:conf/ijcai/McCreeshPT16}; the first three
 sections have been expanded, whilst
 \cref{section:regular,section:labelled,section:filterverify} are new material.
 
@@ -298,7 +298,7 @@ solvers: the Glasgow solver \citep{DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/Kotth
 \citep{DBLP:journals/ai/Solnon10}; VF2 \citep{DBLP:journals/pami/CordellaFSV04}; and VF3
 \citep{DBLP:conf/gbrpr/CarlettiFSV17}. Each was compiled using GCC 4.9.
 
-The Glasgow and LAD solvers are constraint programming style algorithms (although they use dedicated
+The Glasgow and LAD solvers are constraint programming inspired algorithms (although they use dedicated
 data structures, and do not use a constraint programming toolkit). For each vertex in the pattern
 graph, they create a \emph{variable} whose \emph{domain} contains one \emph{value} for each vertex
 in the target graph. The algorithms perform backtracking search, with the goal of assigning to each
@@ -466,7 +466,7 @@ number of solutions inside any subproblem considered during search \citep{DBLP:c
 This is usually done by cheaper surrogates, rather than direct calculation. When branching, both LAD
 and Glasgow pick a variable with fewest remaining values in its domain: doing this will generally
 reduce the first part of the $\langle Sol \rangle$ equation by as little as possible. When two or
-more domains are of equal size, LAD simply breaks ties lexicographically, whereas Glasgow will pick
+more domains are of equal size, LAD breaks ties lexicographically, whereas Glasgow will pick
 a variable corresponding to a pattern vertex of highest degree. This strategy was determined
 empirically, but could have been derived from the $\langle Sol \rangle$ formula: picking a pattern
 vertex of high degree will make the remaining pattern subgraph sparser, which will decrease the
@@ -622,8 +622,9 @@ the data suggests that the actual location of the phase transition may be involv
 \citeauthor{DBLP:conf/aaai/Walsh98}'s suggestion applies only in these conditions). In any case, $\langle Sol
 \rangle$ is insufficient to explain the observed behaviour in these two eighths of the parameter space.
 
-In practice, this is unlikely to be a problem: most real-world instances are relatively sparse. In
-this situation, these experiments justify reusing the non-induced heuristics on induced problems.
+In practice, this is unlikely to be a problem: most of the real-world instances we have seen tend to
+be relatively sparse. In this situation, these experiments justify reusing the non-induced
+heuristics on induced problems.
 
 \subsection{Is the Central Region Genuinely Hard?}
 
@@ -706,7 +707,7 @@ this situation, these experiments justify reusing the non-induced heuristics on 
 \end{figure}
 
 The region in the parameter space where both pattern and target have medium density is far from a
-phase transition, but nevertheless contains instances that are hard for all three solvers. We would
+phase transition, but nevertheless contains instances that are hard for all four solvers. We would
 like to know whether this is due to a weakness in current solvers (perhaps our solvers cannot reason
 about adjacency and non-adjacency simultaneously?), or whether instances in this region are
 inherently difficult to solve.  Thus we repeat the induced experiments on smaller pattern and target
@@ -734,10 +735,10 @@ vertex $(p_1, t_1)$ and vertex $(p_2, t_2)$ if mapping $p_1$ to $t_1$ and $p_2$ 
 simultaneously is permitted, i.e.\ $p_1$ is adjacent to $p_2$ if and only if $t_1$ is adjacent to
 $t_2$. A clique of size equal to the order of the pattern graph exists in the association graph if
 and only if the problem is satisfiable \citep{o:Levi73}. We used this encoding with an
-implementation of \citet{DBLP:journals/cor/SegundoRJ11}'s bit-parallel maximum clique algorithm,
-modified to solve the decision problem rather than the optimisation problem.  Again, our results
-show that the instances in the central region remain hard, and additionally, some of the easy
-unsatisfiable instances become hard.
+implementation of \citet{DBLP:journals/cor/SegundoRJ11}'s bit-parallel maximum clique algorithm
+BBMC, modified to solve the decision problem rather than the optimisation problem.  Again, our
+results show that the instances in the central region remain hard, and additionally, some of the
+easy unsatisfiable instances become hard.
 
 Together, these experiments suggest that the central region may be genuinely hard, despite not being
 near a phase transition. The clique results in particular rule out the hypothesis that subgraph
@@ -749,24 +750,25 @@ rather than adjacency and non-adjacency.
 
 Constrainedness, denoted $\kappa$, is an alternative measure of difficulty designed to refine the
 phase transition concept, and to generalise hardness parameters across different combinatorial
-problems \citep{DBLP:conf/aaai/GentMPW96}. A problem with $\kappa < 1$ is said to be underconstrained, and is
-likely to be satisfiable; a problem with $\kappa > 1$ is overconstrained, and is likely to be
-unsatisfiable. Empirically, problems with $\kappa$ close to 1 are hard, and problems where $\kappa$
-is very small or very large are usually easy. By handling injectivity as a restriction on the size
-of the state space rather than as a constraint, we derive
-\begin{equation}\label{equation:constrainedness}\kappa = 1 - \frac{\log \left(
-t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot {(1 - d_{t})}^{(1 - d_{p}) \cdot
-\binom{p}{2}} \right)}{\log t^{\underline{p}}} \end{equation} for induced isomorphisms, which we plot on the
-sixth row of \cref{figure:induced}. We see that constrainedness predicts that the central region
-will still be relatively difficult for larger pattern graphs: although the problem is
-overconstrained, it is less overconstrained than in the regions the Glasgow and LAD solvers found
-easy.  Thus it seems that rather than just being a unification of existing generalised heuristic
-techniques, constrainedness also gives a better predictor of difficulty than proximity to a phase
+problems \citep{DBLP:conf/aaai/GentMPW96}. A problem with $\kappa < 1$ is said to be
+underconstrained, and is likely to be satisfiable; a problem with $\kappa > 1$ is overconstrained,
+and is likely to be unsatisfiable. Empirically, problems with $\kappa$ close to 1 are hard, and
+problems where $\kappa$ is very small or very large are usually easy. By handling injectivity as a
+restriction on the size of the state space rather than as a constraint, we derive
+\begin{equation}\label{equation:constrainedness}\kappa = 1 - \frac{\log \left( t^{\underline{p}}
+\cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot {(1 - d_{t})}^{(1 - d_{p}) \cdot \binom{p}{2}}
+\right)}{\log t^{\underline{p}}} \end{equation} for induced isomorphisms, which we plot on the sixth
+row of \cref{figure:induced}. We see that constrainedness predicts that the central region will
+still be relatively difficult for larger pattern graphs: although the problem is overconstrained, it
+is less overconstrained than in the regions the Glasgow and LAD solvers found easy.  Thus it seems
+that rather than just being a unification of existing generalised heuristic techniques,
+constrainedness also gives a better predictor of difficulty than proximity to a phase
 transition---our method generates instances where constrainedness and ``close to a phase
-transition'' give very different predictions, and constrainedness gives the better prediction.
+transition'' give very different predictions, and constrainedness closely matches the empirical
+results.
 
-Unfortunately, constrainedness does not help us with heuristics: minimising constrainedness gives
-the same predictions as maximising the expected number of solutions.
+Unfortunately, constrainedness does not give additional heuristic information: minimising
+constrainedness gives the same predictions as maximising the expected number of solutions.
 
 \section{$k$-Regular Graphs}\label{section:regular}
 
@@ -808,11 +810,11 @@ the same predictions as maximising the expected number of solutions.
     \label{figure:kr}
 \end{figure}
 
-What about richer graph structures? We briefly look at what happens with the non-induced problem if
-we use $k$-regular graphs rather than the Erd\H{o}s-R\'enyi model, and then in the following section
-we see the effects of introducing vertex labels. Both models still exhibit phase transition
-behaviour, although with sufficiently many labels the ``satisfiable'' region now contains a mix of
-satisfiable and unsatisfiable instances.
+What about richer graph structures? In this section we briefly look at what happens with the
+non-induced problem if we use $k$-regular graphs rather than the Erd\H{o}s-R\'enyi model, and then
+in the following section we see the effects of introducing vertex labels. Both models still exhibit
+phase transition behaviour, although with sufficiently many labels the ``satisfiable'' region now
+contains a mix of satisfiable and unsatisfiable instances.
 
 By $R(n, k)$ we mean a random graph with $k$ vertices, each of which has degree $k$. In
 \cref{figure:kr} we recreate \cref{figure:non-induced}, using the NetworkX implementation
@@ -970,7 +972,7 @@ unsatisfiable.
     \label{figure:skewed-cumulative}
 \end{figure}
 
-To illustrate this point further, we will now look at some instances created using a slightly more
+To illustrate this point further, we now look at some instances created using a slightly more
 structured random model. We create a family of one thousand labelled instance pairs, as follows. To
 create a pattern graph, we create ten vertices with label zero, with edges between these vertices
 with probability 0.2. We then add another ten vertices, with labels chosen randomly between one and
@@ -1005,7 +1007,9 @@ LAD detect this without search), but unless the labelled vertex is given the low
 try to map every adjacent vertex in the clique before considering the difficult isolated vertex.
 This example can be extended slightly to fool any simple static heuristic, or any simple label
 counting mechanism (for example, by attaching an additional vertex with a unique label to the
-clique).
+clique). Note also the resemblance to the cases seen in the bottom left of the VF2 plots in
+\cref{figure:non-induced}, where a pattern graph which has a few edges combined with a target graph
+with no edges gives a timeout.
 
 These experiments further highlight that VF2 occasionally finds some instances which should be easy hard.
 But does this cause problems in practice? The literature suggests that it does. For example,
@@ -1085,7 +1089,7 @@ popular of these strategies is a form of indexing which is often named \emph{fil
 
 The filter~/ verify approach has an interesting history, of which we now give a very selective and
 incomplete overview. Our description is biased by a general modern understanding of the empirical
-hardness of \NP-complete problems, which was not widely known at least at the time of the earlier
+hardness of \NP-complete problems, which was not widely known at the time of the earlier
 papers we discuss. The common theme of all of the following papers is that pre-computed information
 is used to eliminate certain unsatisfiable instances from consideration, without performing a
 subgraph isomorphism test. For example, an index might contain a bit of information expressing
@@ -1171,7 +1175,10 @@ However, in a description of a system tailored to biological networks,
 \citet{DBLP:conf/edbt/ZhangLY09} state that \begin{displayquote}``Since the size of the raw database
     graph is small, it can be easily fit in the main memory.  However, the query (matching) time
 will be very long due to the NP-hard complexity.''\end{displayquote} They suggest that indexing is
-a way of avoiding this.
+a way of avoiding this. Similarly, \citet{DBLP:journals/pvldb/ZhaoH10} argue that ``the graph query
+problem is hard in that \ldots it requires subgraph isomorphism checking \ldots which has proven to
+be NP-complete'' and that working with large networks is hard or impossible ``due to the lack of
+scalable graph indexing mechanisms''.
 
 \citet{DBLP:conf/icdcs/CaoYWRL11} propose a privacy-preserving cloud graph database system using
 filter~/ verify, stating that ``checking subgraph isomorphism is \NP-complete, and therefore it is
@@ -1181,7 +1188,8 @@ subgraph isomorphism is an \NP-complete problem, a filter-and-verification metho
 employed to speed up the search efficiency of graph similarity matching over a graph set''.
 Similarly, after reviewing the literature, \citet{DBLP:journals/vldb/YuanM13} argue that subgraph
 querying is costly because it is \NP-complete, and that indices can improve the performance of graph
-database queries. Again, new indexing techniques are introduced. Subsequently, \citet{DBLP:journals/pvldb/KatsarouNT15} perform a comprehensive comparison of graph database
+database queries. Again, new indexing techniques are introduced. Subsequently,
+\citet{DBLP:journals/pvldb/KatsarouNT15} perform a comprehensive comparison of graph database
 filtering techniques. They state that performing a query against each graph in the dataset
 ``obviously does not scale, as subgraph isomorphism is \NP-complete''. In describing a system which
 returns a special subset of graphs which match a query, \citet{DBLP:journals/tkde/ZhengLZHZ16}
@@ -1261,14 +1269,15 @@ following the example of \citet{o:10.1371/journal.pone.0076911}, they are widely
         \citeauthor{o:10.1371/journal.pone.0076911}, the queries are compounds with 8, 16 or 32
         edges.
     \item The PDBS dataset \citep{o:HeLCBBSKMR02} contains 30 labelled graphs representing DNA, RNA,
-        and proteins, each duplicated twenty times. These
+        and proteins, each duplicated twenty times to give a dataset of 600 graphs. These
         can be relatively large, having up to tens of thousands of vertices, but are extremely
         sparse. The queries are randomly selected connected subgraphs and do not have a real-world
         meaning.
     \item The PCM dataset \citep{o:doi:10.1093/bioinformatics/btr163} contains 50 protein contact
-        maps, each duplicated four times. These graphs have under a thousand vertices and below
-        twenty thousand edges; they are slightly less sparse than the previous two datasets. As for
-        PDBS, the queries are randomly generated and do not have a particular meaning.
+        maps, each duplicated four times to give a dataset of 200 graphs. These graphs have under a
+        thousand vertices and below twenty thousand edges; they are slightly less sparse than the
+        previous two datasets. As for PDBS, the queries are randomly generated and do not have a
+        particular meaning.
     \item The PPI dataset contains 20 protein interaction networks, with up to ten thousand
         vertices. The queries have either four or eight vertices.
 \end{itemize}
@@ -1315,7 +1324,7 @@ subgraph isomorphism algorithm, and these instances are not inherently ``really 
 \subsection{Benefits of Constraint Programming over Filter / Verify}
 
 There are at least four benefits beyond simplicity towards abolishing filter~/ verify in favour of a
-purely constraint programming style approach:
+purely constraint programming inspired approach:
 
 \begin{itemize}
     \item Domain filtering is useful on both satisfiable and unsatisfiable instances, whilst
@@ -1406,12 +1415,13 @@ results out of a poor algorithm. Claiming huge improvements from an algorithm po
 only of variations of poor algorithms does not demonstrate a genuine improvement over the state of
 the art.
 
-Improved search orderings for VF2 also appear in recent work by
+Improved search orderings for VF2-style algorithms also appear in recent work by
 \citet{DBLP:conf/gbrpr/CarlettiFV15} and \citet{o:Carletti16}, cumulating in VF3
-\citep{DBLP:conf/gbrpr/CarlettiFSV17}, and by \citet{DBLP:conf/wise/ShenZ17}. We have seen in
-\cref{section:labelled} that such an approach could give improvements, but will not bring an
-algorithm that does not use domains close to the performance of one that does on harder instances.
-Indeed, we saw in \cref{figure:induced} that VF3 performs \emph{worse} than VF2 on harder instances.
+\citep{DBLP:conf/gbrpr/CarlettiFSV17,o:CarlettiFSV17}, and by \citet{DBLP:conf/wise/ShenZ17}. We
+have seen in \cref{section:labelled} that such an approach could give improvements, but will not
+bring an algorithm that does not use domains close to the performance of one that does on harder
+instances.
+
 The importance of using hard benchmark instances was stressed by
 \citet{DBLP:journals/heuristics/Gent98}:
 
@@ -1432,6 +1442,20 @@ an order of magnitude slower than other approaches. This should not surprise us:
 costs of LAD are non-trivial due to it constructing domains, calculating neighbourhood degree
 sequences, and performing all-different filtering. However, the risks of occasionally encountering
 exponential performance from weaker algorithms on easy instances should now be clear.
+
+\citet{o:CarlettiFSV17} correctly observe that ``a performance improvement on [hard instances] has a
+far greater practical impact than it would have on easier graphs, since the saved time can be of
+several hours or even days'', but mistakenly believe that being larger and slightly denser is what
+makes an instance harder. To evaluate VF3, they introduce a new dataset consisting entirely of
+satisfiable instances created by taking a connected subgraph of a randomly generated graph and
+permuting the nodes. They conclude that VF3 is the best algorithm based upon its performance solving
+the enumeration problem on these new instances.  We urge a more cautious interpretation of these
+results: as we saw in \cref{section:induced}, being genuinely hard (rather than simply larger) is a
+subtle property, and more care must be taken to avoid accidentally measuring which algorithm scales
+best to large, easy instances due to it using the simplest inference routines. Indeed, we saw in
+\cref{figure:induced} that VF3 performs \emph{worse} than VF2 on genuinely harder instances, and an
+induced analogue of \cref{figure:labels} confirms that VF3 still struggles with many obviously
+unsatisfiable instances.
 
 Of course, hard random instances of the kind we describe in
 \cref{section:non-induced,section:induced} are also atypical, and should not form the sole basis for
@@ -1490,8 +1514,8 @@ initialisation is still costly).
 We must stress that we are not simply concluding that graph database systems should use a better
 subgraph isomorphism algorithm.  Instead, this paper has shown that such systems need to be designed
 respecting our understanding of the empirical hardness of \NP-complete problems, that subgraph
-isomorphism algorithms must not be treated as a black box, and that lessons learned in constraint
-programming and artificial intelligence must not go unheeded in other domains.
+isomorphism algorithms should not be treated as a black box, and that lessons learned in constraint
+programming and artificial intelligence should not go unheeded in other domains.
 
 \acks{The authors would like to thank Kitty Meeks and Craig Reilly for their comments. The heatmap
 schemes used in this paper were created with the assistance of the ``Chroma.js Color Scale Helper''
