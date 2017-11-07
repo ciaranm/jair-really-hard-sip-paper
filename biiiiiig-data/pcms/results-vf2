@@ -408,11 +408,11 @@ query -> 1A7C.cm.B.cmap 0 unsat
 query -> 1A7C.cm.C.cmap 0 unsat
 query -> 1AB4.cm.A.cmap 69091 unsat
 query -> 1AD2.cm.A.cmap 1088 unsat
-query -> 1AMU.cm.A.cmap 1000001 fail
-query -> 1AMU.cm.B.cmap 1000001 fail
+query -> 1AMU.cm.A.cmap 1011075 unsat
+query -> 1AMU.cm.B.cmap 2332854 unsat
 query -> 1ANT.cm.I.cmap 1697 unsat
 query -> 1ANT.cm.L.cmap 2113 unsat
-query -> 1ARO.cm.L.cmap 1000001 fail
+query -> 1ARO.cm.L.cmap 6081179 sat 
 query -> 1ARO.cm.P.cmap 7167 unsat
 query -> 1ATU.cm.A.cmap 58155 unsat
 query -> 1AWB.cm.A.cmap 988 unsat
@@ -420,7 +420,7 @@ query -> 1AWB.cm.B.cmap 897 unsat
 query -> 1AXB.cm.A.cmap 2191 unsat
 query -> 1AZX.cm.I.cmap 2305 unsat
 query -> 1AZX.cm.L.cmap 2386 unsat
-query -> 1BA3.cm.A.cmap 1000001 fail
+query -> 1BA3.cm.A.cmap 6476072 unsat
 query -> 1BGW.cm.A.cmap 43231 unsat
 query -> 1BJT.cm.A.cmap 39403 unsat
 query -> 1BK4.cm.A.cmap 1624 unsat
@@ -458,11 +458,11 @@ query -> 1A7C.cm.B.cmap 0 unsat
 query -> 1A7C.cm.C.cmap 0 unsat
 query -> 1AB4.cm.A.cmap 69091 unsat
 query -> 1AD2.cm.A.cmap 1088 unsat
-query -> 1AMU.cm.A.cmap 1000001 fail
-query -> 1AMU.cm.B.cmap 1000001 fail
+query -> 1AMU.cm.A.cmap 1011075 unsat
+query -> 1AMU.cm.B.cmap 2332854 unsat
 query -> 1ANT.cm.I.cmap 1697 unsat
 query -> 1ANT.cm.L.cmap 2113 unsat
-query -> 1ARO.cm.L.cmap 1000001 fail
+query -> 1ARO.cm.L.cmap 6081179 sat 
 query -> 1ARO.cm.P.cmap 7167 unsat
 query -> 1ATU.cm.A.cmap 58155 unsat
 query -> 1AWB.cm.A.cmap 988 unsat
@@ -470,7 +470,7 @@ query -> 1AWB.cm.B.cmap 897 unsat
 query -> 1AXB.cm.A.cmap 2191 unsat
 query -> 1AZX.cm.I.cmap 2305 unsat
 query -> 1AZX.cm.L.cmap 2386 unsat
-query -> 1BA3.cm.A.cmap 1000001 fail
+query -> 1BA3.cm.A.cmap 6476072 unsat
 query -> 1BGW.cm.A.cmap 43231 unsat
 query -> 1BJT.cm.A.cmap 39403 unsat
 query -> 1BK4.cm.A.cmap 1624 unsat
@@ -508,11 +508,11 @@ query -> 1A7C.cm.B.cmap 0 unsat
 query -> 1A7C.cm.C.cmap 0 unsat
 query -> 1AB4.cm.A.cmap 69091 unsat
 query -> 1AD2.cm.A.cmap 1088 unsat
-query -> 1AMU.cm.A.cmap 1000001 fail
-query -> 1AMU.cm.B.cmap 1000001 fail
+query -> 1AMU.cm.A.cmap 1011075 unsat
+query -> 1AMU.cm.B.cmap 2332854 unsat
 query -> 1ANT.cm.I.cmap 1697 unsat
 query -> 1ANT.cm.L.cmap 2113 unsat
-query -> 1ARO.cm.L.cmap 1000001 fail
+query -> 1ARO.cm.L.cmap 6081179 sat 
 query -> 1ARO.cm.P.cmap 7167 unsat
 query -> 1ATU.cm.A.cmap 58155 unsat
 query -> 1AWB.cm.A.cmap 988 unsat
@@ -520,7 +520,7 @@ query -> 1AWB.cm.B.cmap 897 unsat
 query -> 1AXB.cm.A.cmap 2191 unsat
 query -> 1AZX.cm.I.cmap 2305 unsat
 query -> 1AZX.cm.L.cmap 2386 unsat
-query -> 1BA3.cm.A.cmap 1000001 fail
+query -> 1BA3.cm.A.cmap 6476072 unsat
 query -> 1BGW.cm.A.cmap 43231 unsat
 query -> 1BJT.cm.A.cmap 39403 unsat
 query -> 1BK4.cm.A.cmap 1624 unsat
@@ -558,11 +558,11 @@ query -> 1A7C.cm.B.cmap 0 unsat
 query -> 1A7C.cm.C.cmap 0 unsat
 query -> 1AB4.cm.A.cmap 69091 unsat
 query -> 1AD2.cm.A.cmap 1088 unsat
-query -> 1AMU.cm.A.cmap 1000001 fail
-query -> 1AMU.cm.B.cmap 1000001 fail
+query -> 1AMU.cm.A.cmap 1011075 unsat
+query -> 1AMU.cm.B.cmap 2332854 unsat
 query -> 1ANT.cm.I.cmap 1697 unsat
 query -> 1ANT.cm.L.cmap 2113 unsat
-query -> 1ARO.cm.L.cmap 1000001 fail
+query -> 1ARO.cm.L.cmap 6081179 sat 
 query -> 1ARO.cm.P.cmap 7167 unsat
 query -> 1ATU.cm.A.cmap 58155 unsat
 query -> 1AWB.cm.A.cmap 988 unsat
@@ -570,7 +570,7 @@ query -> 1AWB.cm.B.cmap 897 unsat
 query -> 1AXB.cm.A.cmap 2191 unsat
 query -> 1AZX.cm.I.cmap 2305 unsat
 query -> 1AZX.cm.L.cmap 2386 unsat
-query -> 1BA3.cm.A.cmap 1000001 fail
+query -> 1BA3.cm.A.cmap 6476072 unsat
 query -> 1BGW.cm.A.cmap 43231 unsat
 query -> 1BJT.cm.A.cmap 39403 unsat
 query -> 1BK4.cm.A.cmap 1624 unsat
@@ -639,7 +639,7 @@ query -> 1BY7.cm.A.cmap 91 unsat
 query -> 1BZA.cm.A.cmap 496 unsat
 query -> 1C5G.cm.A.cmap 9265 unsat
 query -> 1CEF.cm.A.cmap 479457 unsat
-query -> 1CEG.cm.A.cmap 1000001 fail
+query -> 1CEG.cm.A.cmap 1199658 unsat
 query -> 1CJS.cm.A.cmap 575 unsat
 query -> 1CK3.cm.A.cmap 19 unsat
 query -> 1CNQ.cm.A.cmap 62 unsat
@@ -689,7 +689,7 @@ query -> 1BY7.cm.A.cmap 91 unsat
 query -> 1BZA.cm.A.cmap 496 unsat
 query -> 1C5G.cm.A.cmap 9265 unsat
 query -> 1CEF.cm.A.cmap 479457 unsat
-query -> 1CEG.cm.A.cmap 1000001 fail
+query -> 1CEG.cm.A.cmap 1199658 unsat
 query -> 1CJS.cm.A.cmap 575 unsat
 query -> 1CK3.cm.A.cmap 19 unsat
 query -> 1CNQ.cm.A.cmap 62 unsat
@@ -739,7 +739,7 @@ query -> 1BY7.cm.A.cmap 91 unsat
 query -> 1BZA.cm.A.cmap 496 unsat
 query -> 1C5G.cm.A.cmap 9265 unsat
 query -> 1CEF.cm.A.cmap 479457 unsat
-query -> 1CEG.cm.A.cmap 1000001 fail
+query -> 1CEG.cm.A.cmap 1199658 unsat
 query -> 1CJS.cm.A.cmap 575 unsat
 query -> 1CK3.cm.A.cmap 19 unsat
 query -> 1CNQ.cm.A.cmap 62 unsat
@@ -789,7 +789,7 @@ query -> 1BY7.cm.A.cmap 91 unsat
 query -> 1BZA.cm.A.cmap 496 unsat
 query -> 1C5G.cm.A.cmap 9265 unsat
 query -> 1CEF.cm.A.cmap 479457 unsat
-query -> 1CEG.cm.A.cmap 1000001 fail
+query -> 1CEG.cm.A.cmap 1199658 unsat
 query -> 1CJS.cm.A.cmap 575 unsat
 query -> 1CK3.cm.A.cmap 19 unsat
 query -> 1CNQ.cm.A.cmap 62 unsat
@@ -842,7 +842,7 @@ query -> 1CEF.cm.A.cmap 4144 unsat
 query -> 1CEG.cm.A.cmap 6969 unsat
 query -> 1CJS.cm.A.cmap 398 unsat
 query -> 1CK3.cm.A.cmap 423 unsat
-query -> 1CNQ.cm.A.cmap 1000001 fail
+query -> 1CNQ.cm.A.cmap 1670755 sat 
 query -> 1CY0.cm.A.cmap 391 unsat
 query -> 1CY1.cm.A.cmap 423 unsat
 query -> 1CY2.cm.A.cmap 449 unsat
@@ -892,7 +892,7 @@ query -> 1CEF.cm.A.cmap 4144 unsat
 query -> 1CEG.cm.A.cmap 6969 unsat
 query -> 1CJS.cm.A.cmap 398 unsat
 query -> 1CK3.cm.A.cmap 423 unsat
-query -> 1CNQ.cm.A.cmap 1000001 fail
+query -> 1CNQ.cm.A.cmap 1670755 sat 
 query -> 1CY0.cm.A.cmap 391 unsat
 query -> 1CY1.cm.A.cmap 423 unsat
 query -> 1CY2.cm.A.cmap 449 unsat
@@ -942,7 +942,7 @@ query -> 1CEF.cm.A.cmap 4144 unsat
 query -> 1CEG.cm.A.cmap 6969 unsat
 query -> 1CJS.cm.A.cmap 398 unsat
 query -> 1CK3.cm.A.cmap 423 unsat
-query -> 1CNQ.cm.A.cmap 1000001 fail
+query -> 1CNQ.cm.A.cmap 1670755 sat 
 query -> 1CY0.cm.A.cmap 391 unsat
 query -> 1CY1.cm.A.cmap 423 unsat
 query -> 1CY2.cm.A.cmap 449 unsat
@@ -992,7 +992,7 @@ query -> 1CEF.cm.A.cmap 4144 unsat
 query -> 1CEG.cm.A.cmap 6969 unsat
 query -> 1CJS.cm.A.cmap 398 unsat
 query -> 1CK3.cm.A.cmap 423 unsat
-query -> 1CNQ.cm.A.cmap 1000001 fail
+query -> 1CNQ.cm.A.cmap 1670755 sat 
 query -> 1CY0.cm.A.cmap 391 unsat
 query -> 1CY1.cm.A.cmap 423 unsat
 query -> 1CY2.cm.A.cmap 449 unsat
@@ -1246,7 +1246,7 @@ query -> 1CNQ.cm.A.cmap 432 unsat
 query -> 1CY0.cm.A.cmap 909 unsat
 query -> 1CY1.cm.A.cmap 1230 unsat
 query -> 1CY2.cm.A.cmap 1235 unsat
-query -> 1D1U.cm.A.cmap 1000001 fail
+query -> 1D1U.cm.A.cmap 1106801 sat 
 query -> 1DJA.cm.A.cmap 1659 unsat
 query -> 1A0G.cm.A.cmap 2528 unsat
 query -> 1A0G.cm.B.cmap 3160 unsat
@@ -1296,7 +1296,7 @@ query -> 1CNQ.cm.A.cmap 432 unsat
 query -> 1CY0.cm.A.cmap 909 unsat
 query -> 1CY1.cm.A.cmap 1230 unsat
 query -> 1CY2.cm.A.cmap 1235 unsat
-query -> 1D1U.cm.A.cmap 1000001 fail
+query -> 1D1U.cm.A.cmap 1106801 sat 
 query -> 1DJA.cm.A.cmap 1659 unsat
 query -> 1A0G.cm.A.cmap 2528 unsat
 query -> 1A0G.cm.B.cmap 3160 unsat
@@ -1346,7 +1346,7 @@ query -> 1CNQ.cm.A.cmap 432 unsat
 query -> 1CY0.cm.A.cmap 909 unsat
 query -> 1CY1.cm.A.cmap 1230 unsat
 query -> 1CY2.cm.A.cmap 1235 unsat
-query -> 1D1U.cm.A.cmap 1000001 fail
+query -> 1D1U.cm.A.cmap 1106801 sat 
 query -> 1DJA.cm.A.cmap 1659 unsat
 query -> 1A0G.cm.A.cmap 2528 unsat
 query -> 1A0G.cm.B.cmap 3160 unsat
@@ -1396,7 +1396,7 @@ query -> 1CNQ.cm.A.cmap 432 unsat
 query -> 1CY0.cm.A.cmap 909 unsat
 query -> 1CY1.cm.A.cmap 1230 unsat
 query -> 1CY2.cm.A.cmap 1235 unsat
-query -> 1D1U.cm.A.cmap 1000001 fail
+query -> 1D1U.cm.A.cmap 1106801 sat 
 query -> 1DJA.cm.A.cmap 1659 unsat
 query -> 1A0G.cm.A.cmap 12 sat 
 query -> 1A0G.cm.B.cmap 12 sat 

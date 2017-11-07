@@ -100,7 +100,7 @@ namespace
         using VF2MonoState::VF2MonoState;
 
         virtual void BackTrack() {
-            if (++hacky_global_nodes > 1000000)
+            if (++hacky_global_nodes > 10000000)
                 throw TimeForAnAbortion();
 
             VF2MonoState::BackTrack();
