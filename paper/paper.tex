@@ -1285,7 +1285,8 @@ of deficiency in VF2 demonstrated towards the end of the previous section.
 To show that a pure subgraph isomorphism approach is feasible, with no indexing or supporting
 preprocessing, we look at four datasets commonly used in graph indexing evaluations. We do not claim
 that these are high-quality datasets or that the associated queries are sensible, merely that
-following the example of \citet{o:10.1371/journal.pone.0076911}, they are widely used.
+following the example of \citet{o:10.1371/journal.pone.0076911}, they are widely used. Each dataset
+has labels on vertices (but not on edges), and we will look at the non-induced problem.
 
 \begin{itemize}
     \item The AIDS dataset contains graphs representing 40,000 chemical molecules. These graphs are
@@ -1324,8 +1325,9 @@ following the example of \citet{o:10.1371/journal.pone.0076911}, they are widely
     \hspace*{1em}
 
     \caption{Cumulative number of instances solved as a function of search space size, using four
-    graph database datasets and a simple constraint programming subgraph isomorphism algorithm. Note
-    that the $x$-axis shows recursive calls, and does \emph{not} use a log scale.}
+    graph database datasets, and either VF2 or a simple constraint programming subgraph isomorphism
+    algorithm implemented in Gecode. The $x$-axis shows recursive calls, using a log scale, and each
+    line ends at the $x$ value where every instance has been solved.}
     \label{figure:biiiig-data}
 \end{figure}
 
@@ -1342,8 +1344,10 @@ queries). For both PCM and PPI, the hardest problem requires 23 recursive calls.
 none of these instances are in any way computationally hard even for a simple domain-based
 algorithm, even before introducing stronger filtering, inference, or heuristics.  Furthermore it is
 certainly not the case that a sequential scan is infeasible as so many filter~/ verify papers claim.
-The exponential behaviour seen by others in these instances is purely down to a bad choice of
-subgraph isomorphism algorithm, and these instances are not inherently ``really hard''.
+In contrast, with VF2, the hardest instance in PDBS requires 31,189 recursive calls; in AIDS,
+168,569 calls; in PCMS, 6,476,072 calls; and in PPI, 2,913. In other words, any exponential
+behaviour seen in these instances is purely down to a bad choice of subgraph isomorphism algorithm,
+and these instances are not inherently ``really hard''.
 
 \subsection{Benefits of Constraint Programming over Filter / Verify}
 

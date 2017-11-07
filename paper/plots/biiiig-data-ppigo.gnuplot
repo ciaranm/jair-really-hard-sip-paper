@@ -12,18 +12,20 @@ set output "biiiig-data-ppigo.tex"
 
 load "../chroma.pal"
 
-set xrange [0:]
 set xlabel "Recursive calls"
 set ylabel "Instances solved"
 set yrange [0:100]
-set key Right at screen 0.465, screen 0.458
 set border 3
 set grid ls 101
 set xtics nomirror
 set ytics nomirror
-set key off
 set title "PPI"
+set logscale x
+set xrange [1:1e4]
+set format x '$10^{%T}$'
+set key bottom right
 
 plot \
-    "<cut -d' ' -f4 ../../biiiiiig-data/ppigo/results" u 1:(1) smooth cumulative w l ls 1 lw 2
+    "<cut -d' ' -f4 ../../biiiiiig-data/ppigo/results-vf2" u 1:(1) smooth cumulative w l ls 5 lw 2 ti 'VF2', \
+    "<cut -d' ' -f4 ../../biiiiiig-data/ppigo/results" u 1:(1) smooth cumulative w l ls 1 lw 2 ti 'Gecode'
 

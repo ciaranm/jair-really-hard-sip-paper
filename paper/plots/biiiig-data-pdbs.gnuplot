@@ -12,19 +12,20 @@ set output "biiiig-data-pdbs.tex"
 
 load "../chroma.pal"
 
-set xrange [0:4000]
 set xlabel "Recursive calls"
 set ylabel "Instances solved"
 set yrange [0:3600]
-set key Right at screen 0.465, screen 0.458
 set border 3
 set grid ls 101
-set xtics nomirror 1000
-set ytics nomirror
-set key off
+set ytics nomirror add ("$3600$" 3600) ("" 3500)
+set xtics nomirror
+set key bottom right
 set title "PDBS"
-set ytics add ("$3600$" 3600) ("" 3500)
+set logscale x
+set format x '$10^{%T}$'
+set xrange [1:1e5]
 
 plot \
-    "<cut -d' ' -f4 ../../biiiiiig-data/pdbs/results" u 1:(1) smooth cumulative w l ls 1 lw 2
+    "<cut -d' ' -f4 ../../biiiiiig-data/pdbs/results-vf2" u 1:(1) smooth cumulative w l ls 5 lw 2 ti 'VF2', \
+    "<cut -d' ' -f4 ../../biiiiiig-data/pdbs/results" u 1:(1) smooth cumulative w l ls 1 lw 2 ti 'Gecode'
 

@@ -16,15 +16,19 @@ set xrange [0:]
 set xlabel "Recursive calls"
 set ylabel "Instances solved"
 set yrange [0:1800]
-set key Right at screen 0.465, screen 0.458
 set border 3
 set grid ls 101
 set xtics nomirror
-set ytics nomirror
+set ytics nomirror add ("$1800$" 1800)
 set key off
 set title "PCM"
-set ytics add ("$1800$" 1800)
+set logscale x
+set xrange [1:1e7]
+set format x '$10^{%T}$'
+set key bottom right
 
 plot \
-    "<cut -d' ' -f4 ../../biiiiiig-data/pcms/results" u 1:(1) smooth cumulative w l ls 1 lw 2
+    "<cut -d' ' -f4 ../../biiiiiig-data/pcms/results-vf2" u 1:(1) smooth cumulative w l ls 5 lw 2 ti 'VF2', \
+    "<cut -d' ' -f4 ../../biiiiiig-data/pcms/results" u 1:(1) smooth cumulative w l ls 1 lw 2 ti 'Gecode', \
+
 
