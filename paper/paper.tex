@@ -74,8 +74,8 @@ Databases}
     location we can predict; for the induced variant, much richer behaviour is observed, and
     constrainedness gives a better measure of difficulty than does proximity to a phase transition.
     These results have practical consequences: we explain why the widely researched ``filter~/
-    verify'' indexing technique used in graph databases is a flawed design based upon a repeated
-    misunderstanding of the empirical hardness of \NP-complete problems, that cannot be beneficial
+    verify'' indexing technique used in graph databases is a flawed design (based upon a repeated
+    misunderstanding of the empirical hardness of \NP-complete problems) that cannot be beneficial
     when paired with any reasonable subgraph isomorphism algorithm.
 \end{abstract}
 
@@ -181,7 +181,7 @@ detail in \cref{section:filterverify}.
 However, subgraph isomorphism algorithms cannot handle \emph{arbitrary} instances involving hundreds
 or thousands of vertices. Experimental evaluations of subgraph isomorphism algorithms are usually
 performed using randomly generated graph pairs, sometimes together with a mix of real-world graphs,
-and graphs that encode biochemistry and computer vision problems. Using random instances to evaluate
+for example biochemistry and computer vision problems. Using random instances to evaluate
 algorithm behaviour can be beneficial, because it provides a way of generating many instances
 cheaply, and reduces the risk of over-fitting when tuning design parameters. It also allows
 experimenters to control graph parameters such as order, density, or degree distribution, and to
@@ -270,17 +270,17 @@ sections have been expanded, whilst
 \subsection{Definitions}
 
 Throughout, our graphs are undirected, and do not have any loops. In some cases vertices have
-labels, which are treated as integers; we write $\ell(v)$ for the label of vertex $v$. The
-\emph{order} of a graph is the cardinality of its vertex set. We write $\operatorname{V}(G)$ for the
-vertex set of a graph $G$. The \emph{complement} of a graph $G$, denoted $\shortoverline{G}$, is the
-graph with the same vertex set as $G$, and with an edge between distinct vertices $v$ and $w$ if and
-only if $v$ and $w$ are not adjacent in $G$. We write $G(n, p)$ for an Erd\H{o}s-R\'enyi random
-graph with $n$ vertices, and an edge between each distinct unordered pair of vertices with
-independent probability $p$.
+labels, which are treated as integers; we write $\ell(v)$ for the label of vertex $v$. Two vertices
+are \emph{adjacent} if there is an edge between them. The \emph{order} of a graph is the cardinality
+of its vertex set. We write $\operatorname{V}(G)$ for the vertex set of a graph $G$. The
+\emph{complement} of a graph $G$, denoted $\shortoverline{G}$, is the graph with the same vertex set
+as $G$, and with an edge between distinct vertices $v$ and $w$ if and only if $v$ and $w$ are not
+adjacent in $G$. We write $G(n, p)$ for an Erd\H{o}s-R\'enyi random graph with $n$ vertices, and an
+edge between each distinct unordered pair of vertices with independent probability $p$.
 
 A \emph{non-induced subgraph isomorphism} from a graph $P$ (called the \emph{pattern}) to a graph
 $T$ (called the \emph{target}) is an injective mapping $i$ from $\operatorname{V}(P)$ to
-$\operatorname{V}(T)$ which preserves adjacency---that is, for every adjacent $v$ and $w$ in
+$\operatorname{V}(T)$ which preserves adjacency---that is, for every adjacent vertices $v$ and $w$ in
 $\operatorname{V}(P)$, the vertices $i(v)$ and $i(w)$ are adjacent in $T$. Where labels are present,
 the mapping must also preserve labels, so $\ell(v) = \ell(i(v))$ for any $v$. An \emph{induced
 subgraph isomorphism} additionally preserves non-adjacency---that is, if $v$ and $w$ are not
@@ -296,7 +296,7 @@ The experiments in this paper are performed on systems with Intel Xeon E5-4650 v
 RAM, running Scientific Linux release 6.7. We will be working with four subgraph isomorphism
 solvers: the Glasgow solver \citep{DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16}; LAD
 \citep{DBLP:journals/ai/Solnon10}; VF2 \citep{DBLP:journals/pami/CordellaFSV04}; and VF3
-\citep{DBLP:conf/gbrpr/CarlettiFSV17}. Each was compiled using GCC 4.9.
+\citep{DBLP:conf/gbrpr/CarlettiFSV17}. Each was compiled using GCC 4.9 with the ``-O3'' option.
 
 The Glasgow and LAD solvers are constraint programming inspired algorithms (although they use dedicated
 data structures, and do not use a constraint programming toolkit). For each vertex in the pattern
@@ -333,14 +333,22 @@ the induced problem.
 
 \section{Non-Induced Subgraph Isomorphisms}\label{section:non-induced}
 
+??
+
+\subsection{A Phase Transitions when Varying Pattern Edge Density}
+
 \begin{figure}[t]
     \centering
     \includegraphics*{plots/phase-transition.pdf}
 
     \caption{With a fixed pattern graph order of 20, a target graph order of 150, a target edge
-        probability of 0.40, and varying pattern edge probability, we observe a phase transition and
-        complexity peak with the Glasgow solver in the non-induced variant. Each point represents
-        one instance, and the line shows mean search effort.}
+    probability of 0.40, and varying pattern edge probability, we observe a phase transition and
+    complexity peak with the Glasgow solver in the non-induced variant. Each point $(x, y)$
+    represents one instance $i$, where $x$ is the pattern edge probability used to generate $i$, $y$
+    is the number of search nodes needed by the Glasgow solver to solve $i$, and the point is drawn
+    as a green circle if $i$ is satisfiable, and a blue cross otherwise. The black line plots the
+    evolution of the mean number of search nodes when increasing the pattern edge probability from
+    $0$ to $1$.}
     \label{figure:phase-transition}
 \end{figure}
 
@@ -361,6 +369,8 @@ cost of individual instances, as points. The behaviour we observe looks remarkab
 3SAT problems---compare, for example, Figure~1 of \citet{DBLP:journals/cacm/Leyton-BrownHHX14}. In
 particular, satisfiable instances tend to be easier, but show greater variation than unsatisfiable
 instances, and there are exceptionally hard satisfiable instances \citep{DBLP:conf/cp/SmithG97}.
+
+\subsection{Phase Transitions when Varying Pattern and Target Edge Densities}
 
 \begin{figure}[tb]
     \centering
@@ -398,9 +408,10 @@ instances, and there are exceptionally hard satisfiable instances \citep{DBLP:co
         pattern edge probability and the y-axis is the target edge probability, both from 0 to 1.
         Along the top row, we show the proportion of instances which are satisfiable; the white
         bands show the phase transitions, and the black lines are the predictions using
-        equation~\eqref{equation:non-induced-prediction} of where the
-        phase transition will occur. On the subsequent three rows, we show the number of search nodes used by the
-        Glasgow, LAD and VF2 solvers; the dark regions indicate ``really hard'' instances, and black
+        equation~\eqref{equation:non-induced-prediction} of where the phase transition will occur.
+        On the subsequent three rows, we show the average number of search nodes used by the
+        Glasgow, LAD and VF2 solvers over ten instances; the dark regions indicate ``really hard''
+        instances, and black
         points indicate that at least one timeout occurred.}
     \label{figure:non-induced}
 \end{figure}
@@ -436,16 +447,15 @@ extremely important, and we return to it in \cref{section:labelled,section:filte
 We can approximately predict the location of the phase transition by calculating (with
 simplifications regarding rounding and independence) the expected number of solutions for given
 parameters. Since we are trying to find an \emph{injective} mapping from a pattern $P = G(p, d_p)$
-to a target $T = G(t, d_t)$, there are \[ t^{\underline{p}} = t \cdot (t - 1) \cdot \ldots \cdot (t -
-p + 1) \] possible assignments of target vertices to pattern vertices.  If we assume the pattern
-has exactly $d_p \cdot \binom{p}{2}$ edges, we obtain the probability of all of these edges being mapped to
-edges in the target by raising $d_t$ to this power, giving an expected number of solutions of
-\begin{equation}\label{equation:non-induced-prediction}
-    \langle Sol \rangle = t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \textnormal{.}
-\end{equation} This
-formula predicts a very sharp phase transition from $\langle Sol \rangle \ll 1$ to $\langle Sol
-\rangle \gg 1$, which may easily be located numerically. We plot where this occurs using black lines
-in the first row of \cref{figure:non-induced}.
+to a target $T = G(t, d_t)$, there are \[ t^{\underline{p}} = t \cdot (t - 1) \cdot \ldots \cdot (t
+- p + 1) \] possible injective assignments of target vertices to pattern vertices.  If we assume the
+pattern has exactly $d_p \cdot \binom{p}{2}$ edges, we obtain the probability of all of these edges
+being mapped to edges in the target by raising $d_t$ to this power, giving an expected number of
+solutions of \begin{equation}\label{equation:non-induced-prediction} \langle Sol \rangle =
+t^{\underline{p}} \cdot {d_t}^{d_p \cdot \binom{p}{2}} \textnormal{.} \end{equation} This formula
+predicts a very sharp phase transition from $\langle Sol \rangle \ll 1$ to $\langle Sol \rangle \gg
+1$, which may easily be located numerically. We plot where this occurs using black lines in the
+first row of \cref{figure:non-induced}.
 
 This prediction is generally reasonably accurate, except that for very low and very high pattern
 densities, we overestimate the satisfiable region. This is due to variance: although an expected
@@ -464,17 +474,17 @@ heuristics for backtracking search algorithms---one of these is to try to maximi
 number of solutions inside any subproblem considered during search \citep{DBLP:conf/cp/GentMPSW96}.
 This is usually done by cheaper surrogates, rather than direct calculation. When branching, both LAD
 and Glasgow pick a variable with fewest remaining values in its domain: doing this will generally
-reduce the first part of the $\langle Sol \rangle$ equation by as little as possible. When two or
-more domains are of equal size, LAD breaks ties lexicographically, whereas Glasgow will pick
-a variable corresponding to a pattern vertex of highest degree. This strategy was determined
+reduce the first part of the $\langle Sol \rangle$ equation (i.e.\ $t^p$) by as little as possible.
+When two or more domains are of equal size, LAD breaks ties lexicographically, whereas Glasgow will
+pick a variable corresponding to a pattern vertex of highest degree. This strategy was determined
 empirically, but could have been derived from the $\langle Sol \rangle$ formula: picking a pattern
 vertex of high degree will make the remaining pattern subgraph sparser, which will decrease the
 exponent in the second half of the formula, maximising the overall value. LAD does not apply a
-value-ordering heuristic, but Glasgow does: it prefers target vertices of highest degree.  Again, this was
-determined empirically, but it has the effect of increasing $\langle Sol \rangle$ by leaving as many
-vertices as possible available for future use. The search strategy used by VF2, in contrast, is
-based around preserving connectivity, which gives very little discrimination except on the sparsest
-of inputs.
+value-ordering heuristic, but Glasgow does: it prefers target vertices of highest degree.  Again,
+this was determined empirically, but it has the effect of increasing $\langle Sol \rangle$ by
+leaving as many vertices as possible available for future use. The search strategy used by VF2, in
+contrast, is based around preserving connectivity, which gives very little discrimination except on
+the sparsest of inputs.
 
 \section{Induced Subgraph Isomorphisms}\label{section:induced}
 
@@ -560,16 +570,19 @@ of inputs.
     equation~\eqref{equation:constrainedness}: the darkest region is where $\kappa = 1$, and the
     lighter regions show where the problem is either over- or under-constrained. The final row shows
     when the Glasgow algorithm performs better when given the complements of the pattern and target
-    graphs as inputs---the solid lines show the location of the phase transition, and the dotted
-    lines are $t_d=0.5$ and the $p_d=t_d$ diagonal.}\label{figure:induced}
+    graphs as inputs---the solid lines show the empirical location of the phase transition, and the
+    dotted lines are $t_d=0.5$ and the $p_d=t_d$ diagonal.}\label{figure:induced}
 \end{figure}
 
 So far we have looked at the non-induced problem, where extra edges in the target graph are
 permitted.  In the first five rows of \cref{figure:induced} we repeat our experiments, now finding
 induced isomorphisms. With a pattern of order 10, we get two independent phase transitions: the
 bottom right halves of the plots resemble the non-induced results, and the top left halves are close
-to a mirror image. The central satisfiable region, which is away from either phase transition, is
-computationally easy, but instances near the phase transition are hard.
+to a mirror image. This second phase transition comes from the fact that an empty pattern is not an
+induced subgraph of a complete target: an empty pattern of order $k$ is an induced subgraph only if
+there exist $k$ vertices in the target that are not pairwise connected.  The central satisfiable
+region, which is away from either phase transition, is computationally easy, but instances near the
+phase transition are hard.
 
 For larger patterns of order 20 and 30, we have a large unsatisfiable region in the middle. Despite
 not being near either phase transition, instances in the centre remain computationally challenging
@@ -813,7 +826,8 @@ constrainedness gives the same predictions as maximising the expected number of 
 
     \caption{Behaviour of algorithms on the non-induced problem on random $k$-regular graphs, as the
     pattern degree (x-axis) and target degree (y-axis) are varied from 0 to
-    $\left|\operatorname{V}\right| - 1$, using target graphs of 150 vertices.}
+    $\left|\operatorname{V}(G)\right| - 1$, using target graphs of 150 vertices, and pattern graphs
+    of 10, 20, and 30 vertices.}
     \label{figure:kr}
 \end{figure}
 
@@ -823,18 +837,19 @@ in the following section we see the effects of introducing vertex labels. Both m
 phase transition behaviour, although with sufficiently many labels the ``satisfiable'' region now
 contains a mix of satisfiable and unsatisfiable instances.
 
-By $R(n, k)$ we mean a random graph with $k$ vertices, each of which has degree $k$. In
+By $R(n, k)$ we mean a random graph with $n$ vertices, each of which has degree $k$. In
 \cref{figure:kr} we recreate \cref{figure:non-induced}, using the NetworkX implementation
 \citep{o:NetworkX} of the \citet{DBLP:journals/cpc/StegerW99} algorithm to generate regular graphs.
-The $x$-axes range from degree 0 to degree $n - 1$, and the y-axes range from degree 0 to degree
-149.  The satisfiable / unsatisfiable plots show very similar results to the non-induced problem on
-Erd\H{o}s-R\'enyi random graphs, with a similarly sharp phase transition, and
-again only instances near the phase transition are difficult.
+The $x$-axes range from degree 0 to degree $n - 1$ where $n \in \{ 10, 20, 30 \}$ is the number of
+pattern vertices, and the y-axes range from degree 0 to degree
+149 (one less than the number of target vertices).  The satisfiable / unsatisfiable plots show very
+similar results to the non-induced problem on Erd\H{o}s-R\'enyi random graphs, with a similarly
+sharp phase transition, and again only instances near the phase transition are difficult.
 
 Regularity means that degree-based heuristics have no information to work with. Additionally, the
-degree-based filtering techniques used by Glasgow and LAD have no effect on these graphs, and so at
-the top of search, every domain is identical. However, once a guessed assignment has been made,
-selecting from small domains first remains an effective strategy to guide the remainder of the
+degree-based filtering techniques used by Glasgow and LAD have no effect on these graphs at the top
+of search, and so initially every domain is identical. However, once a guessed assignment has been
+made, selecting from small domains first remains an effective strategy to guide the remainder of the
 search.
 
 \section{Labelled Graphs}\label{section:labelled}
@@ -849,10 +864,10 @@ seems to be more common in the literature.
 \subsection{Predictions and Empirical Hardness}
 
 Suppose our labels are drawn randomly from a set $L = \{ 1, \ldots, k \}$, where $k$ is reasonably
-small compared to $p$. Recall that $\ell(v)$ is the label of vertex $v$. By defining \[
-    \operatorname{V}(P)\vert_n = \{ v \in \operatorname{V}(P) : \ell(v) = n \} \] to be the set of
-vertices with label $n$, we can partition the pattern vertices by label into disjoint sets
-$\{\operatorname{V}(P)\vert_1, \ldots, \operatorname{V}(P)\vert_k \}\textnormal{\,,}$ each of
+small compared to the number of pattern vertices $p$. Recall that $\ell(v)$ is the label of vertex
+$v$. By defining \[ \operatorname{V}(P)\vert_n = \{ v \in \operatorname{V}(P) : \ell(v) = x \} \] to
+be the set of vertices with label $x$, we can partition the pattern vertices by label into disjoint
+sets $\{\operatorname{V}(P)\vert_1, \ldots, \operatorname{V}(P)\vert_k \}\textnormal{\,,}$ each of
 which is expected to contain $\nicefrac{p}{k}$ vertices. Similarly, we may partition the target
 vertices into disjoint sets $\{ \operatorname{V}(T)\vert_1, \ldots, \operatorname{V}(T)\vert_k \}$.
 
@@ -863,10 +878,10 @@ $\operatorname{V}(T)|_x$.  Thus for each label $x$, we have an expected $\nicefr
 each of whose domains contain $\nicefrac{t}{k}$ values. We would like to say that the size of the
 state space is now \[ |S| = \left((\nicefrac{t}{k})^{\underline{\nicefrac{p}{k}}}\right)^{k}
 \textnormal{,} \] but to do this we must state what $a^{\underline{b}}$ means when $b$ is
-fractional. The gamma function $\Gamma(n)$ is equal to $(n - 1)!$ for integers $n \ge 1$, but is also
-defined for positive real numbers, obeying the identify $\Gamma(x + 1) = x\Gamma(x)$. By noting that
-$t^{\underline{p}} = \nicefrac{t!}{(t - p)!}$, we may obtain a reasonable
-continuous extension by taking \[ |S| = \left(\frac{\Gamma\left(\nicefrac{t}{k} +
+fractional. The gamma function $\Gamma(n)$ is equal to $(n - 1)!$ for integers $n \ge 1$
+\citep{Davis59}, but is also defined for positive real numbers, obeying the identify $\Gamma(x + 1)
+= x\Gamma(x)$. By noting that $t^{\underline{p}} = \nicefrac{t!}{(t - p)!}$, we may obtain a
+reasonable continuous extension by taking \[ |S| = \left(\frac{\Gamma\left(\nicefrac{t}{k} +
 1\right)}{\Gamma\left(\nicefrac{t}{k} - \nicefrac{p}{k} + 1\right)}\right)^{k} \textnormal{\,.} \]
 
 As before, we expect the pattern to have $d_p \cdot \binom{p}{2}$ edges, and so if we simplify by
@@ -941,7 +956,7 @@ power, giving an estimate of \begin{equation}\label{equation:non-induced-labelle
 So how good are these predictions? The black lines on the first row of heatmaps in
 \cref{figure:labels} plot where we calculate $\langle Sol \rangle = 1$ will occur. For small numbers
 of labels, our predictions are slightly better than in the unlabelled case: there seems to be less
-of a variance problem for very dense patterns. Even as the numbers of labels becomes relatively
+of a variance problem for very dense patterns. Even as the number of labels becomes relatively
 large, the prediction of the phase transition still occurs in the right place, but with ten labels
 we start to see sporadic unsatisfiable instances deep inside the satisfiable region. With twenty
 labels, we instead get a kind of phase transition from ``all unsatisfiable'' to ``mixed satisfiable
@@ -1001,6 +1016,8 @@ solve 352 of the 1,000 instances with a one thousand second timeout.
 
 The ``VF2${\leftrightarrow}$'' line shows what happens with VF2 if the graphs are permuted, so that
 the non-zero labelled vertices are given lower vertex numbers rather than higher vertex numbers.
+In other words, we permute pattern vertices in such a way that the first ten vertices have non-zero
+labels, and the ten last vertices have zero labels (and similarly for the target graphs).
 This makes VF2 behave better, but still extremely poorly compared to the other two solvers; the
 motivation behind this modification will become clear later in this paper.  It will also be
 important to remember that both VF2 variations find some satisfiable \emph{and} some unsatisfiable
@@ -1011,7 +1028,7 @@ we have a pattern graph and a target graph, both of which are cliques plus one i
 the isolated vertices have different unique labels. This is trivially unsatisfiable (and Glasgow and
 LAD detect this without search), but unless the labelled vertex is given the lowest vertex number
 (so it is branched on first), VF2 takes nearly a million recursive calls to detect this: VF2 will
-try to map every adjacent vertex in the clique before considering the difficult isolated vertex.
+try to map every adjacent vertex in the clique before considering the unmatchable isolated vertex.
 This example can be extended slightly to fool any simple static heuristic, or any simple label
 counting mechanism (for example, by attaching an additional vertex with a unique label to the
 clique). Note also the resemblance to the cases seen in the bottom left of the VF2 plots in
@@ -1100,11 +1117,11 @@ hardness of \NP-complete problems, which was not widely known at the time of the
 papers we discuss. The common theme of all of the following papers is that pre-computed information
 is used to eliminate certain unsatisfiable instances from consideration, without performing a
 subgraph isomorphism test. For example, an index might contain a bit of information expressing
-whether a target graph contains two red vertices. When a pattern graph with two red vertices is used
-as a query, any target whose feature set does not have this bit set would not be considered, and so
-a subgraph isomorphism call would not be made for that pattern / target pair. (In practice, feature
-hashing is often used, which can lead to false positives, but this is not relevant to our
-discussion.)
+whether a target graph contains at least two red vertices. When a pattern graph with two red
+vertices is used as a query, any target whose feature set does not have this bit set would not be
+considered, and so a subgraph isomorphism call would not be made for that pattern / target pair. (In
+practice, feature hashing is often used, which can lead to false positives, but this is not relevant
+to our discussion.)
 
 An early graph database system by \citet{DBLP:conf/pods/ShashaWG02} uses a filtering heuristic to
 eliminate unsatisfiable instances based upon simple structural elements. It is not clear whether the
@@ -1121,7 +1138,7 @@ T_{\mathit{search}} + \left|C_q\right| \cdot T_{\mathit{iso\_test}} \textnormal{
 $T_{\mathit{search}}$ is the time taken to search for a candidate set of potential solutions of size
 $\left|C_q\right|$, and $T_{\mathit{iso\_test}}$ is the cost of a subgraph isomorphism test. They
 reason that since isomorphism testing is \NP-complete, by making $\left|C_q\right|$ as small as
-possible, the query response time will be reduced.  (Importantly, it is \emph{not} time taken to
+possible, the query response time will be reduced.  (Importantly, it is \emph{not} the time taken to
 load graphs from disk which contributes to the per-candidate cost, but rather the time to perform a
 subgraph isomorphism call.) They conclude that ``graph indexing plays a critical role at efficient
 query processing in graph databases''.
@@ -1247,14 +1264,14 @@ These beliefs are not entirely unfounded: none of the isomorphism algorithms con
 papers will immediately detect if a pattern contains two red vertices, whilst the target graph
 contains only one. This kind of flaw \emph{should} be picked up at the top of search by an
 all-different propagator \citep{DBLP:conf/aaai/Regin94}.  However, as
-\citet{DBLP:journals/pvldb/KatsarouNT15} note, some variation on VF2
-\citep{DBLP:journals/pami/CordellaFSV04} is the usual subgraph isomorphism algorithm of choice for
-graph database systems, although \citeauthor{DBLP:journals/jacm/Ullmann76}'s algorithm is sometimes
-chosen. Other approaches have been considered, albeit not with algorithms strong enough to establish
-all-difference. For example, \citet{DBLP:journals/pvldb/ShangZLY08} propose an algorithm which makes
-use of the frequency of various features to guide search; \citet{DBLP:journals/pvldb/LeeHKL12}
-determine experimentally that this technique tends to be very effective, even on families of graphs
-for which it was not designed.
+\citet{DBLP:journals/pvldb/KatsarouNT15} note, VF2 \citep{DBLP:journals/pami/CordellaFSV04} or a
+similar algorithm is the usual subgraph isomorphism algorithm of choice for graph database systems,
+although \citeauthor{DBLP:journals/jacm/Ullmann76}'s algorithm is sometimes chosen. Other approaches
+have been considered, albeit not with algorithms strong enough to establish all-difference. For
+example, \citet{DBLP:journals/pvldb/ShangZLY08} propose an algorithm which makes use of the
+frequency of various features to guide search; \citet{DBLP:journals/pvldb/LeeHKL12} determine
+experimentally that this technique tends to be very effective, even on families of graphs for which
+it was not designed.
 
 We therefore believe it would be unlikely to cause too much astonishment if we suggested that a
 better subgraph isomorphism algorithm could be dropped in as a black box replacement in graph
