@@ -92,7 +92,7 @@ class SIP : public Space
     public:
         IntVarArray mapping;
 
-        SIP(const Graph & pattern, const Graph & target, int maximum_label) :
+        SIP(const Graph & pattern, const Graph & target, int maximum_label, bool sdf) :
             mapping(*this, pattern.size, 0, target.size - 1)
         {
             // injectivity
@@ -154,7 +154,7 @@ class SIP : public Space
             for (int v = 0 ; v < pattern.size ; ++v)
                 mapping_permuted[v] = mapping[mapping_permutation[v]];
 
-            branch(*this, mapping_permuted, INT_VAR_SIZE_MIN(), INT_VAL_MIN());
+            branch(*this, mapping_permuted, sdf ? INT_VAR_SIZE_MIN() : INT_VAR_NONE(), INT_VAL_MIN());
         }
 
         SIP(bool share, SIP & s) :
@@ -171,8 +171,8 @@ class SIP : public Space
 
 int main(int argc, char * argv[])
 {
-    if (3 != argc) {
-        cerr << "Usage: " << argv[0] << " pattern-file target-file" << endl;
+    if (4 != argc) {
+        cerr << "Usage: " << argv[0] << " pattern-file target-file sdf" << endl;
         return EXIT_FAILURE;
     }
 
@@ -185,7 +185,7 @@ int main(int argc, char * argv[])
         for (const auto & target : targets) {
             cout << pattern.name << " -> " << target.name << " " << flush;
 
-            DFS<SIP> e(make_unique<SIP>(pattern, target, labels_map.size() + 1).get());
+            DFS<SIP> e(make_unique<SIP>(pattern, target, labels_map.size() + 1, argv[3] == string("true")).get());
             if (unique_ptr<SIP> s{ e.next() })
                 cout << e.statistics().node << " sat " << s->mapping << endl;
             else
