@@ -26,7 +26,7 @@ auto add_results(
         const string & dir, const string & alg,
         int ps, int ts, int pd, int td, int r,
         const string & pd_p, const string & td_p, const string & ed,
-        int & failures, unsigned long long & total_nodes) -> void
+        int & failures, unsigned long long & total_nodes) -> bool
 {
     string pd_s = (pd_p == "pkr" ? to_string(pd) : str(format("%|1|.%|02|") % (pd / 100) % (pd % 100)));
     string td_s = (td_p == "tkr" ? to_string(td) : str(format("%|1|.%|02|") % (td / 100) % (td % 100)));
@@ -37,21 +37,23 @@ auto add_results(
     if (! infile) {
         cerr << "missing " << filename << endl;
         ++failures;
-        return;
+        return false;
     }
 
     string success, aborted;
     unsigned long long this_nodes;
 
     if (string::npos != alg.find("vf3")) {
-        infile >> success >> this_nodes;
+        infile >> success;
         if (! infile) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
         if (success == "aborted")
             aborted = success;
+        else
+            infile >> this_nodes;
     }
     else if (string::npos != alg.find("vf2")) {
         infile >> success;
@@ -63,7 +65,7 @@ auto add_results(
         if (! infile) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
     }
     else if (string::npos != alg.find("lad")) {
@@ -75,7 +77,7 @@ auto add_results(
         if (! infile) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
 
         if (string::npos != line.find("CPU time exceeded"))
@@ -109,7 +111,7 @@ auto add_results(
         if (! (found_status && found_nodes)) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
     }
     else if (string::npos != alg.find("glucose")) {
@@ -134,7 +136,7 @@ auto add_results(
         if (! (found_status && found_nodes)) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
     }
     else if (string::npos != alg.find("gurobi")) {
@@ -165,7 +167,7 @@ auto add_results(
         if (! (found_status && found_nodes)) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
     }
     else {
@@ -173,7 +175,7 @@ auto add_results(
         if (! infile) {
             cerr << "reading " << filename << endl;
             ++failures;
-            return;
+            return false;
         }
     }
 
@@ -181,6 +183,8 @@ auto add_results(
         ++failures;
     else
         total_nodes += this_nodes;
+
+    return true;
 }
 
 auto main(int argc, char * argv[]) -> int
@@ -206,16 +210,19 @@ auto main(int argc, char * argv[]) -> int
 
     for (int td = 0 ; td <= tx ; td += di) {
         for (int pd = 0 ; pd <= px ; pd += di) {
-            int failures = 0;
+            int failures = 0, ns = 0;
             unsigned long long nodes = 0;
             for (int r = 1 ; r <= nr ; ++r)
-                add_results(dir, alg, ps, ts, pd, td, r, pd_p, td_p, ed, failures, nodes);
+                if (add_results(dir, alg, ps, ts, pd, td, r, pd_p, td_p, ed, failures, nodes))
+                    ++ns;
 
-            if (failures > 0)
+            if (0 == ns)
+                cout << "0 ";
+            else if (failures > (nr - ns))
                 cout << "fail ";
             else {
                 max_nodes = max(nodes, max_nodes);
-                cout << (nodes / double(nr)) << " ";
+                cout << (nodes / double(ns)) << " ";
             }
         }
         cout << endl;
