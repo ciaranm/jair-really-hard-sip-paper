@@ -196,7 +196,7 @@ existing benchmark suites contain relatively few non-trivial unsatisfiable insta
 of the patterns in the instances by \citeauthor{DBLP:journals/constraints/ZampelliDS10} have had
 extra edges added, making them unsatisfiable). Also, the satisfiable instances tend to be
 computationally fairly easy, with most of the difficulty being in dealing with the size of the
-model. This has lead to bias in algorithm design, to the extent that some proposed techniques, such
+model. This has led to bias in algorithm design, to the extent that some proposed techniques, such
 as those of \citet{DBLP:conf/sls/BattitiM07}, will \emph{only} work on satisfiable instances.
 
 The first contribution of this paper is to present and evaluate new methods for creating random
@@ -1097,7 +1097,7 @@ algorithm would eliminate this cost.
 
 
 However, by far the biggest problem is in graph databases. The following section shows how
-widespread use of poor subgraph isomorphism algorithms has not just lead to overly pessimistic
+widespread use of poor subgraph isomorphism algorithms has not just led to overly pessimistic
 conclusions regarding performance, but has misdirected the design of larger systems.
 
 \section{Querying Graph Databases}\label{section:filterverify}
@@ -1106,7 +1106,7 @@ A particularly common use of subgraph isomorphism algorithms is inside graph dat
 general problem these systems solve is, for a set of target graphs, to process a pattern query and
 return every target graph which is subgraph-isomorphic to that pattern. The set of target graphs is
 usually seen as fixed, or at least rarely-changing, whilst the patterns arrive dynamically. This has
-lead to the development of systems which perform extensive computations on the target graphs
+led to the development of systems which perform extensive computations on the target graphs
 beforehand, in the hopes of reducing the response times for individual pattern queries. The most
 popular of these strategies is a form of indexing which is often named \emph{filter~/ verify}.
 
