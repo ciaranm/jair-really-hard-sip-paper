@@ -271,12 +271,14 @@ sections have been expanded, whilst
 
 Throughout, our graphs are undirected, and do not have any loops. In some cases vertices have
 labels, which are treated as integers; we write $\ell(v)$ for the label of vertex $v$. Two vertices
-are \emph{adjacent} if there is an edge between them. The \emph{order} of a graph is the cardinality
-of its vertex set. We write $\operatorname{V}(G)$ for the vertex set of a graph $G$. The
-\emph{complement} of a graph $G$, denoted $\shortoverline{G}$, is the graph with the same vertex set
-as $G$, and with an edge between distinct vertices $v$ and $w$ if and only if $v$ and $w$ are not
-adjacent in $G$. We write $G(n, p)$ for an Erd\H{o}s-R\'enyi random graph with $n$ vertices, and an
-edge between each distinct unordered pair of vertices with independent probability $p$.
+are \emph{adjacent} if there is an edge between them. The \emph{neighbourhood} of a vertex is the
+set of vertices to which it is adjacent, and the \emph{degree} of a vertex is the cardinality of its
+neighbourhood. The \emph{order} of a graph is the cardinality of its vertex set. We write
+$\operatorname{V}(G)$ for the vertex set of a graph $G$. The \emph{complement} of a graph $G$,
+denoted $\shortoverline{G}$, is the graph with the same vertex set as $G$, and with an edge between
+distinct vertices $v$ and $w$ if and only if $v$ and $w$ are not adjacent in $G$. We write $G(n, p)$
+for an Erd\H{o}s-R\'enyi random graph with $n$ vertices, and an edge between each distinct unordered
+pair of vertices with independent probability $p$.
 
 A \emph{non-induced subgraph isomorphism} from a graph $P$ (called the \emph{pattern}) to a graph
 $T$ (called the \emph{target}) is an injective mapping $i$ from $\operatorname{V}(P)$ to
@@ -297,39 +299,60 @@ RAM, running Scientific Linux release 6.7. We will be working with four subgraph
 solvers: the Glasgow solver \citep{DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16}; LAD
 \citep{DBLP:journals/ai/Solnon10}; VF2 \citep{DBLP:journals/pami/CordellaFSV04}; and VF3
 \citep{DBLP:conf/gbrpr/CarlettiFSV17}. Each was compiled using GCC 4.9 with the ``-O3'' option.
-
-The Glasgow and LAD solvers are constraint programming inspired algorithms (although they use dedicated
-data structures, and do not use a constraint programming toolkit). For each vertex in the pattern
-graph, they create a \emph{variable} whose \emph{domain} contains one \emph{value} for each vertex
-in the target graph. The algorithms perform backtracking search, with the goal of assigning to each
-variable a value from its domain so as to form a subgraph isomorphism. The algorithms use
-\emph{inference} to process \emph{constraints} which eliminate values from domains, ensuring that
-the injectivity (an \emph{all-different} constraint) and adjacency rules are respected. If at any
-point during search a \emph{domain wipeout} occurs (that is, if every value is removed from any
-domain), the algorithms will backtrack immediately. The search is guided by \emph{variable-ordering
-heuristics}, which select which variable (i.e.\ pattern vertex) to branch on next, and
-\emph{value-ordering} heuristics which select which value (i.e.\ target vertex) to try as part of a
-partial mapping. The two algorithms differ in terms of additional inference performed, their
-choices of underlying data structures and algorithms, and in the details of their variable- and
-value-ordering heuristics.
-
-The approach used by VF2 and VF3 is a little different: domains of variables are not stored (so the
-algorithm operates in the style of conventional backtracking), and wipeouts are not detected until
-an assignment is made. Instead, an assignment is built up by repeatedly branching only on vertices
-which are adjacent to a previously-assigned vertex.
-
-We measure only the number of recursive calls (guessed assignments) made, not runtimes. We are not
-aiming to compare absolute performance between solvers; rather, we are looking for
-solver-independent patterns of difficulty. All experiments use a timeout of 1,000 seconds, which is
-enough for the Glasgow solver to solve nearly all instances (whose orders were selected with this
-timeout in mind), although we may slightly overestimate the proportion of unsatisfiable instances
-for extremely sparse or dense pattern graphs. The LAD, VF2, and VF3 solvers experienced many more
-failures with this timeout, so our picture of just how hard the hardest instances are with these
-solvers is less detailed.
-
 The Glasgow, LAD, and VF2 solvers support both non-induced and induced isomorphisms (although
 neither Glasgow nor LAD were designed with the induced version in mind), whilst VF3 supports only
 the induced problem.
+
+\subsection{Subgraph Isomorphism Solvers}
+
+The Glasgow and LAD solvers are constraint programming inspired algorithms (although they use
+dedicated data structures, and do not use a constraint programming toolkit). Constraint programming
+is a field concerned with solving \emph{constraint satisfaction} problems. In such a problem, we
+have a set of \emph{variables}, each of which has a \emph{domain} of \emph{values}. We also have a
+set of \emph{constraints}. The objective is to assign each variable a value from its domain, whilst
+respecting every constraint. This is done using a combination of \emph{inference}, which eliminates
+infeasible values from domains, and backtracking search. This search is driven by
+\emph{variable-ordering} heuristics, which select which unassigned variable to branch on, and
+\emph{value-ordering} heuristics, which select which value to try giving that variable. If at any
+point during search a \emph{domain wipeout} occurs (that is, if every value is removed from any
+domain), the algorithms will backtrack immediately.
+
+In the case of subgraph isomorphism, the basic constraint model is to have a domain for each pattern
+vertex, with the domains being each target vertex. An \emph{all-different} constraint ensures
+injectivity, whilst the adjacency rules can be expressed as extensional constraints by listing
+allowed tuples.  With this model, the backtracking search builds up partial assignments of pattern
+vertices to target vertices, until either a complete assignment is reached (and the instance is
+\emph{satisfiable}), or search establishes that no such assignment can exist (and it is
+\emph{unsatisfiable}).
+
+This model can be extended with additional constraints. These allow more inference to be performed,
+and so a solution may be found (or the lack of solution may be proven) with less search.  The
+simplest example is that a pattern vertex of degree $d$ may only be mapped to a target vertex of
+degree at least $d$, and so constraints can be posted which eliminate values corresponding to target
+vertices of low degree from domains corresponding to pattern vertices of high degree. Richer
+constraints involving neighbourhood degree sequences \citep{DBLP:journals/constraints/ZampelliDS10},
+neighbourhood difference constraints \citep{DBLP:journals/ai/Solnon10}, and distances and paths
+\citep{DBLP:conf/cp/AudemardLMGP14,DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16} are also
+possible.
+
+The Glasgow and LAD solvers both use extensions of this basic model, but differ in terms of the
+additional constraints used (and hence the inference which is performed), their choices of
+underlying data structures and algorithms, and in the details of their variable- and value-ordering
+heuristics.
+
+The approach used by VF2 and VF3 is different: domains of variables are not stored (so the algorithm
+operates in the style of conventional backtracking), and wipeouts are not detected until an
+assignment is made. Instead, an assignment is built up by repeatedly branching only on vertices
+which are adjacent to a previously-assigned vertex.
+
+Our experiments will primarily measure the number of recursive calls (guessed assignments) made, not
+runtimes. We are not aiming to give a simple comparison of absolute performance between solvers;
+rather, we are looking for solver-independent patterns of difficulty. All experiments use a timeout
+of 1,000 seconds, which is enough for the Glasgow solver to solve nearly all instances (whose orders
+were selected with this timeout in mind), although we may slightly overestimate the proportion of
+unsatisfiable instances for extremely sparse or dense pattern graphs. The LAD, VF2, and VF3 solvers
+experienced many more failures with this timeout, so our picture of just how hard the hardest
+instances are with these solvers is less detailed.
 
 \section{Non-Induced Subgraph Isomorphisms}\label{section:non-induced}
 
@@ -1362,19 +1385,22 @@ purely constraint programming inspired approach:
         since the information cuts down the search space rather than providing a simple ``yes'' or
         ``no''.
 
-    \item Domain-based heuristics are much stronger than VF2's adjacency branching rules. Picking
-        from small domains dynamically allows search to focus on the hardest part of the problem.
+    \item Domain-based heuristics are widely studied and well-understood
+        \citep{DBLP:conf/ecai/SmithG98}, and unlike VF2's adjacency branching rules, provide
+        discrimination even on dense and low-diameter graphs. Picking from small domains dynamically
+        allows search to focus on the hardest part of the problem, and can exploit conditional
+        structure which is not visible at the top of search.
 
-    \item This approach automatically combines features. For example, a pattern~/ target pair may
-        have matching label features, and matching degree features, but if the only red pattern
-        vertex has degree three whilst no red target vertex has degree more than two, domain
+    \item Domain-based algorithms automatically combines features. For example, a pattern~/ target
+        pair may have matching label features, and matching degree features, but if the only red
+        pattern vertex has degree three whilst no red target vertex has degree more than two, domain
         filtering will detect this immediately. When combined with all-different propagation and
         maintained during search, this effect is even stronger.
 
     \item Finally, as indexing systems get more and more complex in an attempt to filter out a few more
         instances where VF2 performs poorly, the cost of index construction and maintenance is
         considerable.  Indices proposed in the literature often take many hours to build, and can
-        consume much more space than the original graphs.
+        consume much more space than the original graphs \citep{DBLP:journals/tkde/HongZLY15}.
 \end{itemize}
 
 In other words, using domain-based algorithms would not simply be a viable alternative to filter~/
@@ -1549,9 +1575,10 @@ respecting our understanding of the empirical hardness of \NP-complete problems,
 isomorphism algorithms should not be treated as a black box, and that lessons learned in constraint
 programming and artificial intelligence should not go unheeded in other domains.
 
-\acks{The authors would like to thank Kitty Meeks and Craig Reilly for their comments, and Iva
-Babukova for her help with the datasets. The heatmap schemes used in this paper were created with
-the assistance of the ``Chroma.js Color Scale Helper'' by Gregor Aisch.}
+\acks{The authors would like to thank Kitty Meeks and Craig Reilly for their comments. We are
+grateful to Iva Babukova for her help with the datasets and for sharing the results of her
+experiments. The heatmap schemes used in this paper were created with the assistance of the
+``Chroma.js Color Scale Helper'' by Gregor Aisch.}
 
 \bibliography{paper}
 \bibliographystyle{theapa}
