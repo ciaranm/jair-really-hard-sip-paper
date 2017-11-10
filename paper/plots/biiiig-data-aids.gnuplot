@@ -13,7 +13,7 @@ set output "biiiig-data-aids.tex"
 load "../chroma.pal"
 
 set xlabel "Recursive calls"
-set ylabel "Instances solved (1000s)"
+set ylabel "Thousands of instances solved"
 set yrange [0:240]
 set border 3
 set grid ls 101
