@@ -315,7 +315,7 @@ infeasible values from domains, and backtracking search. This search is driven b
 \emph{variable-ordering} heuristics, which select which unassigned variable to branch on, and
 \emph{value-ordering} heuristics, which select which value to try giving that variable. If at any
 point during search a \emph{domain wipeout} occurs (that is, if every value is removed from any
-domain), the algorithms will backtrack immediately.
+domain), the search will backtrack immediately.
 
 In the case of subgraph isomorphism, the basic constraint model is to have a domain for each pattern
 vertex, with the domains being each target vertex. An \emph{all-different} constraint ensures
