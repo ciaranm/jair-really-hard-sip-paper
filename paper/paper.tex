@@ -1300,7 +1300,7 @@ it was not designed.
 We therefore believe it would be unlikely to cause too much astonishment if we suggested that a
 better subgraph isomorphism algorithm could be dropped in as a black box replacement in graph
 databases systems to improve their performance.  This is not our claim. Instead, this paper shows
-that better algorithms invalidate the flawed premise underlying the entire filter~/ verify approach.
+that better algorithms invalidate the premise underlying the entire filter~/ verify approach.
 We will now demonstrate empirically that filter~/ verify is simply a poor workaround for the kinds
 of deficiency in VF2 demonstrated towards the end of the previous section.
 
@@ -1375,7 +1375,7 @@ and these instances are not inherently ``really hard''.
 
 \subsection{Benefits of Constraint Programming over Filter / Verify}
 
-There are at least four benefits beyond simplicity towards abolishing filter~/ verify in favour of a
+There are at least four benefits beyond simplicity towards abandoning filter~/ verify in favour of a
 purely constraint programming inspired approach:
 
 \begin{itemize}
@@ -1408,13 +1408,13 @@ verify with VF2, but rather would be a much better solution.
 
 \subsection{Other Implications}
 
-Unfortunately, indexing is not the only incorrect design choice being made in systems built around
+Indexing is not the only incorrect design choice being made in systems built around
 subgraph isomorphism algorithms, and lessons from constraint programming can be applied to other
 subgraph-related research. We illustrate this by looking at several recent papers on subgraph
 isomorphism, discussing how a deeper understanding of the empirical hardness of subgraph isomorphism
 could lead the reader to different conclusions than the ones presented.
 
-\citet{DBLP:conf/edbt/KatsarouNT17} look at what they call ``straggler'' queries, which they define
+\citet{DBLP:conf/edbt/KatsarouNT17} look at ``straggler'' queries, which they define
 to be the small subset of queries that they observe taking much longer than others to solve. The
 authors present an approach to address this perceived problem that they describe as novel: ``instead
 of trying to come up with new algorithms for sub-iso testing, we utilize isomorphic query rewritings
@@ -1423,9 +1423,9 @@ running the subgraph isomorphism algorithm can lead to ``wildly different'' exec
 note that VF2 does not define ``a strict order in which the nodes of the query are matched'', and so
 permuting the graphs (for example, by using degree or label frequency information) before search can
 sometimes give orders of magnitude improvements. The connection to variable- and value-ordering
-heuristics is not noted, and no consideration is given to even the simplest dynamic ordering
-heuristics like ``smallest domain first'' \citep{DBLP:journals/ai/HaralickE80}. A little thought
-shows that of the orderings proposed, those involving placing rare labels first are effectively poor
+heuristics is not noted, and no consideration is given to dynamic ordering
+heuristics like ``smallest domain first'' \citep{DBLP:journals/ai/HaralickE80}.
+Of the orderings proposed, those involving placing rare labels first are effectively poor
 approximations to a static ``smallest domain at top of search first'' ordering, whilst the remainder
 use degree as we did earlier in this paper. However, \citeauthor{DBLP:conf/edbt/KatsarouNT17} do not
 investigate any algorithm which employs domains, let alone strong variable- or value-ordering
@@ -1455,7 +1455,7 @@ subgraph isomorphism algorithms \citep{DBLP:conf/lion/KotthoffMS16}.  However, i
 hard, and that are not hard for other algorithms.  If permuting graphs sometimes addresses the
 difficulty of some of these instances, then it is likely that they are not genuinely hard instances
 at all, and perhaps it would be better simply to start using an algorithm with domain tracking and
-domain-based ordering heuristics, rather than assembling a portfolio of bad algorithms in the hopes
+domain-based ordering heuristics, rather than assembling a portfolio of weak algorithms in the hopes
 that at least one of them will often get lucky.
 
 To test this suggestion, we return briefly to the experiments on the datasets discussed earlier in
@@ -1490,7 +1490,7 @@ The importance of using hard benchmark instances was stressed by
     hard.''
 \end{displayquote}
 
-Unfortunately, this lesson has not sunk in. For example, \citet{DBLP:journals/tcbb/BonniciG17}
+Unfortunately, this lesson has not been well heeded. For example, \citet{DBLP:journals/tcbb/BonniciG17}
 recently compared various non-constraint-based approaches to LAD using benchmark sets whose
 difficulties are measured between microseconds and milliseconds. Their results suggest that LAD is
 an order of magnitude slower than other approaches. This should not surprise us: the initialisation
@@ -1545,8 +1545,8 @@ target.
 Unfortunately, we saw that this aspect of VF2's performance has had practical consequences, most
 notably being the misdesign of graph database systems. By not trying even the simplest constraint
 programming techniques from the literature, and ignoring all that is known about the empirical
-hardness of \NP-complete problems, members of the graph databases community have misled themselves
-into believing that extensive research into supporting techniques is important, whereas really all
+hardness of \NP-complete problems, members of the graph databases community have reached the mistaken
+conclusion that extensive research into supporting techniques is important, whereas really all
 they are doing is working around some but not all of the defects in their choices of subgraph
 isomorphism algorithms. With this new understanding of what does and does not make subgraph
 isomorphism hard, it is time for a radical rethink of how graph database systems work.
@@ -1571,7 +1571,7 @@ initialisation is still costly).
 
 We must stress that we are not simply concluding that graph database systems should use a better
 subgraph isomorphism algorithm.  Instead, this paper has shown that such systems need to be designed
-respecting our understanding of the empirical hardness of \NP-complete problems, that subgraph
+in light of a modern understanding of the empirical hardness of \NP-complete problems, that subgraph
 isomorphism algorithms should not be treated as a black box, and that lessons learned in constraint
 programming and artificial intelligence should not go unheeded in other domains.
 
