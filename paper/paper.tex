@@ -596,7 +596,7 @@ the sparsest of inputs.
     lighter regions show where the problem is either over- or under-constrained. The final row shows
     when the Glasgow algorithm performs better when given the complements of the pattern and target
     graphs as inputs---the solid lines show the empirical location of the phase transition, and the
-    dotted lines are $t_d=0.5$ and the $p_d=t_d$ diagonal.}\label{figure:induced}
+    dotted lines are $d_t=0.5$ and the $d_p=d_t$ diagonal.}\label{figure:induced}
 \end{figure}
 
 So far we have looked at the non-induced problem, where extra edges in the target graph are
@@ -660,7 +660,7 @@ For larger patterns, more complex behaviour emerges. If we are in the intersecti
 and the bottom right diagonal of the search space, we should always retain the original heuristic,
 and if we are in the intersection of the top half and the top left diagonal, we should always use
 the complements. This behaviour can be predicted by taking the partial derivatives of $\langle Sol
-\rangle$ in the $-p_d$ and $d_t$ directions.  However, when inside the remaining two eighths of the
+\rangle$ in the $-d_p$ and $d_t$ directions.  However, when inside the remaining two eighths of the
 parameter space, the partial derivatives of $\langle Sol \rangle$ disagree on which heuristic to
 use, and using directional derivatives is not enough to resolve the problem. A close observation of
 the data suggests that the actual location of the phase transition may be involved (and perhaps
