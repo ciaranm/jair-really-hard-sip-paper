@@ -1416,23 +1416,19 @@ subgraph-related research. We illustrate this by looking at several recent paper
 isomorphism, discussing how a deeper understanding of the empirical hardness of subgraph isomorphism
 could lead the reader to different conclusions than the ones presented.
 
-\citet{DBLP:conf/edbt/KatsarouNT17} look at ``straggler'' queries, which they define
-to be the small subset of queries that they observe taking much longer than others to solve. The
-authors present an approach to address this perceived problem that they describe as novel: ``instead
-of trying to come up with new algorithms for sub-iso testing, we utilize isomorphic query rewritings
-and existing alternative algorithms in parallel''. Their first claim is that permuting graphs before
-running the subgraph isomorphism algorithm can lead to ``wildly different'' execution times. They
-note that VF2 does not define ``a strict order in which the nodes of the query are matched'', and so
-permuting the graphs (for example, by using degree or label frequency information) before search can
-sometimes give orders of magnitude improvements. The connection to variable- and value-ordering
-heuristics is not noted, and no consideration is given to dynamic ordering
-heuristics like ``smallest domain first'' \citep{DBLP:journals/ai/HaralickE80}.
-Of the orderings proposed, those involving placing rare labels first are effectively poor
-approximations to a static ``smallest domain at top of search first'' ordering, whilst the remainder
-use degree as we did earlier in this paper. However, \citeauthor{DBLP:conf/edbt/KatsarouNT17} do not
-investigate any algorithm which employs domains, let alone strong variable- or value-ordering
-heuristics or all-different propagation, and do not consider that their apparent successes could be
-due to VF2's weaknesses rather than an inherent property of \NP-completeness.
+\citet{DBLP:conf/edbt/KatsarouNT17} present approaches to improve the run times for what they call
+``straggler queries''---the small subset of queries that they observe taking much longer than others
+to solve.  They observe that permuting graphs (for example, by using degree or label frequency
+information) before running the subgraph isomorphism algorithm can improve run times by orders of
+magnitude. However, the connection between this approach and variable- and value-ordering heuristics
+is not noted, and no consideration is given to dynamic ordering heuristics such as ``smallest domain
+first'' \citep{DBLP:journals/ai/HaralickE80}.  Of the orderings proposed, those involving placing
+rare labels first are effectively approximations to a static ``smallest domain at top of search
+first'' ordering, whilst the remainder use degree as we did earlier in this paper.
+\citeauthor{DBLP:conf/edbt/KatsarouNT17} do not investigate any algorithm which employs strong
+variable- or value-ordering heuristics, all-different propagation, or even domains, and do not
+consider that the apparent successes of their approach could be due to VF2's weaknesses rather than
+an inherent property of \NP-completeness.
 
 We saw in the previous sections that although permuting input graphs could improve VF2's behaviour
 on some instances, doing so does not make its performance come close to that of domain-based
