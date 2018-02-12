@@ -74,8 +74,8 @@ Databases}
     location we can predict; for the induced variant, much richer behaviour is observed, and
     constrainedness gives a better measure of difficulty than does proximity to a phase transition.
     These results have practical consequences: we explain why the widely researched ``filter~/
-    verify'' indexing technique used in graph databases is a flawed design (based upon a repeated
-    misunderstanding of the empirical hardness of \NP-complete problems) that cannot be beneficial
+    verify'' indexing technique used in graph databases is founded upon a
+    misunderstanding of the empirical hardness of \NP-complete problems, and cannot be beneficial
     when paired with any reasonable subgraph isomorphism algorithm.
 \end{abstract}
 
@@ -259,7 +259,8 @@ subgraph isomorphism algorithms. Our fourth contribution is to show that the sim
 programming approach, even without the more sophisticated recent advances in subgraph algorithms,
 makes the entire graph database filter~/ verify paradigm unnecessary.  Finally, we explain why
 filter~/ verify and other recently proposed techniques cannot be beneficial even on more challenging
-instances except if an extremely poor choice of subgraph isomorphism algorithm is made.
+instances, unless the chosen subgraph isomorphism algorithm exhibits unnecessarily poor behavior
+on certain classes of instance.
 
 \bigskip
 
@@ -1044,7 +1045,7 @@ The ``VF2${\leftrightarrow}$'' line shows what happens with VF2 if the graphs ar
 the non-zero labelled vertices are given lower vertex numbers rather than higher vertex numbers.
 In other words, we permute pattern vertices in such a way that the first ten vertices have non-zero
 labels, and the ten last vertices have zero labels (and similarly for the target graphs).
-This makes VF2 behave better, but still extremely poorly compared to the other two solvers; the
+This makes VF2 behave better, but still very poorly compared to the other two solvers; the
 motivation behind this modification will become clear later in this paper.  It will also be
 important to remember that both VF2 variations find some satisfiable \emph{and} some unsatisfiable
 instances extremely hard.
@@ -1137,8 +1138,8 @@ popular of these strategies is a form of indexing which is often named \emph{fil
 
 \subsection{The Filter / Verify Paradigm}
 
-The filter~/ verify approach has an interesting history, of which we now give a very selective and
-incomplete overview. Our description is biased by a general modern understanding of the empirical
+The filter~/ verify approach has an interesting history, of which we now give an abridged
+overview. Our description is biased by a general modern understanding of the empirical
 hardness of \NP-complete problems, which was not widely known at the time of the earlier
 papers we discuss. The common theme of all of the following papers is that pre-computed information
 is used to eliminate certain unsatisfiable instances from consideration, without performing a
@@ -1178,15 +1179,17 @@ not change much for a given query''. The argument presented is that
 because one has to not only access the whole graph database but also check subgraph isomorphism. It
 is known that subgraph isomorphism is an \NP-complete problem. Clearly, it is necessary to build
 graph indices in order to help processing graph queries.''\end{displayquote}
-With what we now know about the behaviour of modern subgraph isomorphism algorithms, and the nature
-of solving \NP-complete problems in general, we should immediately be suspicious of these claims. We
-do not expect $T_{\mathit{iso\_test}}$ to be anything like a constant, even if the orders of the
+We reassess these claims in light of
+what we now know about the behaviour of modern subgraph isomorphism algorithms and the nature
+of solving \NP-complete problems. Contrary to the authors' claims,
+we do not expect $T_{\mathit{iso\_test}}$ to be anything like a constant, even if the orders of the
 input graphs are similar. In particular, any instance which can be excluded based upon filtering
 must have a very small proof of unsatisfiability. These instances \emph{should} be trivial with any
-decent subgraph isomorphism algorithm. Thus, all filtering \emph{should} be doing is eliminating the startup
+reasonably good subgraph isomorphism algorithm. Thus, all filtering \emph{should} be doing is eliminating the startup
 costs of a trivial subgraph isomorphism call. The fact that filtering was successful empirically
-should make us wonder whether the subgraph isomorphism algorithm being used was excessively
-primitive. Indeed, the subgraph isomorphism algorithm used is described only as ``the simplest approach'' in the
+should make us wonder whether the subgraph isomorphism algorithm used was substantially
+weaker than the state of the art.
+Indeed, the algorithm is described only as ``the simplest approach'' in the
 paper.  Additionally, the experiments focus on reducing the size of the candidate set, without
 considering the time taken to verify different candidate set instances.  The claim that
 $T_{\mathit{iso\_test}}$ does not change much is not justified experimentally, and no consideration
@@ -1372,7 +1375,7 @@ algorithm, even before introducing stronger filtering, inference, or heuristics.
 certainly not the case that a sequential scan is infeasible as so many filter~/ verify papers claim.
 In contrast, with VF2, the hardest instance in PDBS requires 31,189 recursive calls; in AIDS,
 168,569 calls; in PCMS, 6,476,072 calls; and in PPI, 2,913. In other words, any exponential
-behaviour seen in these instances is purely down to a bad choice of subgraph isomorphism algorithm,
+behaviour seen in these instances is purely down to the choice of subgraph isomorphism algorithm,
 and these instances are not inherently ``really hard''.
 
 \subsection{Benefits of Constraint Programming over Filter / Verify}
@@ -1455,7 +1458,7 @@ This was stressed by
     hard.''
 \end{displayquote}
 
-Unfortunately, this lesson has not been well heeded. For example, \citet{DBLP:journals/tcbb/BonniciG17}
+This lesson has not been well heeded. For example, \citet{DBLP:journals/tcbb/BonniciG17}
 recently compared various non-constraint-based approaches to LAD using benchmark sets whose
 difficulties are measured between microseconds and milliseconds. Their results suggest that LAD is
 an order of magnitude slower than other approaches. This should not surprise us: the initialisation
@@ -1501,19 +1504,19 @@ constrainedness predicts this, and existing general techniques for designing heu
 in certain portions of the parameter space.
 
 When labels were introduced, we saw that VF2 finds some instances hard which other algorithms find
-easy. We looked at this kind of instance in more detail, and argued that this was due to flaws in
+easy. We looked at this kind of instance in more detail, and argued that this was due to shortcomings in
 VF2's design, rather than an interesting property of \NP-completeness. Although inevitably there
-will be instances that every algorithm finds hard, we see no excuse for an algorithm to exhibit
-exponential behaviour in the case when there are two red vertices in a pattern and only one in a
+will be instances that every algorithm finds hard, we see it as a serious weakness for an algorithm to exhibit
+exponential behaviour in such trivial cases as when there are two red vertices in the pattern but only one in the
 target.
 
-Unfortunately, we saw that this aspect of VF2's performance has had practical consequences, most
-notably being the misdesign of graph database systems. By not trying even the simplest constraint
-programming techniques from the literature, and ignoring all that is known about the empirical
+Unfortunately, we saw that this aspect of VF2's performance has had practical consequences, with the
+most notable being the misdesign of graph database systems. By not trying even the simplest constraint
+programming techniques from the literature, and disregarding all that is known about the empirical
 hardness of \NP-complete problems, members of the graph databases community have reached the mistaken
-conclusion that extensive research into supporting techniques is important, whereas really all
-they are doing is working around some but not all of the defects in their choices of subgraph
-isomorphism algorithms. With this new understanding of what does and does not make subgraph
+conclusion that extensive research into supporting techniques is important, whereas really what
+they are doing is working around some but not all of the defects in their chosen algorithms for subgraph
+isomorphism. With this new understanding of what does and does not make subgraph
 isomorphism hard, it is time for a radical rethink of how graph database systems work.
 
 We do not claim that the ultimate ``big data'' subgraph matching algorithm already exists:
@@ -1521,7 +1524,7 @@ on the contrary, there is likely to be plenty of room for future improvement now
 the importance of getting algorithm design right.  For example, a major disadvantage of using
 domains is the relatively expensive initialisation costs, which quickly add up when dealing with
 large numbers of trivial instances. Employing a presolver is an obvious approach---and VF2 is
-actually good in this role \citep{DBLP:conf/lion/KotthoffMS16}---but there are other possibilities.
+in fact good in this role \citep{DBLP:conf/lion/KotthoffMS16}---but there are other possibilities.
 For example, minimal or lazy forward-checking
 \citep{DBLP:conf/ictai/DentM94,DBLP:conf/cp/BacchusG95,o:Dent96,DBLP:conf/ecai/LarrosaM98} avoids
 constructing every domain upfront, although adopting this require alternatives to ``smallest domain
