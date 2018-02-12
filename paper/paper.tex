@@ -1201,7 +1201,7 @@ cost could be influenced by the character of the candidate set.
 
 The equation is also used by \citet{DBLP:conf/icde/JiangWYZ07}, who claim that ``usually the
 verification time dominates the Query Response Time [s]ince the computational complexity of
-$T_{\mathit{iso\_test}}$ is NP-Complete''. They note that \begin{displayquote}``Approximately, the
+$T_{\mathit{iso\_test}}$ is \NP-Complete''. They note that \begin{displayquote}``Approximately, the
     value of $T_{\mathit{iso\_test}}$ does not change too much with the difference of query. Thus,
 the key to reducing query response time is to minimize the size of the candidate answer
 set''.\end{displayquote} This claim becomes understandable when one examines the subgraph
@@ -1213,7 +1213,7 @@ interestingly, this algorithm effectively does forward-checking and has a variab
 heuristic, before these concepts appeared in the constraints literature.}
 
 Without using the equation, \citet{DBLP:conf/sigmod/ChengKNL07} state that since subgraph
-isomorphism is NP-complete, processing by a sequential scan is infeasible. They introduce new
+isomorphism is \NP-complete, processing by a sequential scan is infeasible. They introduce new
 filtering techniques to try to avoid the subgraph isomorphism step. A similar claim is made by
 \citet{DBLP:conf/icde/ZhangHY07} in an introduction of another indexing technique: ``obviously it is
 inefficient to perform a sequential scan on every graph in the database, because the subgraph
@@ -1224,10 +1224,10 @@ Muddying the waters slightly, a survey by \citet{DBLP:journals/datamine/HanCXY07
 However, in a description of a system tailored to biological networks,
 \citet{DBLP:conf/edbt/ZhangLY09} state that \begin{displayquote}``Since the size of the raw database
     graph is small, it can be easily fit in the main memory.  However, the query (matching) time
-will be very long due to the NP-hard complexity.''\end{displayquote} They suggest that indexing is
+will be very long due to the \NP-hard complexity.''\end{displayquote} They suggest that indexing is
 a way of avoiding this. Similarly, \citet{DBLP:journals/pvldb/ZhaoH10} argue that ``the graph query
 problem is hard in that \ldots it requires subgraph isomorphism checking \ldots which has proven to
-be NP-complete'' and that working with large networks is hard or impossible ``due to the lack of
+be \NP-complete'' and that working with large networks is hard or impossible ``due to the lack of
 scalable graph indexing mechanisms''.
 
 \citet{DBLP:conf/icdcs/CaoYWRL11} propose a privacy-preserving cloud graph database system using
@@ -1243,7 +1243,7 @@ database queries. Again, new indexing techniques are introduced. Subsequently,
 filtering techniques. They state that performing a query against each graph in the dataset
 ``obviously does not scale, as subgraph isomorphism is \NP-complete''. In describing a system which
 returns a special subset of graphs which match a query, \citet{DBLP:journals/tkde/ZhengLZHZ16}
-suggest that it is ``NP-hard to check the graph isomorphism'' (meaning subgraph isomorphism), and
+suggest that it is ``\NP-hard to check the graph isomorphism'' (meaning subgraph isomorphism), and
 ``in order to improve the time efficiency'' they use an indexing system to ``avoid as many costly
 subgraph isomorphism checkings as possible''. Their index takes tens of thousands of seconds to
 build, and they suggest that Ullmann's algorithm and VF2 are state of the art for verification.
