@@ -320,7 +320,7 @@ point during search a \emph{domain wipeout} occurs (that is, if every value is r
 domain), the search will backtrack immediately.
 
 In the case of subgraph isomorphism, the basic constraint model is to have a domain for each pattern
-vertex, with the domains being each target vertex. An \emph{all-different} constraint ensures
+vertex, with each domain being the set of target vertices. An \emph{all-different} constraint ensures
 injectivity, whilst the adjacency rules can be expressed as extensional constraints by listing
 allowed tuples.  With this model, the backtracking search builds up partial assignments of pattern
 vertices to target vertices, until either a complete assignment is reached (and the instance is
