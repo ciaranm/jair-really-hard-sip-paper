@@ -215,8 +215,8 @@ vertices) of the pattern and target graphs.  For non-induced isomorphisms, with 
 of parameters we see results very similar to those observed with boolean satisfiability problems:
 there is a phase transition (whose location we can predict) from satisfiable to unsatisfiable, and
 we see a solver-independent complexity peak near this phase transition. Additionally, understanding
-this behaviour helps us to design better variable- and value-ordering heuristics---this is the
-second contribution of this paper.
+this behaviour helps us to design better search strategies, by improving variable- and
+value-ordering heuristics---this is the second contribution of this paper.
 
 In \cref{section:induced} we look at the induced isomorphism problem.  For certain choices of
 parameters, there are two phase transitions, going from satisfiable to unsatisfiable, and then from
@@ -313,9 +313,11 @@ set of \emph{constraints}. The objective is to assign each variable a value from
 respecting every constraint. This is done using a combination of \emph{inference}, which eliminates
 infeasible values from domains, and backtracking search. This search is driven by
 \emph{variable-ordering} heuristics, which select which unassigned variable to branch on, and
-\emph{value-ordering} heuristics, which select which value to try giving that variable. If at any
-point during search a \emph{domain wipeout} occurs (that is, if every value is removed from any
-domain), the search will backtrack immediately.
+\emph{value-ordering} heuristics, which select which value to try giving that variable. That is,
+variable-ordering selects a pattern vertex, whilst value-ordering tells us the order in which to try
+different candidate target vertices for that pattern vertex. If at any point during search a
+\emph{domain wipeout} occurs (that is, if every value is removed from any domain), the search will
+backtrack immediately.
 
 In the case of subgraph isomorphism, the basic constraint model is to have a domain for each pattern
 vertex, with each domain being the set of target vertices. An \emph{all-different} constraint ensures
