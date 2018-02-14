@@ -252,13 +252,13 @@ wildcards).
 
 In \cref{section:filterverify} we look at some of the datasets commonly used to test graph database
 systems, which the literature suggests are hard to solve. Simple experiments show that the entire
-perceived difficulty of each of these datasets comes down to the widespread use of especially poor
-subgraph isomorphism algorithms. Our fourth contribution is to show that the simplest constraint
-programming approach, even without the more sophisticated recent advances in subgraph algorithms,
-makes the entire graph database filter~/ verify paradigm unnecessary.  Finally, we explain why
-filter~/ verify and other recently proposed techniques cannot be beneficial even on more challenging
-instances, unless the chosen subgraph isomorphism algorithm exhibits unnecessarily poor behavior
-on certain classes of instance.
+perceived difficulty of each of these datasets comes down to the widespread use of particular
+subgraph isomorphism algorithms, rather than inherent hardness. Our fourth contribution is to show
+that the simplest constraint programming approach, even without the more sophisticated recent
+advances in subgraph algorithms, makes the entire graph database filter~/ verify paradigm
+unnecessary.  Finally, we explain why filter~/ verify and other recently proposed techniques cannot
+be beneficial even on more challenging instances, unless the chosen subgraph isomorphism algorithm
+exhibits unnecessarily poor behavior on certain classes of instance.
 
 \bigskip
 
@@ -1112,7 +1112,7 @@ algorithm would eliminate this cost.
 
 
 However, by far the biggest problem is in graph databases. The following section shows how
-widespread use of poor subgraph isomorphism algorithms has not just led to overly pessimistic
+widespread use of weak subgraph isomorphism algorithms has not just led to overly pessimistic
 conclusions regarding performance, but has misdirected the design of larger systems.
 
 \section{Querying Graph Databases}\label{section:filterverify}
