@@ -236,9 +236,9 @@ What about other random graph models? In \cref{section:regular} we see that grap
 has the same degree (known as $k$-regular) exhibit very similar characteristics.  However, when
 labels on vertices are introduced (as is commonly seen in real-world applications and in graph
 database systems), richer behaviour emerges, particularly when moving away from a uniform labelling
-scheme, and the popular VF2 algorithm behaves much worse than two more recent
-constraint-based algorithms in certain cases. In \cref{section:labelled} we take a close look at
-these cases, and argue that they \emph{should} be easy to solve.
+scheme, and the popular VF2 algorithm \citep{DBLP:journals/pami/CordellaFSV04} behaves much worse
+than two more recent constraint-based algorithms in certain cases. In \cref{section:labelled} we
+take a close look at these cases, and argue that they \emph{should} be easy to solve.
 
 This is not simply a theoretical curiosity. A labelled version of subgraph isomorphism is one of
 the key components in supporting complex queries in graph databases---typically, these systems store
