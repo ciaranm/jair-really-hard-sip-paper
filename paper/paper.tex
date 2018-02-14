@@ -795,22 +795,25 @@ rather than adjacency and non-adjacency.
 
 Constrainedness, denoted $\kappa$, is an alternative measure of difficulty designed to refine the
 phase transition concept, and to generalise hardness parameters across different combinatorial
-problems \citep{DBLP:conf/aaai/GentMPW96}. A problem with $\kappa < 1$ is said to be
-underconstrained, and is likely to be satisfiable; a problem with $\kappa > 1$ is overconstrained,
-and is likely to be unsatisfiable. Empirically, problems with $\kappa$ close to 1 are hard, and
-problems where $\kappa$ is very small or very large are usually easy. By handling injectivity as a
+problems \citep{DBLP:conf/aaai/GentMPW96}. An ensemble of problem instances with $\kappa < 1$ is
+said to be underconstrained, and is likely to be made up of satisfiable instances; an ensemble with
+$\kappa > 1$ is overconstrained, and is likely to be made of unsatisfiable instances. Empirically,
+problem instances from an ensemble with $\kappa$ close to 1 are hard, and problems drawn from an
+ensemble where $\kappa$ is very small or very large are usually easy.
+
+By handling injectivity as a
 restriction on the size of the state space rather than as a constraint, we derive
 \begin{equation}\label{equation:constrainedness}\kappa = 1 - \frac{\log \left( t^{\underline{p}}
 \cdot {d_t}^{d_p \cdot \binom{p}{2}} \cdot {(1 - d_{t})}^{(1 - d_{p}) \cdot \binom{p}{2}}
 \right)}{\log t^{\underline{p}}} \end{equation} for induced isomorphisms, which we plot on the sixth
 row of \cref{figure:induced}. We see that constrainedness predicts that the central region will
-still be relatively difficult for larger pattern graphs: although the problem is overconstrained, it
-is less overconstrained than in the regions the Glasgow and LAD solvers found easy.  Thus it seems
-that rather than just being a unification of existing generalised heuristic techniques,
-constrainedness also gives a better predictor of difficulty than proximity to a phase
-transition---our method generates instances where constrainedness and ``close to a phase
-transition'' give very different predictions, and constrainedness closely matches the empirical
-results.
+still be relatively difficult for larger pattern graphs: although a family of instances generated
+with these parameters is overconstrained, it is less overconstrained than in the regions the Glasgow
+and LAD solvers found easy.  Thus it seems that rather than just being a unification of existing
+generalised heuristic techniques, constrainedness also gives a better predictor of difficulty than
+proximity to a phase transition---our method generates collections of instances where
+constrainedness and ``close to a phase transition'' give very different predictions, and
+constrainedness closely matches the empirical results.
 
 Unfortunately, constrainedness does not give additional heuristic information: minimising
 constrainedness gives the same predictions as maximising the expected number of solutions.
