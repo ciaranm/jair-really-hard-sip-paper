@@ -1305,9 +1305,10 @@ it was not designed.
 We therefore believe it would be unlikely to cause too much astonishment if we suggested that a
 better subgraph isomorphism algorithm could be dropped in as a black box replacement in graph
 databases systems to improve their performance.  This is not our claim. Instead, this paper shows
-that better algorithms invalidate the premise underlying the entire filter~/ verify approach.
-We will now demonstrate empirically that filter~/ verify is simply a poor workaround for the kinds
-of deficiency in VF2 demonstrated towards the end of the previous section.
+that better algorithms invalidate the premise underlying the entire filter~/ verify approach.  We
+will now demonstrate empirically that filter~/ verify is simply a limited workaround for a subset of
+the weaknesses in non-constraint-based subgraph isomorphism algorithms that we demonstrated towards
+the end of the previous section.
 
 \subsection{Is Filtering Necessary?}
 
@@ -1432,6 +1433,44 @@ first'' ordering, whilst the remainder use degree as we did earlier in this pape
 variable- or value-ordering heuristics, all-different propagation, or even domains, and do not
 consider that the apparent successes of their approach could be due to VF2's weaknesses rather than
 an inherent property of \NP-completeness.
+
+We saw in the previous sections that although permuting input graphs could improve VF2's behaviour
+on some instances, doing so does not make its performance come close to that of domain-based
+algorithms.  \citeauthor{DBLP:conf/edbt/KatsarouNT17} say they ``hope that our findings will open up
+new research directions, striving to find appropriate, per-query, isomorphic rewritings, in
+combination with alternate per-query sub-iso algorithms that can yield large improvements''. We
+believe it is important instead to emphasise previous research directions that have already solved
+most of this problem, and to help ensure that these techniques become more widely known.
+
+\citet{DBLP:conf/edbt/KatsarouNT17}'s second claim is that ``different
+algorithms find different queries hard''. To address this, they run many subgraph isomorphism
+algorithms and input permutations in parallel; the extensive literature on parallel portfolios in
+general \citep{DBLP:journals/ai/GomesS01}, and the approach by \citet{DBLP:conf/sls/BattitiM07} for
+subgraph isomorphism in particular, is not noted (and nor are portfolios mentioned when they say
+that ``using machine learning models to predict which version \ldots to employ per query is of high
+interest'').  The evidence so far in this paper suggests that we should be wary. It is certainly
+true that there are some instances that all algorithms find hard, and there are good theoretical
+reasons to believe that these instances genuinely are really hard.  Furthermore, algorithm
+portfolios are also well-known to be a successful technique, and are beneficial even with modern
+subgraph isomorphism algorithms \citep{DBLP:conf/lion/KotthoffMS16}.  However, in
+\cref{section:labelled} we saw that there are many instances that VF2 finds hard that should not be
+hard, and that are not hard for other algorithms.  If permuting graphs sometimes addresses the
+difficulty of some of these instances, then it is likely that they are not genuinely hard instances
+at all, and perhaps it would be better simply to start using an algorithm with domain tracking and
+domain-based ordering heuristics, rather than assembling a portfolio of weak algorithms in the hopes
+that at least one of them will often get lucky.
+
+To test this suggestion, we return briefly to the experiments on the datasets discussed earlier in
+this section. What if we modify our solver so that it does not use ``smallest domain first'', and
+does not detect domain wipeouts until attempting to branch on an empty variable?  Suddenly three of
+the four datasets become extremely hard, with many instances now timing out after making hundreds of
+millions of recursive calls, and the PPI dataset now requires hundreds of thousands of calls for
+some queries.  Furthermore, slight changes to the input vertex ordering can now make some of these
+``hard'' instances easy again.  This backs up our suspicions: the apparent success of
+\citet{DBLP:conf/edbt/KatsarouNT17}'s technique is due to the ease of sometimes getting better
+results out of a poor algorithm. Claiming huge improvements from an algorithm portfolio consisting
+only of variations of poor algorithms does not demonstrate a genuine improvement over the state of
+the art.
 
 Improved search orderings for VF2-style algorithms also appear in recent work by
 \citet{DBLP:conf/gbrpr/CarlettiFV15} and \citet{o:Carletti16}, cumulating in VF3
