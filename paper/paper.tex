@@ -1171,7 +1171,8 @@ subgraph isomorphism call.) They conclude that ``graph indexing plays a critical
 query processing in graph databases''.
 
 This equation is repeated and expanded upon by \citet{DBLP:journals/tods/YanYH05} to explicitly
-separate I/O and isomorphism testing costs, obtaining a query response time of \[
+separate I/O and isomorphism testing costs into $T_{\mathit{io}}$ and $T_{\mathit{iso\_test}}$
+respectively, obtaining a query response time of \[
     T_{\mathit{search}} + \left|C_q\right| \cdot (T_{\mathit{io}} + T_{\mathit{iso\_test}})
     \textnormal{.} \] The authors explicitly state that ``the value of $T_{\mathit{iso\_test}}$ does
 not change much for a given query''. The argument presented is that
