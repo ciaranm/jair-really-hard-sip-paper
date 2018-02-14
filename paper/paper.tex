@@ -1438,15 +1438,13 @@ Improved search orderings for VF2-style algorithms also appear in recent work by
 \citep{DBLP:conf/gbrpr/CarlettiFSV17,o:CarlettiFSV17}, and by \citet{DBLP:conf/wise/ShenZ17}. We
 have seen in \cref{section:labelled} that such an approach could give improvements, but will not
 bring an algorithm that does not use domains close to the performance of one that does on harder
-instances.  We thus believe that a significant amount of effort in designing algorithms for subgraph
-isomorphism has been misdirected due to a lack of familiarity with the best existing algorithms for
-subgraph isomorphism on one hand, and with broadly-applicable lessons from the constraint
-programming literature on the other.
+instances.  We thus believe that a significant amount of effort in designing algorithms for and
+systems involving subgraph isomorphism has been misdirected due to a lack of familiarity with the
+best existing algorithms for subgraph isomorphism, and with more broadly-applicable lessons on
+algorithm design from the constraint programming literature.
 
-We now move our focus from the importance of using state-of-the-art techniques for algorithm design,
-to the pitfalls of choosing unrealistically easy instances to benchmark our algorithms.
-This was stressed by
-\citet{DBLP:journals/heuristics/Gent98}:
+Another such lesson is the importance of choosing a good set of benchmark instances. As
+\citet{DBLP:journals/heuristics/Gent98} observes:
 
 \begin{displayquote}
     ``Benchmark problems should be hard. I report on the solution of the five open benchmark
@@ -1458,8 +1456,9 @@ This was stressed by
     hard.''
 \end{displayquote}
 
-This lesson has not been well heeded. For example, \citet{DBLP:journals/tcbb/BonniciG17}
-recently compared various non-constraint-based approaches to LAD using benchmark sets whose
+We hope that this paper provides some much-needed help in this direction, as some recent
+evaluations work only with extremely easy instances. For example, \citet{DBLP:journals/tcbb/BonniciG17}
+compared various non-constraint-based approaches to LAD using benchmark sets whose
 difficulties are measured between microseconds and milliseconds. Their results suggest that LAD is
 an order of magnitude slower than other approaches. This should not surprise us: the initialisation
 costs of LAD are non-trivial due to it constructing domains, calculating neighbourhood degree
@@ -1515,7 +1514,7 @@ most notable being the misdesign of graph database systems. By not trying even t
 programming techniques from the literature, and disregarding all that is known about the empirical
 hardness of \NP-complete problems, members of the graph databases community have reached the mistaken
 conclusion that extensive research into supporting techniques is important, whereas really what
-they are doing is working around some but not all of the defects in their chosen algorithms for subgraph
+they are doing is working around some but not all of the weaknesses in their chosen algorithms for subgraph
 isomorphism. With this new understanding of what does and does not make subgraph
 isomorphism hard, it is time for a radical rethink of how graph database systems work.
 
