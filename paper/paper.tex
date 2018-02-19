@@ -365,6 +365,16 @@ instances for the non-induced problem, and by measuring the empirical difficulty
 
 \subsection{A Phase Transition when Varying Pattern Edge Probability}
 
+Suppose we arbitrarily decide upon a pattern graph order of 20, a target graph order of 150, a fixed
+target edge probability of 0.40, and no vertex labels. As we vary the pattern edge probability from
+0 to 1, we would expect to see a shift from entirely satisfiable instances (with no edges in the
+pattern, we can always find a match) to entirely unsatisfiable instances (a maximum clique in this
+order and edge probability of target graph will usually have between 9 and 12 vertices). The move
+from green circles (satisfiable) to blue crosses (unsatisfiable) in \cref{figure:phase-transition}
+shows that this is the case. For densities of 0.67 or greater, no instance is satisfiable; with
+densities of 0.44 or less, every instance is satisfiable; and with a density of 0.55, roughly half
+the instances are satisfiable.
+
 \begin{figure}[t]
     \centering
     \includegraphics*{plots/phase-transition.pdf}
@@ -376,19 +386,9 @@ instances for the non-induced problem, and by measuring the empirical difficulty
     is the number of search nodes needed by the Glasgow solver to solve $i$, and the point is drawn
     as a green circle if $i$ is satisfiable, and a blue cross otherwise. The black line plots the
     evolution of the mean number of search nodes when increasing the pattern edge probability from
-    $0$ to $1$.}
+    $0$ to $1$ in steps of $0.01$, using a larger sample size of $1,000$.}
     \label{figure:phase-transition}
 \end{figure}
-
-Suppose we arbitrarily decide upon a pattern graph order of 20, a target graph order of 150, a fixed
-target edge probability of 0.40, and no vertex labels. As we vary the pattern edge probability from
-0 to 1, we would expect to see a shift from entirely satisfiable instances (with no edges in the
-pattern, we can always find a match) to entirely unsatisfiable instances (a maximum clique in this
-order and edge probability of target graph will usually have between 9 and 12 vertices). The move
-from green circles (satisfiable) to blue crosses (unsatisfiable) in \cref{figure:phase-transition}
-shows that this is the case. For densities of 0.67 or greater, no instance is satisfiable; with
-densities of 0.44 or less, every instance is satisfiable; and with a density of 0.55, roughly half
-the instances are satisfiable.
 
 The line plots mean search effort using the Glasgow solver: for sparse patterns, the problem is
 trivial; for dense patterns, proving unsatisfiability is not particularly difficult; and we see a
