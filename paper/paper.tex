@@ -391,12 +391,12 @@ the instances are satisfiable.
     represents one instance $i$, where $x$ is the pattern edge probability used to generate $i$, $y$
     is the number of search nodes needed by the Glasgow solver to solve $i$, and the point is drawn
     as a green circle if $i$ is satisfiable, and a blue cross otherwise. The black line plots the
-    evolution of the mean number of search nodes when increasing the pattern edge probability from
+    evolution of the arithmetic mean number of search nodes when increasing the pattern edge probability from
     $0$ to $1$ in steps of $0.01$, using a larger sample size of $1,000$.}
     \label{figure:phase-transition}
 \end{figure}
 
-The line plots mean search effort using the Glasgow solver: for sparse patterns, the problem is
+The line plots arithmetic mean search effort using the Glasgow solver: for sparse patterns, the problem is
 trivial; for dense patterns, proving unsatisfiability is not particularly difficult; and we see a
 complexity peak around the point where half the instances are satisfiable.  We also plot the search
 cost of individual instances, as points. The behaviour we observe looks remarkably similar to random
