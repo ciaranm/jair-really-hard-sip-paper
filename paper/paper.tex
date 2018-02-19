@@ -278,9 +278,13 @@ set of vertices to which it is adjacent, and the \emph{degree} of a vertex is th
 neighbourhood. The \emph{order} of a graph is the cardinality of its vertex set. We write
 $\operatorname{V}(G)$ for the vertex set of a graph $G$. The \emph{complement} of a graph $G$,
 denoted $\shortoverline{G}$, is the graph with the same vertex set as $G$, and with an edge between
-distinct vertices $v$ and $w$ if and only if $v$ and $w$ are not adjacent in $G$. We write $G(n, p)$
-for an Erd\H{o}s-R\'enyi random graph with $n$ vertices, and an edge between each distinct unordered
-pair of vertices with independent probability $p$.
+distinct vertices $v$ and $w$ if and only if $v$ and $w$ are not adjacent in $G$.
+
+An \emph{Erd\H{o}s-R\'enyi random graph}, written $G(n, p)$, is a graph with $n$ vertices, and an
+edge between each distinct unordered pair of vertices with independent probability $p$
+\citep{o:Gilbert59,o:ErdosR59}.\footnote{Note that elsewhere, this same name sometimes instead
+refers to a graph $G(n, E)$ chosen uniformly from among all graphs with $n$ vertices and exactly $E$
+edges.}
 
 A \emph{non-induced subgraph isomorphism} from a graph $P$ (called the \emph{pattern}) to a graph
 $T$ (called the \emph{target}) is an injective mapping $i$ from $\operatorname{V}(P)$ to
