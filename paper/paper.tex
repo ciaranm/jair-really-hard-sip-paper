@@ -1538,12 +1538,20 @@ uncovered several interesting phenomena: there are hard instances far from a pha
 constrainedness predicts this, and existing general techniques for designing heuristics do not work
 in certain portions of the parameter space.
 
-When labels were introduced, we saw that VF2 finds some instances hard which other algorithms find
-easy. We looked at this kind of instance in more detail, and argued that this was due to shortcomings in
-VF2's design, rather than an interesting property of \NP-completeness. Although inevitably there
-will be instances that every algorithm finds hard, we see it as a serious weakness for an algorithm to exhibit
-exponential behaviour in such trivial cases as when there are two red vertices in the pattern but only one in the
-target.
+We note that these ``really hard'' instances have a very particular structure, which is unlikely to
+arise naturally. Indeed, the successes seen with constraint programming approaches on the instances
+in \cref{section:filterverify}, and in the wider range of application instances used by
+\citet{DBLP:conf/lion/KotthoffMS16}, suggest that the real-world instances encountered so far are
+generally fairly easy for a good algorithm. Nonetheless, carefully designed synthetic instances
+provide a good starting point for scientific experiments, and can help improve the behaviour of
+algorithms on real-world instances too.
+
+For example, when labels were introduced, we saw that VF2 found some instances hard which other
+algorithms found easy. We looked at this kind of instance in more detail, and argued that this was
+due to shortcomings in VF2's design, rather than an interesting property of \NP-completeness.
+Although inevitably there will be instances that every algorithm finds hard, we see it as a serious
+weakness for an algorithm to exhibit exponential behaviour in such trivial cases as when there are
+two red vertices in the pattern but only one in the target.
 
 Unfortunately, we saw that this aspect of VF2's performance has had practical consequences, with the
 most notable being the misdesign of graph database systems. By not trying even the simplest constraint
