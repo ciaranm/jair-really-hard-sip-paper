@@ -13,7 +13,7 @@
 \usepackage{nicefrac}
 \usepackage{csquotes}
 
-\usetikzlibrary{decorations, decorations.pathreplacing, calc, backgrounds}
+\usetikzlibrary{calc, positioning}
 
 \jairheading{1}{2017}{0-0}{0/0}{0/0}
 \ShortHeadings{When Subgraph Isomorphism is Really Hard}
@@ -334,13 +334,71 @@ vertices to target vertices, until either a complete assignment is reached (and 
 \emph{satisfiable}), or search establishes that no such assignment can exist (and it is
 \emph{unsatisfiable}).
 
+For example, in \cref{figure:cpsipexample}, we would have three variables $A$, $B$ and $C$, each of
+which has a domain $\{1, 2, 3, 4, 5, 6\}$. Suppose initially we guessed the assignment $A = 1$:
+inference would tell us that vertices adjacent to $A$ must be mapped to vertices adjacent to $1$,
+and so the value $6$ would be eliminated from the domains of both $B$ and $C$, whilst injectivity
+would eliminate $1$ from $B$ and $C$. Now suppose we then guessed $B = 2$: this would leave no
+suitable values for $C$, and so we would backtrack and try a new assignment for $B$. Guessing $B =
+3$ will similarly give a wipeout on $C$, but guessing $B = 4$ will leave the value $5$ in the domain
+of $C$, and we could then guess $C = 5$ to obtain a complete assignment.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[scale=0.3,every node/.style={font=\footnotesize}]
+        \begin{scope}
+            \node[draw, circle, fill=chromaygb2, inner sep=0.5pt] (Na) at (0, 0) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb2, inner sep=0.5pt] (Nb) at (-120:3) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb2, inner sep=0.5pt] (Nc) at (-60:3) {\phantom{0}};
+
+            \node [above = 0 of Na] {A};
+            \node [below = 0 of Nb] {B};
+            \node [below = 0 of Nc] {C};
+
+            \draw [ultra thick] (Na) -- (Nb);
+            \draw [ultra thick] (Nb) -- (Nc);
+            \draw [ultra thick] (Nc) -- (Na);
+        \end{scope}
+
+        \begin{scope}[xshift=9cm]
+            \node[draw, circle, fill=chromaygb5, inner sep=0.5pt] (N1) at (0, 0) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb5, inner sep=0.5pt] (N2) at (180:3) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb5, inner sep=0.5pt] (N3) at (0:3) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb5, inner sep=0.5pt] (N4) at (-120:3) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb5, inner sep=0.5pt] (N5) at (-60:3) {\phantom{0}};
+            \node[draw, circle, fill=chromaygb5, inner sep=0.5pt] (N6) at ($(-60:3)+(3,0)$) {\phantom{0}};
+
+            \draw [ultra thick] (N1) -- (N2);
+            \draw [ultra thick] (N1) -- (N3);
+            \draw [ultra thick] (N1) -- (N4);
+            \draw [ultra thick] (N1) -- (N5);
+            \draw [ultra thick] (N4) -- (N5);
+            \draw [ultra thick] (N5) -- (N6);
+
+            \node [above = 0 of N1] {1};
+            \node [above = 0 of N2] {2};
+            \node [above = 0 of N3] {3};
+            \node [below = 0 of N4] {4};
+            \node [below = 0 of N5] {5};
+            \node [below = 0 of N6] {6};
+
+        \end{scope}
+    \end{tikzpicture}
+
+    \caption{An example used to illustrate the simple constraint programming model for the problem:
+    the pattern graph is on the left, and the target graph on the right.}
+    \label{figure:cpsipexample}
+\end{figure}
+
 This model can be extended with additional constraints. These allow more inference to be performed,
 and so a solution may be found (or the lack of solution may be proven) with less search.  The
 simplest example is that a pattern vertex of degree $d$ may only be mapped to a target vertex of
 degree at least $d$, and so constraints can be posted which eliminate values corresponding to target
-vertices of low degree from domains corresponding to pattern vertices of high degree. Richer
-constraints involving neighbourhood degree sequences \citep{DBLP:journals/constraints/ZampelliDS10},
-neighbourhood difference constraints \citep{DBLP:journals/ai/Solnon10}, and distances and paths
+vertices of low degree from domains corresponding to pattern vertices of high degree. In the example
+in \cref{figure:cpsipexample}, this rule would eliminate the values $2$, $3$ and $6$ from every domain at
+the top of search. Richer constraints involving neighbourhood degree sequences
+\citep{DBLP:journals/constraints/ZampelliDS10}, neighbourhood difference constraints
+\citep{DBLP:journals/ai/Solnon10}, and distances and paths
 \citep{DBLP:conf/cp/AudemardLMGP14,DBLP:conf/cp/McCreeshP15,DBLP:conf/lion/KotthoffMS16} are also
 possible.
 
