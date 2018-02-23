@@ -357,12 +357,14 @@ which are adjacent to a previously-assigned vertex.
 Our experiments will primarily measure the number of \emph{search nodes} (that is, the number of
 recursive calls made, or the number of guessed assignments), not runtimes. We are not aiming to give
 a simple comparison of absolute performance between solvers; rather, we are looking for
-solver-independent patterns of difficulty. All experiments use a timeout of 1,000 seconds, which is
-enough for the Glasgow solver to solve nearly all instances (whose orders were selected with this
-timeout in mind), although we may slightly overestimate the proportion of unsatisfiable instances
-for extremely sparse or dense pattern graphs. The LAD, VF2, and VF3 solvers experienced many more
-failures with this timeout, so our picture of just how hard the hardest instances are with these
-solvers is less detailed.
+solver-independent patterns of difficulty. However, roughly speaking, on the small graphs used in
+the following sections, Glasgow manages around 300,000 recursive calls per second on our hardware,
+whilst LAD and VF2 perform around 1,000 and 70,000 recursive calls per second respectively.
+All experiments use a timeout of 1,000 seconds, which is enough for the Glasgow solver to solve
+nearly all instances (whose orders were selected with this timeout in mind), although we may
+slightly overestimate the proportion of unsatisfiable instances for extremely sparse or dense
+pattern graphs. The LAD, VF2, and VF3 solvers experienced many more failures with this timeout, so
+our picture of just how hard the hardest instances are with these solvers is less detailed.
 
 \section{Non-Induced Subgraph Isomorphisms}\label{section:non-induced}
 
