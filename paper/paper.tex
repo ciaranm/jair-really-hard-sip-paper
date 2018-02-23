@@ -1376,16 +1376,23 @@ ordering heuristic with tie-breaking on degree, an all-different constraint, ext
 for adjacency, and labelled-degree filtering at the top of search. Even this simple approach finds
 nearly every instance in each of the four datasets trivial, and no exponential behaviour is
 observed. As we show in \cref{figure:biiiig-data}, the \emph{hardest} instance for the AIDS dataset
-requires 287 recursive calls, and 149,268 of the instances can be solved without search.  For PDBS,
-the hardest problem requires 3,161 recursive calls (which occurs 20 times, due to duplicated
-queries). For both PCM and PPI, the hardest problem requires 23 recursive calls.  In other words,
-none of these instances are in any way computationally hard even for a simple domain-based
-algorithm, even before introducing stronger filtering, inference, or heuristics.  Furthermore it is
-certainly not the case that a sequential scan is infeasible as so many filter~/ verify papers claim.
-In contrast, with VF2, the hardest instance in PDBS requires 31,189 recursive calls; in AIDS,
-168,569 calls; in PCMS, 6,476,072 calls; and in PPI, 2,913. In other words, any exponential
-behaviour seen in these instances is purely down to the choice of subgraph isomorphism algorithm,
-and these instances are not inherently ``really hard''.
+requires 287 recursive calls, and 149,268 of the instances can be solved without search;
+furthermore, no instance individually requires more than 12ms. For both PCM and PPI, the hardest
+problem requires 23 recursive calls, and no instance takes more than 12ms and 282ms respectively.
+For PDBS, the hardest problem requires 3,161 recursive calls (which occurs 20 times, due to
+duplicated queries); however, Gecode struggles on these instances due to its general purpose data
+structures not scaling well to the large target graph sizes, and some of these instances can take as
+long as 30s to solve.
+
+In other words, none of these instances are in any way computationally hard even for a simple
+domain-based algorithm, even before introducing stronger filtering, inference, or heuristics, and
+the only difficulties arise from Gecode requiring the use of extensional constraints rather than the
+specialised adjacency data structures used by Glasgow and LAD.  Furthermore it is certainly not the
+case that a sequential scan is infeasible as so many filter~/ verify papers claim.  In contrast,
+with VF2, the hardest instance in PDBS requires 31,189 recursive calls; in AIDS, 168,569 calls; in
+PCMS, 6,476,072 calls; and in PPI, 2,913. In other words, any exponential behaviour seen in these
+instances is purely down to the choice of subgraph isomorphism algorithm, and these instances are
+not inherently ``really hard''.
 
 \subsection{Benefits of Constraint Programming over Filter / Verify}
 
@@ -1584,7 +1591,12 @@ For example, minimal or lazy forward-checking
 \citep{DBLP:conf/ictai/DentM94,DBLP:conf/cp/BacchusG95,o:Dent96,DBLP:conf/ecai/LarrosaM98} avoids
 constructing every domain upfront, although adopting this require alternatives to ``smallest domain
 first'' and to all-different. Such an approach may also be beneficial for huge target graphs, where
-having domains range over the entire target is impractical.
+having domains range over the entire target is impractical. Indeed, we saw that a raw constraint
+programming approach using Gecode suffered from relatively long runtimes on the very large but
+sparse PDBS instances, despite finding the instances very easy in terms of number of recursive
+calls. An algorithm which is capable of performing most of the reasoning of the Glasgow and LAD
+solvers, but without needing to store domains and adjacency matrices, could represent a major
+breakthrough.
 
 There is also scope for precalculating supporting information about target graphs. For example,
 neighbourhood degree sequences and supplemental graphs could both be pre-computed and stored. The aim
