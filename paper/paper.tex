@@ -505,6 +505,9 @@ similar behaviour is seen with random constraint satisfaction problems
 
 \subsection{Variable- and Value-Ordering Heuristics}
 
+The Glasgow and LAD solvers are driven by ordering heuristics: variable-ordering tells us which
+pattern vertex to branch on, whilst value-ordering tells the order in which we should try target
+vertices for that pattern vertex.
 Various general principles have been considered when designing variable- and value-ordering
 heuristics for backtracking search algorithms---one of these is to try to maximise the expected
 number of solutions inside any subproblem considered during search \citep{DBLP:conf/cp/GentMPSW96}.
