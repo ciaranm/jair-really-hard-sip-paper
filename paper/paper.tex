@@ -216,7 +216,8 @@ of parameters we see results very similar to those observed with boolean satisfi
 there is a phase transition (whose location we can predict) from satisfiable to unsatisfiable, and
 we see a solver-independent complexity peak near this phase transition. Additionally, understanding
 this behaviour helps us to design better search strategies, by improving variable- and
-value-ordering heuristics---this is the second contribution of this paper.
+value-ordering heuristics (that is, by improving the order in which pattern and target vertices are
+selected for guessed assignments). This is the second contribution of this paper.
 
 In \cref{section:induced} we look at the induced subgraph isomorphism problem.  For certain choices of
 parameters, there are two phase transitions, going from satisfiable to unsatisfiable, and then from
@@ -320,19 +321,19 @@ set of \emph{constraints}. The objective is to assign each variable a value from
 respecting every constraint. This is done using a combination of \emph{inference}, which eliminates
 infeasible values from domains, and backtracking search. This search is driven by
 \emph{variable-ordering} heuristics, which select which unassigned variable to branch on, and
-\emph{value-ordering} heuristics, which select which value to try giving that variable. That is,
-variable-ordering selects a pattern vertex, whilst value-ordering tells us the order in which to try
-different candidate target vertices for that pattern vertex. If at any point during search a
-\emph{domain wipeout} occurs (that is, if every value is removed from any domain), the search will
-backtrack immediately.
+\emph{value-ordering} heuristics, which select which value to try giving that variable.
 
-In the case of subgraph isomorphism, the basic constraint model is to have a domain for each pattern
-vertex, with each domain being the set of target vertices. An \emph{all-different} constraint ensures
-injectivity, whilst the adjacency rules can be expressed as extensional constraints by listing
-allowed tuples.  With this model, the backtracking search builds up partial assignments of pattern
-vertices to target vertices, until either a complete assignment is reached (and the instance is
-\emph{satisfiable}), or search establishes that no such assignment can exist (and it is
-\emph{unsatisfiable}).
+In the case of subgraph isomorphism, the basic constraint model is to have a variable for each
+pattern vertex, with each variable's domain being the set of target vertices. An
+\emph{all-different} constraint ensures injectivity, whilst the adjacency rules can be expressed as
+extensional constraints by listing allowed tuples.  With this model, the backtracking search builds
+up partial assignments of pattern vertices to target vertices, until either a complete assignment is
+reached (and the instance is \emph{satisfiable}), or search establishes that no such assignment can
+exist (and it is \emph{unsatisfiable}).  Hence, the role of the variable-ordering heuristic for
+subgraph isomorphism is to select a pattern vertex, whilst value-ordering tells us the order in
+which to try different candidate target vertices for that pattern vertex. If at any point during
+search a \emph{domain wipeout} occurs (that is, if every value is removed from any domain), the
+search will backtrack immediately.
 
 For example, in \cref{figure:cpsipexample}, we would have three variables $A$, $B$ and $C$, each of
 which has a domain $\{1, 2, 3, 4, 5, 6\}$. Suppose initially we guessed the assignment $A = 1$:
@@ -672,8 +673,8 @@ the sparsest of inputs.
 \end{figure}
 
 So far we have looked at the non-induced problem, where extra edges in the target graph are
-permitted.  In the first five rows of \cref{figure:induced} we repeat our experiments, now finding
-induced isomorphisms. With a pattern of order 10, we get two independent phase transitions: the
+permitted.  In the first five rows of \cref{figure:induced} we repeat our experiments, now searching
+for induced isomorphisms. With a pattern of order 10, we get two independent phase transitions: the
 bottom right halves of the plots resemble the non-induced results, and the top left halves are close
 to a mirror image. This second phase transition comes from the fact that an empty pattern is not an
 induced subgraph of a complete target: an empty pattern of order $k$ is an induced subgraph only if
@@ -870,8 +871,8 @@ phase transition concept, and to generalise hardness parameters across different
 problems \citep{DBLP:conf/aaai/GentMPW96}. An ensemble of problem instances with $\kappa < 1$ is
 said to be underconstrained, and is likely to be made up of satisfiable instances; an ensemble with
 $\kappa > 1$ is overconstrained, and is likely to be made of unsatisfiable instances. Empirically,
-problem instances from an ensemble with $\kappa$ close to 1 are hard, and problems drawn from an
-ensemble where $\kappa$ is very small or very large are usually easy.
+problem instances from an ensemble with $\kappa$ close to 1 are hard, and problem instances drawn
+from an ensemble where $\kappa$ is very small or very large are usually easy.
 
 By handling injectivity as a
 restriction on the size of the state space rather than as a constraint, we derive
@@ -1187,8 +1188,9 @@ algorithm would eliminate this cost.
 
 
 However, by far the biggest problem is in graph databases. The following section shows how
-widespread use of weak subgraph isomorphism algorithms has not just led to overly pessimistic
-conclusions regarding performance, but has misdirected the design of larger systems.
+widespread use of certain non-constraint-based subgraph isomorphism algorithms has not just led to
+overly pessimistic conclusions regarding performance, but has misdirected the design of larger
+systems.
 
 \section{Querying Graph Databases}\label{section:filterverify}
 
@@ -1197,7 +1199,7 @@ general problem these systems solve is, for a set of target graphs, to process a
 return every target graph which is subgraph-isomorphic to that pattern. The set of target graphs is
 usually seen as fixed, or at least rarely-changing, whilst the patterns arrive dynamically. This has
 led to the development of systems which perform extensive computations on the target graphs
-beforehand, in the hopes of reducing the response times for individual pattern queries. The most
+beforehand, in the hope of reducing the response times for individual pattern queries. The most
 popular of these strategies is a form of indexing which is often named \emph{filter~/ verify}.
 
 \subsection{The Filter / Verify Paradigm}
@@ -1229,14 +1231,14 @@ query response time, which is to be minimised, is governed by the equation \[ T 
 T_{\mathit{search}} + \left|C_q\right| \cdot T_{\mathit{iso\_test}} \textnormal{,}\] where
 $T_{\mathit{search}}$ is the time taken to search for a candidate set of potential solutions of size
 $\left|C_q\right|$, and $T_{\mathit{iso\_test}}$ is the cost of a subgraph isomorphism test. They
-reason that since isomorphism testing is \NP-complete, by making $\left|C_q\right|$ as small as
+reason that since subisomorphism testing is \NP-complete, by making $\left|C_q\right|$ as small as
 possible, the query response time will be reduced.  (Importantly, it is \emph{not} the time taken to
 load graphs from disk which contributes to the per-candidate cost, but rather the time to perform a
 subgraph isomorphism call.) They conclude that ``graph indexing plays a critical role at efficient
 query processing in graph databases''.
 
 This equation is repeated and expanded upon by \citet{DBLP:journals/tods/YanYH05} to explicitly
-separate I/O and isomorphism testing costs into $T_{\mathit{io}}$ and $T_{\mathit{iso\_test}}$
+separate I/O and subisomorphism testing costs into $T_{\mathit{io}}$ and $T_{\mathit{iso\_test}}$
 respectively, obtaining a query response time of \[
     T_{\mathit{search}} + \left|C_q\right| \cdot (T_{\mathit{io}} + T_{\mathit{iso\_test}})
     \textnormal{.} \] The authors explicitly state that ``the value of $T_{\mathit{iso\_test}}$ does
@@ -1251,7 +1253,7 @@ of solving \NP-complete problems. Contrary to the authors' claims,
 we do not expect $T_{\mathit{iso\_test}}$ to be anything like a constant, even if the orders of the
 input graphs are similar. In particular, any instance which can be excluded based upon filtering
 must have a very small proof of unsatisfiability. These instances \emph{should} be trivial with any
-reasonably good subgraph isomorphism algorithm. Thus, all filtering \emph{should} be doing is eliminating the startup
+domain-based subgraph isomorphism algorithm. Thus, all filtering \emph{should} be doing is eliminating the startup
 costs of a trivial subgraph isomorphism call. The fact that filtering was successful empirically
 should make us wonder whether the subgraph isomorphism algorithm used was substantially
 weaker than the state of the art.
@@ -1263,7 +1265,7 @@ is given as to whether this would hold true for other subgraph isomorphism algor
 
 Moving forwards, the (simpler form of the) query response time equation is repeated by
 \citet{DBLP:conf/vldb/ZhaoYY07}. Again, the work has a focus on reducing the candidate set size
-through indexing. The authors appear to believe that the cost of the isomorphism test is not a major
+through indexing. The authors appear to believe that the cost of the subisomorphism test is not a major
 factor in influencing the result, and focus on the remaining terms in the equation. They use the
 ``average cost'' of a subgraph isomorphism test as a constant, without considering that the average
 cost could be influenced by the character of the candidate set.
@@ -1278,8 +1280,8 @@ isomorphism algorithm chosen for the verification step \citep{DBLP:journals/jacm
 algorithm predates techniques like generalised arc-consistent all-different propagation
 \citep{DBLP:conf/aaai/Regin94}, it cannot immediately detect unsatisfiability in simple cases like
 there being two red vertices in the pattern but only one in the target.\footnote{Although
-interestingly, this algorithm effectively does forward-checking and has a variable-ordering
-heuristic, before these concepts appeared in the constraints literature.}
+interestingly, this algorithm effectively maintains (binary) arc consistency, and has a
+variable-ordering heuristic, before these concepts appeared in the constraints literature.}
 
 Without using the equation, \citet{DBLP:conf/sigmod/ChengKNL07} state that since subgraph
 isomorphism is \NP-complete, processing by a sequential scan is infeasible. They introduce new
@@ -1355,7 +1357,7 @@ time for a subgraph isomorphism query does not particularly depend upon the inst
 it considered that a good subgraph isomorphism algorithm should be able to eliminate
 obviously-unsatisfiable instances with a similar time requirement to an indexing system.
 
-These beliefs are not entirely unfounded: none of the isomorphism algorithms considered in these
+These beliefs are not entirely unfounded: none of the subisomorphism algorithms considered in these
 papers will immediately detect if a pattern contains two red vertices, whilst the target graph
 contains only one. This kind of flaw \emph{should} be picked up at the top of search by an
 all-different propagator \citep{DBLP:conf/aaai/Regin94}.  However, as
@@ -1470,7 +1472,7 @@ purely constraint programming inspired approach:
         allows search to focus on the hardest part of the problem, and can exploit conditional
         structure which is not visible at the top of search.
 
-    \item Domain-based algorithms automatically combines features. For example, a pattern~/ target
+    \item Domain-based algorithms automatically combine features. For example, a pattern~/ target
         pair may have matching label features, and matching degree features, but if the only red
         pattern vertex has degree three whilst no red target vertex has degree more than two, domain
         filtering will detect this immediately. When combined with all-different propagation and
@@ -1519,31 +1521,30 @@ most of this problem, and to help ensure that these techniques become more widel
 algorithms find different queries hard''. To address this, they run many subgraph isomorphism
 algorithms and input permutations in parallel; the extensive literature on parallel portfolios in
 general \citep{DBLP:journals/ai/GomesS01}, and the approach by \citet{DBLP:conf/sls/BattitiM07} for
-subgraph isomorphism in particular, is not noted (and nor are portfolios mentioned when they say
-that ``using machine learning models to predict which version \ldots to employ per query is of high
-interest'').  The evidence so far in this paper suggests that we should be wary. It is certainly
-true that there are some instances that all algorithms find hard, and there are good theoretical
-reasons to believe that these instances genuinely are really hard.  Furthermore, algorithm
-portfolios are also well-known to be a successful technique, and are beneficial even with modern
-subgraph isomorphism algorithms \citep{DBLP:conf/lion/KotthoffMS16}.  However, in
-\cref{section:labelled} we saw that there are many instances that VF2 finds hard that should not be
-hard, and that are not hard for other algorithms.  If permuting graphs sometimes addresses the
-difficulty of some of these instances, then it is likely that they are not genuinely hard instances
-at all, and perhaps it would be better simply to start using an algorithm with domain tracking and
-domain-based ordering heuristics, rather than assembling a portfolio of weak algorithms in the hopes
-that at least one of them will often get lucky.
+subgraph isomorphism in particular, is not noted. (Nor is the portfolios literature referenced when
+they say that ``using machine learning models to predict which version \ldots to employ per query is
+of high interest'').  The evidence so far in this paper suggests that we should carefully examine
+the reasons behind these speedups. It is certainly true that there are some instances that all
+algorithms find hard, and there are good theoretical reasons to believe that these instances
+genuinely are really hard.  Furthermore, algorithm portfolios are also well-known to be a successful
+technique, and are beneficial even with modern subgraph isomorphism algorithms
+\citep{DBLP:conf/lion/KotthoffMS16}.  However, in \cref{section:labelled} we saw that there are many
+instances that VF2 finds hard that should not be hard, and that are not hard for other algorithms.
+If permuting graphs sometimes addresses the difficulty of some of these instances, then it is likely
+that they are not genuinely hard instances at all. Perhaps then, it would be better simply to use an
+algorithm with domain tracking and domain-based ordering heuristics.
 
 To test this suggestion, we return briefly to the experiments on the datasets discussed earlier in
 this section. What if we modify our solver so that it does not use ``smallest domain first'', and
-does not detect domain wipeouts until attempting to branch on an empty variable?  Suddenly three of
+does not detect domain wipeouts until attempting to branch on an empty variable?  In this case, three of
 the four datasets become extremely hard, with many instances now timing out after making hundreds of
 millions of recursive calls, and the PPI dataset now requires hundreds of thousands of calls for
 some queries.  Furthermore, slight changes to the input vertex ordering can now make some of these
-``hard'' instances easy again.  This backs up our suspicions: the apparent success of
+``hard'' instances easy again.  This verifies our intuition: the apparent success of
 \citet{DBLP:conf/edbt/KatsarouNT17}'s technique is due to the ease of sometimes getting better
-results out of a poor algorithm. Claiming huge improvements from an algorithm portfolio consisting
-only of variations of poor algorithms does not demonstrate a genuine improvement over the state of
-the art.
+results out of a poor algorithm. Obtaining huge improvements from an algorithm portfolio consisting
+only of variations of poor algorithms is not sufficient to demonstrate a genuine improvement over
+the state of the art.
 
 Improved search orderings for VF2-style algorithms also appear in recent work by
 \citet{DBLP:conf/gbrpr/CarlettiFV15} and \citet{o:Carletti16}, cumulating in VF3
@@ -1552,8 +1553,7 @@ have seen in \cref{section:labelled} that such an approach could give improvemen
 bring an algorithm that does not use domains close to the performance of one that does on harder
 instances.  We thus believe that a significant amount of effort in designing algorithms for and
 systems involving subgraph isomorphism has been misdirected due to a lack of familiarity with the
-best existing algorithms for subgraph isomorphism, and with more broadly-applicable lessons on
-algorithm design from the constraint programming literature.
+constraint programming literature.
 
 Another such lesson is the importance of choosing a good set of benchmark instances. As
 \citet{DBLP:journals/heuristics/Gent98} observes:
@@ -1579,20 +1579,17 @@ exponential performance from weaker algorithms on easy instances should now be c
 
 \citet{o:CarlettiFSV17} correctly observe that ``a performance improvement on [hard instances] has a
 far greater practical impact than it would have on easier graphs, since the saved time can be of
-several hours or even days'', but mistakenly believe that being larger and slightly denser is what
-makes an instance harder. To evaluate VF3, they introduce a new dataset consisting entirely of
+several hours or even days''. To evaluate VF3, they introduce a new dataset consisting entirely of
 satisfiable instances created by taking a connected subgraph of a randomly generated graph and
 permuting the nodes. They conclude that VF3 is the best algorithm based upon its performance solving
 the enumeration problem on these new instances.  We urge a more cautious interpretation of these
-results: as we saw in \cref{section:induced}, being genuinely hard (rather than simply larger) is a
-subtle property, and it is not safe to say that an instance is hard simply because several
-minor variations of a particular kind of algorithm find it hard. More care must thus be taken to
-avoid accidentally measuring which algorithm scales best to large, easy instances due to it using
-the simplest inference routines. Indeed, we saw in \cref{figure:induced} that VF3 performs
-\emph{worse} than VF2 on genuinely harder instances, and additionally behaves erratically in parts
-of the parameter space that every other solver finds easy; finally, an induced analogue of
-\cref{figure:labels} confirms that VF3 also still struggles with many obviously unsatisfiable
-instances.
+results: as we saw in \cref{section:induced}, being genuinely hard (rather than simply larger or
+denser) is a subtle property, and care must be taken when empirically evaluating algorithms. In
+particular, if one only considers large, easy instances, then the simpler the algorithm, the better
+it scales. Indeed, we saw in \cref{figure:induced} that VF3 performs \emph{worse} than VF2 on
+genuinely harder instances, and additionally behaves erratically in parts of the parameter space
+that every other solver finds easy; finally, an induced analogue of \cref{figure:labels} confirms
+that VF3 also still struggles with many obviously unsatisfiable instances.
 
 Of course, hard random instances of the kind we describe in
 \cref{section:non-induced,section:induced} are also atypical, and should not form the sole basis for
@@ -1634,10 +1631,9 @@ Unfortunately, we saw that this aspect of VF2's performance has had practical co
 most notable being the misdesign of graph database systems. By not trying even the simplest constraint
 programming techniques from the literature, and disregarding all that is known about the empirical
 hardness of \NP-complete problems, members of the graph databases community have reached the mistaken
-conclusion that extensive research into supporting techniques is important, whereas really what
-they are doing is working around some but not all of the weaknesses in their chosen algorithms for subgraph
-isomorphism. With this new understanding of what does and does not make subgraph
-isomorphism hard, it is time for a radical rethink of how graph database systems work.
+conclusion that extensive research into supporting techniques is important. With this new
+understanding of what does and does not make subgraph isomorphism hard, it is time for a radical
+rethink of how graph database systems work.
 
 We do not claim that the ultimate ``big data'' subgraph matching algorithm already exists:
 on the contrary, there is likely to be plenty of room for future improvement now that we understand
@@ -1647,7 +1643,7 @@ large numbers of trivial instances. Employing a presolver is an obvious approach
 in fact good in this role \citep{DBLP:conf/lion/KotthoffMS16}---but there are other possibilities.
 For example, minimal or lazy forward-checking
 \citep{DBLP:conf/ictai/DentM94,DBLP:conf/cp/BacchusG95,o:Dent96,DBLP:conf/ecai/LarrosaM98} avoids
-constructing every domain upfront, although adopting this require alternatives to ``smallest domain
+constructing every domain upfront, although adopting this may require alternatives to ``smallest domain
 first'' and to all-different. Such an approach may also be beneficial for huge target graphs, where
 having domains range over the entire target is impractical. Indeed, we saw that a raw constraint
 programming approach using Gecode suffered from relatively long runtimes on the very large but
