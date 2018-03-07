@@ -15,7 +15,7 @@
 
 \usetikzlibrary{calc, positioning}
 
-\jairheading{1}{2017}{0-0}{0/0}{0/0}
+\jairheading{61}{2018}{0-0}{11/17}{03/18}
 \ShortHeadings{When Subgraph Isomorphism is Really Hard}
 {McCreesh, Prosser, Solnon \& Trimble}
 \firstpageno{1}
@@ -37,23 +37,19 @@
 % http://tex.stackexchange.com/questions/22100/the-bar-and-overline-commands
 \newcommand{\shortoverline}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 
-\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
-
 \begin{document}
 
 \title{When Subgraph Isomorphism is Really Hard, and Why This Matters for Graph
 Databases}
 
-\author{\name Ciaran McCreesh \thanks{This work was supported by the Engineering and Physical Sciences
-           Research Council [grant numbers EP/K503058/1, EP/M508056/1, and EP/P026842/1]} \email
-           ciaran.mccreesh@glasgow.ac.uk \\
-       \addr University of Glasgow, Glasgow, Scotland \\
-       \name Patrick Prosser \samethanks[1] \email patrick.prosser@glasgow.ac.uk \\
-       \addr University of Glasgow, Glasgow, Scotland \\
-       \name Christine Solnon \thanks{This work was supported
-       by the ANR project SoLStiCe (ANR-13-BS02-0002-01)} \email christine.solnon@insa-lyon.fr \\
-       \addr INSA-Lyon, LIRIS, UMR5205, F-69621, France \\
-       \name James Trimble \samethanks[1] \email j.trimble.1@research.gla.ac.uk \\
+\author{\name Ciaran McCreesh \email ciaran.mccreesh@glasgow.ac.uk \\
+       \name Patrick Prosser \email patrick.prosser@glasgow.ac.uk \\
+       \addr University of Glasgow, Glasgow, Scotland
+       \AND
+       \name Christine Solnon \email christine.solnon@insa-lyon.fr \\
+       \addr INSA-Lyon, LIRIS, UMR5205, F-69621, France
+       \AND
+       \name James Trimble \email j.trimble.1@research.gla.ac.uk \\
        \addr University of Glasgow, Glasgow, Scotland}
 \maketitle
 
@@ -260,13 +256,6 @@ unnecessary.  Finally, we explain why filter~/ verify and other recently propose
 be beneficial even on more challenging instances, unless the chosen subgraph isomorphism algorithm
 exhibits unnecessarily poor behavior on certain classes of instance.
 
-\bigskip
-
-Parts of this paper were presented at IJCAI \cite{DBLP:conf/ijcai/McCreeshPT16}; the first three
-sections have been expanded, whilst
-\cref{section:regular,section:labelled,section:filterverify} are new material. Most of this work
-also appeared in a PhD thesis \cite{o:McCreesh17}.
-
 \subsection{Definitions}
 
 Throughout, our graphs are undirected, and do not have any loops. In some cases vertices have
@@ -422,7 +411,7 @@ slightly overestimate the proportion of unsatisfiable instances for extremely sp
 pattern graphs. The LAD, VF2, and VF3 solvers experienced many more failures with this timeout, so
 our picture of just how hard the hardest instances are with these solvers is less detailed.
 
-\section{Non-Induced Subgraph Isomorphisms}\label{section:non-induced}
+\section{Non-induced Subgraph Isomorphisms}\label{section:non-induced}
 
 We begin by introducing a way of randomly generating a mix of satisfiable and unsatisfiable
 instances for the non-induced problem, and by measuring the empirical difficulty of such instances.
@@ -458,9 +447,10 @@ The line plots arithmetic mean search effort using the Glasgow solver: for spars
 trivial; for dense patterns, proving unsatisfiability is not particularly difficult; and we see a
 complexity peak around the point where half the instances are satisfiable.  We also plot the search
 cost of individual instances, as points. The behaviour we observe looks remarkably similar to random
-3SAT problems---compare, for example, Figure~1 of \citeA{DBLP:journals/cacm/Leyton-BrownHHX14}. In
-particular, satisfiable instances tend to be easier, but show greater variation than unsatisfiable
-instances, and there are exceptionally hard satisfiable instances \cite{DBLP:conf/cp/SmithG97}.
+3SAT problems---compare, for example, Figure~1 of the work of
+\citeA{DBLP:journals/cacm/Leyton-BrownHHX14}. In particular, satisfiable instances tend to be
+easier, but show greater variation than unsatisfiable instances, and there are exceptionally hard
+satisfiable instances \cite{DBLP:conf/cp/SmithG97}.
 
 \subsection{Phase Transitions when Varying Pattern and Target Edge Probabilities}
 
@@ -733,8 +723,8 @@ the complements. This behaviour can be predicted by taking the partial derivativ
 \rangle$ in the $-d_p$ and $d_t$ directions.  However, when inside the remaining two eighths of the
 parameter space, the partial derivatives of $\langle Sol \rangle$ disagree on which heuristic to
 use, and using directional derivatives is not enough to resolve the problem. A close observation of
-the data suggests that the actual location of the phase transition may be involved (and perhaps
-\citeauthor{DBLP:conf/aaai/Walsh98}'s suggestion applies only in these conditions). In any case, $\langle Sol
+the data suggests that the actual location of the phase transition may be involved---and perhaps
+\citeS{DBLP:conf/aaai/Walsh98} suggestion applies only in these conditions. In any case, $\langle Sol
 \rangle$ is insufficient to explain the observed behaviour in these two eighths of the parameter space.
 
 In practice, this is unlikely to be a problem: most of the real-world instances we have seen tend to
@@ -850,7 +840,7 @@ vertex $(p_1, t_1)$ and vertex $(p_2, t_2)$ if mapping $p_1$ to $t_1$ and $p_2$ 
 simultaneously is permitted, i.e.\ $p_1$ is adjacent to $p_2$ if and only if $t_1$ is adjacent to
 $t_2$. A clique of size equal to the order of the pattern graph exists in the association graph if
 and only if the problem is satisfiable \cite{o:Levi73}. We used this encoding with an
-implementation of \citeA{DBLP:journals/cor/SegundoRJ11}'s bit-parallel maximum clique algorithm
+implementation of \citeS{DBLP:journals/cor/SegundoRJ11} bit-parallel maximum clique algorithm
 BBMC, modified to solve the decision problem rather than the optimisation problem.  Again, our
 results show that the instances in the central region remain hard, and additionally, some of the
 easy unsatisfiable instances become hard.
@@ -1130,7 +1120,7 @@ But does this cause problems in practice? The literature suggests that it does. 
 \begin{displayquote}``There are (not so many) instances for which creation of a clear design is
     prohibitively slow in the current implementation that evaluates subgraph isomorphism with the
     VF2 algorithm \ldots Recent experiences with a few of these showed that the LAD algorithm was
-    very fast in ruling out impossible matches, where VF2 took a long time.''\end{displayquote}
+very fast in ruling out impossible matches, where VF2 took a long time.'' (p.\ 44)\end{displayquote}
 Similarly, \citeA{o:Murray12} uses VF2 inside a compiler, and observes extremely variable
 (and prohibitively high) compile times in some cases due to the expense of subgraph isomorphism
 calls---given the heavily labelled nature of these graphs, we conjecture that any domain-based
@@ -1232,18 +1222,18 @@ reason that since subisomorphism testing is \NP-complete, by making $\left|C_q\r
 possible, the query response time will be reduced.  (Importantly, it is \emph{not} the time taken to
 load graphs from disk which contributes to the per-candidate cost, but rather the time to perform a
 subgraph isomorphism call.) They conclude that ``graph indexing plays a critical role at efficient
-query processing in graph databases''.
+query processing in graph databases'' (p.\ 345).
 
 This equation is repeated and expanded upon by \citeA{DBLP:journals/tods/YanYH05} to explicitly
 separate I/O and subisomorphism testing costs into $T_{\mathit{io}}$ and $T_{\mathit{iso\_test}}$
 respectively, obtaining a query response time of \[
     T_{\mathit{search}} + \left|C_q\right| \cdot (T_{\mathit{io}} + T_{\mathit{iso\_test}})
     \textnormal{.} \] The authors explicitly state that ``the value of $T_{\mathit{iso\_test}}$ does
-not change much for a given query''. The argument presented is that
+not change much for a given query'' (p.\ 996). The argument presented is that
 \begin{displayquote}``Sequential scan is very costly
 because one has to not only access the whole graph database but also check subgraph isomorphism. It
 is known that subgraph isomorphism is an \NP-complete problem. Clearly, it is necessary to build
-graph indices in order to help processing graph queries.''\end{displayquote}
+graph indices in order to help processing graph queries.'' (p.\ 961)\end{displayquote}
 We reassess these claims in light of
 what we now know about the behaviour of modern subgraph isomorphism algorithms and the nature
 of solving \NP-complete problems. Contrary to the authors' claims,
@@ -1272,7 +1262,7 @@ verification time dominates the Query Response Time [s]ince the computational co
 $T_{\mathit{iso\_test}}$ is \NP-Complete''. They note that \begin{displayquote}``Approximately, the
     value of $T_{\mathit{iso\_test}}$ does not change too much with the difference of query. Thus,
 the key to reducing query response time is to minimize the size of the candidate answer
-set''.\end{displayquote} This claim becomes understandable when one examines the subgraph
+set''.  (p.\ 568)\end{displayquote} This claim becomes understandable when one examines the subgraph
 isomorphism algorithm chosen for the verification step \cite{DBLP:journals/jacm/Ullmann76}: as the
 algorithm predates techniques like generalised arc-consistent all-different propagation
 \cite{DBLP:conf/aaai/Regin94}, it cannot immediately detect unsatisfiability in simple cases like
@@ -1285,60 +1275,61 @@ isomorphism is \NP-complete, processing by a sequential scan is infeasible. They
 filtering techniques to try to avoid the subgraph isomorphism step. A similar claim is made by
 \citeA{DBLP:conf/icde/ZhangHY07} in an introduction of another indexing technique: ``obviously it is
 inefficient to perform a sequential scan on every graph in the database, because the subgraph
-isomorphism test is expensive''.
+isomorphism test is expensive'' (p.\ 966).
 
 Muddying the waters slightly, a survey by \citeA{DBLP:journals/datamine/HanCXY07} states that
 ``large volumes of data'' (not \NP-completeness) is the reason for using indexing in these systems.
 However, in a description of a system tailored to biological networks,
 \citeA{DBLP:conf/edbt/ZhangLY09} state that \begin{displayquote}``Since the size of the raw database
     graph is small, it can be easily fit in the main memory.  However, the query (matching) time
-will be very long due to the \NP-hard complexity.''\end{displayquote} They suggest that indexing is
-a way of avoiding this. Similarly, \citeA{DBLP:journals/pvldb/ZhaoH10} argue that ``the graph query
-problem is hard in that \ldots it requires subgraph isomorphism checking \ldots which has proven to
-be \NP-complete'' and that working with large networks is hard or impossible ``due to the lack of
-scalable graph indexing mechanisms''.
+will be very long due to the \NP-hard complexity.'' (p.\ 193)\end{displayquote} They suggest that
+indexing is a way of avoiding this. Similarly, \citeA{DBLP:journals/pvldb/ZhaoH10} argue that ``the
+graph query problem is hard in that \ldots it requires subgraph isomorphism checking \ldots which
+has proven to be \NP-complete'' and that working with large networks is hard or impossible ``due to
+the lack of scalable graph indexing mechanisms'' (p.\ 340).
 
 \citeA{DBLP:conf/icdcs/CaoYWRL11} propose a privacy-preserving cloud graph database system using
 filter~/ verify, stating that ``checking subgraph isomorphism is \NP-complete, and therefore it is
-infeasible to employ such a costly solution'' which simply checks every graph for a match.
+infeasible to employ such a costly solution'' (p.\ 393) which simply checks every graph for a match.
 \citeA{DBLP:journals/tkde/WangWYY12} look at indexing large sparse graphs. They state that ``because
 subgraph isomorphism is an \NP-complete problem, a filter-and-verification method is usually
-employed to speed up the search efficiency of graph similarity matching over a graph set''.
+employed to speed up the search efficiency of graph similarity matching over a graph set'' (p.\ 441).
 Similarly, after reviewing the literature, \citeA{DBLP:journals/vldb/YuanM13} argue that subgraph
 querying is costly because it is \NP-complete, and that indices can improve the performance of graph
 database queries. Again, new indexing techniques are introduced. Subsequently,
 \citeA{DBLP:journals/pvldb/KatsarouNT15} perform a comprehensive comparison of graph database
 filtering techniques. They state that performing a query against each graph in the dataset
-``obviously does not scale, as subgraph isomorphism is \NP-complete''. In describing a system which
-returns a special subset of graphs which match a query, \citeA{DBLP:journals/tkde/ZhengLZHZ16}
-suggest that it is ``\NP-hard to check the graph isomorphism'' (meaning subgraph isomorphism), and
-``in order to improve the time efficiency'' they use an indexing system to ``avoid as many costly
-subgraph isomorphism checkings as possible''. Their index takes tens of thousands of seconds to
-build, and they suggest that Ullmann's algorithm and VF2 are state of the art for verification.
-\citeA{DBLP:journals/www/PengZ0LZ16} state that ``obviously, it is impossible to employ some
-subgraph isomorphism algorithm, such as Ullmann or VF2'', and argue that ``in order to speed up
-query processing'', they need to create indices.  And \citeA{DBLP:conf/isda/AzaouziR16} argue that
-``since the subgraph isomorphism test is expensive, checking all graphs of a large database can be
-unfeasible'', saying that ``naturally, the verification step is computationally more expensive since
-it requires a subgraph isomorphism''; their experiments look at candidate set reduction sizes, and
-their choice of subgraph isomorphism algorithm is not mentioned.
+``obviously does not scale, as subgraph isomorphism is \NP-complete'' (p.\ 1566). In describing a
+system which returns a special subset of graphs which match a query,
+\citeA{DBLP:journals/tkde/ZhengLZHZ16} suggest that it is ``\NP-hard to check the graph
+isomorphism'' (meaning subgraph isomorphism), and ``in order to improve the time efficiency'' they
+use an indexing system to ``avoid as many costly subgraph isomorphism checkings as possible'' (p.\
+1806). Their index takes tens of thousands of seconds to build, and they suggest that Ullmann's
+algorithm and VF2 are state of the art for verification.  \citeA{DBLP:journals/www/PengZ0LZ16} state
+that ``obviously, it is impossible to employ some subgraph isomorphism algorithm, such as Ullmann or
+VF2'', and argue that ``in order to speed up query processing'', they need to create indices (p.\
+418).  And \citeA{DBLP:conf/isda/AzaouziR16} argue that ``since the subgraph isomorphism test is expensive,
+checking all graphs of a large database can be unfeasible'', saying that ``naturally, the
+verification step is computationally more expensive since it requires a subgraph isomorphism'' (p.\
+251); their experiments look at candidate set reduction sizes, and their choice of subgraph isomorphism
+algorithm is not mentioned.
 
 The filter~/ verify paradigm also influences other research. For example, it is used by
 \citeA{DBLP:conf/icde/TianP08} in an approximate subgraph searching system: they state that
 Ullmann's algorithm ``is prohibitively expensive for querying against [a] database with a large
-number of graphs'', and that indices are used ``to filter out graphs that do not match the query''.
-More recently, \citeA{DBLP:journals/pvldb/YuanMG13} continue a line of supergraph search work, again
+number of graphs'', and that indices are used ``to filter out graphs that do not match the query''
+(p.\ 964).  More recently, \citeA{DBLP:journals/pvldb/YuanMG13} continue a line of supergraph search work, again
 using a filtering step to avoid subgraph isomorphism calls (in the opposite direction, so queries
 are now target graphs). \citeA{DBLP:journals/tkde/HongZLY15} look at graph database subgraph
 isomorphism with an additional set-similarity constraint, and state that Ullmann's algorithm and VF2
-are ``usually costly for large graphs'' because they ``do not utilize any index structure''. They
-propose an indexing structure, which takes over 2,000 seconds to construct, and uses nearly 2GBytes
+are ``usually costly for large graphs'' because they ``do not utilize any index structure'' (p.\
+2509). They propose an indexing structure, which takes over 2,000 seconds to construct, and uses nearly 2GBytes
 of space.  There is also research into maintaining indices when the set of target graph changes: for
 example \citeA{DBLP:conf/sigmod/YuanMYG15} look at algorithms for updating graph indices.
 And describing a system for reusing results of queries which are sub- or super-graphs of previous
 queries, \citeA{DBLP:conf/edbt/WangNT16} state that querying is a ``very costly operation as it
-entails the \NP-complete problem of subgraph isomorphism'', and place ``an emphasis on the number of
-unnecessary subgraph isomorphism tests''.
+entails the \NP-complete problem of subgraph isomorphism'' (p.\ 41), and place ``an emphasis on the
+number of unnecessary subgraph isomorphism tests'' (p.\ 42).
 
 After some early ambiguity, then, it becomes clear that the intent behind filter~/ verify systems is
 to reduce the number of subgraph isomorphism calls, and that the cost of loading graphs from disk is
@@ -1508,19 +1499,19 @@ an inherent property of \NP-completeness.
 
 We saw in the previous sections that although permuting input graphs could improve VF2's behaviour
 on some instances, doing so does not make its performance come close to that of domain-based
-algorithms.  \citeauthor{DBLP:conf/edbt/KatsarouNT17} say they ``hope that our findings will open up
+algorithms.  \citeA{DBLP:conf/edbt/KatsarouNT17} say they ``hope that our findings will open up
 new research directions, striving to find appropriate, per-query, isomorphic rewritings, in
-combination with alternate per-query sub-iso algorithms that can yield large improvements''. We
-believe it is important instead to emphasise previous research directions that have already solved
-most of this problem, and to help ensure that these techniques become more widely known.
+combination with alternate per-query sub-iso algorithms that can yield large improvements''
+(p.\ 36). We believe it is important instead to emphasise previous research directions that have already
+solved most of this problem, and to help ensure that these techniques become more widely known.
 
-\citeA{DBLP:conf/edbt/KatsarouNT17}'s second claim is that ``different
-algorithms find different queries hard''. To address this, they run many subgraph isomorphism
+\citeS{DBLP:conf/edbt/KatsarouNT17} second claim is that ``different
+algorithms find different queries hard'' (p.\ 30). To address this, they run many subgraph isomorphism
 algorithms and input permutations in parallel; the extensive literature on parallel portfolios in
 general \cite{DBLP:journals/ai/GomesS01}, and the approach by \citeA{DBLP:conf/sls/BattitiM07} for
 subgraph isomorphism in particular, is not noted. (Nor is the portfolios literature referenced when
 they say that ``using machine learning models to predict which version \ldots to employ per query is
-of high interest'').  The evidence so far in this paper suggests that we should carefully examine
+of high interest'', p.\ 36).  The evidence so far in this paper suggests that we should carefully examine
 the reasons behind these speedups. It is certainly true that there are some instances that all
 algorithms find hard, and there are good theoretical reasons to believe that these instances
 genuinely are really hard.  Furthermore, algorithm portfolios are also well-known to be a successful
@@ -1538,7 +1529,7 @@ the four datasets become extremely hard, with many instances now timing out afte
 millions of recursive calls, and the PPI dataset now requires hundreds of thousands of calls for
 some queries.  Furthermore, slight changes to the input vertex ordering can now make some of these
 ``hard'' instances easy again.  This verifies our intuition: the apparent success of
-\citeA{DBLP:conf/edbt/KatsarouNT17}'s technique is due to the ease of sometimes getting better
+\citeS{DBLP:conf/edbt/KatsarouNT17} technique is due to the ease of sometimes getting better
 results out of a poor algorithm. Obtaining huge improvements from an algorithm portfolio consisting
 only of variations of poor algorithms is not sufficient to demonstrate a genuine improvement over
 the state of the art.
@@ -1562,7 +1553,7 @@ Another such lesson is the importance of choosing a good set of benchmark instan
     easy. In four cases I give improved packings to refute conjectures that previously reported
     packings were optimal, and I give a proof that the fifth conjecture was correct. \ldots Future
     experimenters should be careful to perform tests on problems that can reasonably be regarded as
-    hard.''
+    hard.'' (p.\ 299)
 \end{displayquote}
 
 We hope that this paper provides some much-needed help in this direction, as some recent
@@ -1576,17 +1567,18 @@ exponential performance from weaker algorithms on easy instances should now be c
 
 \citeA{o:CarlettiFSV17} correctly observe that ``a performance improvement on [hard instances] has a
 far greater practical impact than it would have on easier graphs, since the saved time can be of
-several hours or even days''. To evaluate VF3, they introduce a new dataset consisting entirely of
-satisfiable instances created by taking a connected subgraph of a randomly generated graph and
-permuting the nodes. They conclude that VF3 is the best algorithm based upon its performance solving
-the enumeration problem on these new instances.  We urge a more cautious interpretation of these
-results: as we saw in \cref{section:induced}, being genuinely hard (rather than simply larger or
-denser) is a subtle property, and care must be taken when empirically evaluating algorithms. In
-particular, if one only considers large, easy instances, then the simpler the algorithm, the better
-it scales. Indeed, we saw in \cref{figure:induced} that VF3 performs \emph{worse} than VF2 on
-genuinely harder instances, and additionally behaves erratically in parts of the parameter space
-that every other solver finds easy; finally, an induced analogue of \cref{figure:labels} confirms
-that VF3 also still struggles with many obviously unsatisfiable instances.
+several hours or even days'' (p.\ 805). To evaluate VF3, they introduce a new dataset consisting
+entirely of satisfiable instances created by taking a connected subgraph of a randomly generated
+graph and permuting the nodes. They conclude that VF3 is the best algorithm based upon its
+performance solving the enumeration problem on these new instances.  We urge a more cautious
+interpretation of these results: as we saw in \cref{section:induced}, being genuinely hard (rather
+than simply larger or denser) is a subtle property, and care must be taken when empirically
+evaluating algorithms. In particular, if one only considers large, easy instances, then the simpler
+the algorithm, the better it scales. Indeed, we saw in \cref{figure:induced} that VF3 performs
+\emph{worse} than VF2 on genuinely harder instances, and additionally behaves erratically in parts
+of the parameter space that every other solver finds easy; finally, an induced analogue of
+\cref{figure:labels} confirms that VF3 also still struggles with many obviously unsatisfiable
+instances.
 
 Of course, hard random instances of the kind we describe in
 \cref{section:non-induced,section:induced} are also atypical, and should not form the sole basis for
@@ -1661,10 +1653,18 @@ in light of a modern understanding of the empirical hardness of \NP-complete pro
 isomorphism algorithms should not be treated as a black box, and that lessons learned in constraint
 programming and artificial intelligence should not go unheeded in other domains.
 
-\acks{The authors would like to thank Kitty Meeks and Craig Reilly for their comments. We are
-grateful to Iva Babukova for her help with the datasets and for sharing the results of her
-experiments. The heatmap schemes used in this paper were created with the assistance of the
-``Chroma.js Color Scale Helper'' by Gregor Aisch.}
+\acks{
+The authors would like to thank Kitty Meeks and Craig Reilly for their comments. We are grateful to
+Iva Babukova for her help with the datasets and for sharing the results of her experiments.  The
+heatmap schemes used in this paper were created with the assistance of the ``Chroma.js Color Scale
+Helper'' by Gregor Aisch.  Parts of this paper were presented at IJCAI
+\cite{DBLP:conf/ijcai/McCreeshPT16}; the first three sections have been expanded, whilst
+\cref{section:regular,section:labelled,section:filterverify} are new material. Most of this work
+also appeared in a PhD thesis \cite{o:McCreesh17}.
+
+This work was supported by the Engineering and Physical Sciences Research Council [grant numbers
+EP/K503058/1, EP/M508056/1, and EP/P026842/1], and by the ANR project SoLStiCe
+(ANR-13-BS02-0002-01).}
 
 \bibliography{paper}
 \bibliographystyle{theapa}
